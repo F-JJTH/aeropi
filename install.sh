@@ -9,7 +9,7 @@
 echo "Welcome to aeroPi installer"
 echo "###########################"
 
-echo "raspi-config will be launched, then  and expand filesystem"
+echo "raspi-config will be launched, then expand filesystem and change user password"
 echo "Then reboot the RPi"
 read -p "Continue the script? <Y/n> " prompt
 if [[ $prompt =~ [nN](o)* ]]
@@ -18,10 +18,7 @@ then
 fi
 
 echo "Setting hostname..."
-sudo echo "aeroPi" > /etc/hostname
-
-echo "Setting new password for Pi user..."
-passwd
+sudo sh -c "echo aeroPi > /etc/hostname"
 
 echo "Installing dependencies..."
 sudo apt-get install gpsd gpsd-clients python-gps
