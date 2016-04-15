@@ -21,7 +21,7 @@ echo "Setting hostname..."
 sudo sh -c "echo aeroPi > /etc/hostname"
 
 echo "Installing dependencies..."
-sudo apt-get install gpsd gpsd-clients python-gps
+sudo apt-get install gpsd gpsd-clients python-gps i2c-tools
 
 echo "Update RPi..."
 echo "sudo apt-get update"
@@ -41,5 +41,9 @@ if [[ $prompt =~ [nN](o)* ]]
 then
   exit 0
 fi
+
+sudo sh -c "echo '' >> /boot/config.txt"
+sudo sh -c "echo '#Fix for GPS on RPi3' >> /boot/config.txt"
+sudo sh -c "echo 'enable_uart=1' >> /boot/config.txt"
 
 echo "Done"
