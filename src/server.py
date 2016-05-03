@@ -35,7 +35,7 @@ class GPSWebSocket(threading.Thread):
     self.session = gps3.GPSDSocket(host='localhost')
     self.fix = gps3.Fix()
     
-    start_server = websockets.serve(self.handler, '127.0.0.1', 7001)
+    start_server = websockets.serve(self.handler, '192.168.0.27', 7001)
     eventloop = asyncio.new_event_loop()
     asyncio.set_event_loop(eventloop)
     eventloop.run_until_complete(start_server)

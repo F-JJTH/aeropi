@@ -21,7 +21,7 @@ echo "Setting hostname..."
 sudo sh -c "echo aeroPi > /etc/hostname"
 
 echo "Installing dependencies..."
-sudo apt-get install gpsd gpsd-clients python-gps i2c-tools
+sudo apt-get install gpsd gpsd-clients python-gps i2c-tools apache2 libapache2-mod-php5
 
 echo "Update RPi..."
 echo "sudo apt-get update"
