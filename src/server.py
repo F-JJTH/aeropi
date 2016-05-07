@@ -35,7 +35,7 @@ class GPSWebSocket(threading.Thread):
     self.session = gps3.GPSDSocket(host='localhost')
     self.fix = gps3.Fix()
     
-    start_server = websockets.serve(self.handler, '192.168.0.27', 7001)
+    start_server = websockets.serve(self.handler, '0.0.0.0', 7001)
     eventloop = asyncio.new_event_loop()
     asyncio.set_event_loop(eventloop)
     eventloop.run_until_complete(start_server)
@@ -79,7 +79,7 @@ class IMUWebSocket(threading.Thread):
     self.imu.setCompassEnable(True)
     self.poll_interval = self.imu.IMUGetPollInterval()
     
-    start_server = websockets.serve(self.handler, '192.168.0.27', 7000)
+    start_server = websockets.serve(self.handler, '0.0.0.0', 7000)
     eventloop = asyncio.new_event_loop()
     asyncio.set_event_loop(eventloop)
     eventloop.run_until_complete(start_server)
@@ -93,4 +93,5 @@ if __name__ == "__main__":
   imuWS = IMUWebSocket()
   gpsWS.start()
   imuWS.start()
+  
 
