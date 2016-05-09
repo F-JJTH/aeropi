@@ -10,11 +10,14 @@ import websockets
 import asyncio
 import threading
 
+ALTITUDE = 0
+PRESSURE = 0
 
 
 class GPSWebSocket(threading.Thread):    
   @asyncio.coroutine
   def handler(self, websocket, path):
+    global ALTITUDE
     for new_data in self.session:
       if new_data:
         self.fix.refresh(new_data)
@@ -22,11 +25,14 @@ class GPSWebSocket(threading.Thread):
           lat =  self.fix.TPV["lat"]
           lon =  self.fix.TPV["lon"]
           alt =  self.fix.TPV["alt"]
+          ALTITUDE = alt
           spd =  self.fix.TPV["speed"]
-          hdg =  self.fix.TPV["track"]
-          climb = self.fix.TPV['climb']
-          stream = '{"gps":[{"lat": "%s", "lon": "%s", "hdg": "%f", "climb": "%f", "alt": "%f", "spd": "%f"}]}'\
-                   % (lat, lon, float(hdg), climb, alt, spd)
+          hdg = 0
+          if int(spd) > 2:
+            hdg =  self.fix.TPV["track"]
+          vs = self.fix.TPV['climb']
+          stream = '{"lat": %s, "lon": %s, "hdg": %d, "vs": %d, "alt": %.1f, "spd": %d}'\
+                   % (lat, lon, int(hdg), vs*3.28084, alt*3.28084, spd*3.6)
           yield from websocket.send(stream)
         except ValueError:
           pass
@@ -46,16 +52,29 @@ class GPSWebSocket(threading.Thread):
 class IMUWebSocket(threading.Thread):    
   @asyncio.coroutine
   def handler(self, websocket, path):
+    global PRESSURE
+    lastStream = 0
     while True:
       if self.imu.IMURead():
         data = self.imu.getIMUData()
-        (data["pressureValid"], data["pressure"], data["temperatureValid"], data["temperature"]) = self.pressure.pressureRead()
         fusionPose = data["fusionPose"]
-        stream = '{"imu":[{"pressureValid": "%i", "pressure": "%d", "temperatureValid": "%i", "temperature": "%d", "pitch": "%d", "roll": "%d", "yaw": "%d"}]}'\
-                  % (data["pressureValid"], data["pressure"], data["temperatureValid"], data["temperature"],\
-                  math.degrees(fusionPose[0]), math.degrees(fusionPose[1]), math.degrees(fusionPose[2]))
-        yield from websocket.send(stream)
-        time.sleep(self.poll_interval*1.0/1000.0)
+        (data["pressureValid"], data["pressure"], data["temperatureValid"], data["temperature"]) = self.pressure.pressureRead()
+        
+        if type(ALTITUDE) is float:
+          PRESSURE = data["pressure"] / math.pow(1.0 - (ALTITUDE/44330.0), 5.255);
+        
+        temperature = 0
+        if data["temperatureValid"]:
+          temperature = data["temperature"]
+
+        stream = '{"altMb": %d, "temperature": %.1f, "pitch": %d, "bank": %d, "yaw": %d}'\
+                  % (PRESSURE, temperature, math.degrees(fusionPose[0])-166, math.degrees(fusionPose[1]), math.degrees(fusionPose[2]))
+
+        if stream != lastStream:
+          yield from websocket.send(stream)
+
+        lastStream = stream
+        time.sleep(self.poll_interval*0.0001)
 
   def run(self):
     if not os.path.exists("RTIMULib.ini"):
