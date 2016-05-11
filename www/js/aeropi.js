@@ -134,10 +134,10 @@ function destSphere(lat1, lon1, brg, spd) {
  *******************************************************************************************/
 
 var _followAircraft = true;
-var _lastPosition = null;
 var _lastCoord = null;
 var _gotoPositions = [];
 var _defaultPosition = new L.latLng(44, 5);
+var _lastPosition = _defaultPosition;
 var _locationListener = null;
 var _plot = null;
 var _timer = null;
@@ -170,7 +170,7 @@ var predictivePath = new L.polyline(_defaultPosition).addTo(map);
 var gotoPath       = new L.polyline(_defaultPosition, {color: '#00ff00', opacity: 0.8}).addTo(map);
 var trackPath      = new L.polyline(_defaultPosition, {color: '#ff0000', opacity: 0.4}).addTo(map);
 var trackPathHist  = new L.polyline(_defaultPosition, {color: '#ff0000', opacity: 0.4, clickable: false});
-var accuracyCircle = new L.circle(_defaultPosition, 50).addTo(map);
+//var accuracyCircle = new L.circle(_defaultPosition, 50).addTo(map);
 var aircraftMarker = new L.aircraftMarker(_defaultPosition).addTo(map); // Defined by Marker.js
 var plotHoverMarker = new L.circleMarker(_defaultPosition, {color: '#ff0000', radius: 5});
 

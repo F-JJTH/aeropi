@@ -73,7 +73,7 @@ function Instruments() {
 }
 
 function getMainHeight() {
-  var bodyHeight = $(window).height();
+  var bodyHeight = $(window).width();
   var top = $('#top').height();
   var bottom = $('#bottom').height();
   return bodyHeight-top-bottom;
@@ -85,7 +85,7 @@ function getMainHeight() {
 		// Initial configuration
 		var attitude = this;
 		var settings = $.extend({
-			size : getMainHeight()/2,
+			size : ($(window).width()/100)*40,
 			roll : 0,
 			pitch : 0,
 			heading: 0,

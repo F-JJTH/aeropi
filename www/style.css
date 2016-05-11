@@ -2,14 +2,79 @@ body, a, ul, li
 h1, h2, h3, h4, span{
 margin: 0;
 padding: 0;
+font-family: sans-serif;
 }
 
 body{
 width: 100%;
 height: 100%;
-background: gray;
+background: #222222;
 }
 
+#toolbar{
+position: absolute;
+left: 92%;
+width: 8%;
+height: 100%;
+}
+
+#toolbar button{
+width: 100%;
+height: 25%;
+margin: 0;
+padding: 0;
+}
+
+#toolbar img{
+width: 100%;
+}
+
+#info{
+position: absolute;
+width: 40%;
+height: 100%;
+}
+
+#info ul{
+list-style-type: none;
+width: 100%;
+margin: 0 2%;
+}
+
+#info li.text-instrument{
+float: left;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+width: 46%;
+margin: 2%;
+padding: 1.5%;
+border: 1px solid #2D2D2D;
+color: white;
+box-sizing: border-box;
+}
+
+#map{
+position: absolute;
+left: 42%;
+width: 50%;
+height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 ul.dashboard{
 display: block;
 list-style-type: none;
@@ -116,6 +181,8 @@ background-color: rgba(255,255,255,0);
 .aircraft-marker-icon path {
 fill: #00ff00;
 }
+
+*/
 
 
 

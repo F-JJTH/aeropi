@@ -34,7 +34,7 @@
 .lvml{behavior:url(#default#VML);display:inline-block;position:absolute;}
 .leaflet-control{position:relative;z-index:7;pointer-events:auto;}
 .leaflet-top,
-.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none;}
+.leaflet-bottom{display:none;position:absolute;z-index:1000;pointer-events:none;}
 .leaflet-top{top:0;}
 .leaflet-right{right:0;}
 .leaflet-bottom{bottom:0;}

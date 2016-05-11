@@ -41,7 +41,7 @@ class GPSWebSocket(threading.Thread):
     self.session = gps3.GPSDSocket(host='localhost')
     self.fix = gps3.Fix()
     
-    start_server = websockets.serve(self.handler, '0.0.0.0', 7001)
+    start_server = websockets.serve(self.handler, '0.0.0.0', 7700)
     eventloop = asyncio.new_event_loop()
     asyncio.set_event_loop(eventloop)
     eventloop.run_until_complete(start_server)
@@ -68,7 +68,7 @@ class IMUWebSocket(threading.Thread):
           temperature = data["temperature"]
 
         stream = '{"altMb": %d, "temperature": %.1f, "pitch": %d, "bank": %d, "yaw": %d}'\
-                  % (PRESSURE, temperature, math.degrees(fusionPose[0])-166, math.degrees(fusionPose[1]), math.degrees(fusionPose[2]))
+                  % (PRESSURE, temperature, math.degrees(fusionPose[0]), math.degrees(fusionPose[1]), math.degrees(fusionPose[2]))
 
         if stream != lastStream:
           yield from websocket.send(stream)
