@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 import signal, sys
 sys.path.append('.')
-import RTIMU
-import os.path
 import time
-import math
-import gps3
 import websockets
 import asyncio
 import threading
+import os.path
+import math
+import RTIMU
+import gps3
 
 ALTITUDE = 0
 PRESSURE = 0

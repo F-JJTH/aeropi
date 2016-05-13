@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+</head>
+<body>
+</body>
+</html>
+<script type="text/javascript">
+  var ws = new WebSocket("ws://localhost:7700", 'json');
+  ws.onmessage = function (e) {
+    var data = e.data;
+    console.log(data);
+  };
+</script>

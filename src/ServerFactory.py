@@ -81,7 +81,6 @@ class MSGWorker (threading.Thread):
 
   def sendData(self, data):
     for websocket in self.connected.copy():
-      print("Sending data: %s" % data)
       coro = websocket.send(data)
       future = asyncio.run_coroutine_threadsafe(coro, loop)
 
@@ -104,10 +103,8 @@ if __name__ == "__main__":
     loop.run_forever()
   except KeyboardInterrupt:
     stopFlag = True
-    #TODO: close ws server and loop correctely
+    ws_server.close()
+    loop.stop()
     print("Exiting program...")
-
-
-
 
 
