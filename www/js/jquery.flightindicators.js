@@ -33,9 +33,9 @@ function Unit(data) {
       if(data.bank != undefined)
         this.bank = data.bank;
       if(data.altMb != undefined)
-        this.altimeterMb = data.altMb;
+        this.altimeterMb = data.pressure;
       if(data.vs != undefined)
-        this.vertSpeed = data.vs/1000;
+        this.vertSpeed = data.vs;
     }
   }
 

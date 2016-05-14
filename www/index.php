@@ -95,7 +95,7 @@ gpsSocket.onmessage = function (e) {
 var imuSocket = new WebSocket("ws://"+hostname+":7000", 'json');
 imuSocket.onmessage = function (e) {
   var data = JSON.parse(e.data);
-  $('#qnh span.val').html(data.altMb);
+  $('#qnh span.val').html(data.pressure);
   instruments.update(data, indicators);
 };
 
