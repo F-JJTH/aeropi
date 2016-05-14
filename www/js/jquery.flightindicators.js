@@ -88,6 +88,8 @@ function getMainHeight() {
 			size : ($(window).width()/100)*40,
 			roll : 0,
 			pitch : 0,
+			rollOffset : 0,
+			pitchOffset : 0,
 			heading: 0,
 			vario: 0,
 			airspeed: 0,
@@ -136,11 +138,15 @@ function getMainHeight() {
 		// Private methods
 		function _setRoll(roll){
 			placeholder.each(function(){
-				$(this).find('div.instrument.attitude div.roll').css('transform', 'rotate('+roll+'deg)');
+			        settings.roll = roll;
+				roll = roll + settings.rollOffset;
+				$(this).find('div.instrument.attitude div.roll').css('transform', 'rotate('+(roll)+'deg)');
 			});
 		}
 
 		function _setPitch(pitch){
+			settings.pitch = pitch;
+		        pitch = pitch + settings.pitchOffset;
 			if(pitch>constants.pitch_bound){pitch = constants.pitch_bound;}
 			else if(pitch<-constants.pitch_bound){pitch = -constants.pitch_bound;}
 			placeholder.each(function(){
@@ -205,8 +211,14 @@ function getMainHeight() {
 				$(this).find('img.box.background').hide();
 			});
 		}
+		
+		function _calibrate(){
+			settings.pitchOffset = -settings.pitch;
+			settings.rollOffset = -settings.roll;
+		}
 
 		// Public methods
+		this.calibrate = function(){_calibrate();}
 		this.setRoll = function(roll){_setRoll(roll);}
 		this.setPitch = function(pitch){_setPitch(pitch);}
 		this.setHeading = function(heading){_setHeading(heading);}

@@ -39,38 +39,11 @@
     </ul>
   </div>
   <div id="toolbar">
-    <button><span>Param</span></button>
-    <button id="leaflet-center-map"><span>Center map</span></button>
+    <button id="settings"><span>Param</span></button>
+    <button id="leaflet-center-map"><img src="img/followAircraft.svg"></button>
     <button id="leaflet-zoom-in"><img src="img/zoom-in.png"></button>
     <button id="leaflet-zoom-out"><img src="img/zoom-out.png"></button>
   </div>
-
-
-
-
-
-
-  <!--<ul id="top" class="dashboard">
-    <li><a href="#">0</a></li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-  </ul>-->
-  
-  <main>
-
-  </main>
-
-  <!--<ul id="bottom" class="dashboard">
-    <li><a href="#">6</a></li>
-    <li><a href="#">7</a></li>
-    <li><a href="#">8</a></li>
-    <li><a href="#">9</a></li>
-    <li><a href="#">10</a></li>
-    <li><a href="#">11</a></li>
-  </ul>-->
 </body>
 </html>
 
@@ -95,6 +68,16 @@ $('#leaflet-zoom-in').on('click', function(){
 
 $('#leaflet-zoom-out').on('click', function(){
   map.zoomOut();
+});
+
+$('#leaflet-center-map').on('click', function(){
+  _followAircraft = true;
+  if(_lastPosition != null)
+    map.panTo(_lastPosition, {animate: true, noMoveStart: true});
+});
+
+$('#attitude').on('click', function(){
+  indicators.attitude.calibrate();
 });
 
 

@@ -16,11 +16,11 @@ div.instrument .box {
 }
 div.instrument.attitude div.roll {
   transform: rotate(0deg);
-  transition: all 0.1s linear;
+  /*transition: all 0.1s linear;*/
 }
 div.instrument.attitude div.roll div.pitch {
   top: 0%;
-  transition: all 0.1s linear;
+  /*transition: all 0.1s linear;*/
 }
 div.instrument.heading div.yaw {
   transform: rotate(0deg);
