@@ -36,7 +36,7 @@ class GPSWorker (threading.Thread):
             hdg = self.fix.TPV["track"] if spd > 2 else 0
             self.alt = float(self.fix.TPV["alt"])
             alt = self.alt*3.28084
-            self.data = '{"lat": %s, "lon": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d}' % (lat, lon, hdg, vs, self.alt, spd)
+            self.data = '{"lat": %s, "lon": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d}' % (lat, lon, hdg, vs, alt, spd)
           except ValueError:
             pass
 

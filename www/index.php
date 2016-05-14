@@ -81,22 +81,22 @@ $('#attitude').on('click', function(){
 });
 
 
-var gpsSocket = new WebSocket("ws://"+hostname+":7700",'json');
-gpsSocket.onmessage = function (e) {
+var ws = new WebSocket("ws://"+hostname+":7700",'json');
+ws.onmessage = function (e) {
   var data = JSON.parse(e.data);
   //instruments.update(data, indicators);
-  $('#alt span.val').html(data.alt);
-  $('#gs span.val').html(data.spd);
-  $('#hdg span.val').html(data.hdg);
-  $('#vs span.val').html(data.vs);
-  geo_success(data);
+  if(data.IMU){
+    data = data.IMU;
+    $('#gs span.val').html(data.spd);
+    $('#hdg span.val').html(data.hdg);
+    $('#vs span.val').html(data.vs);
+    $('#qnh span.val').html(data.pressure);
+    instruments.update(data, indicators);
+  }
+  if(data.GPS){
+    data = data.GPS;
+    $('#alt span.val').html(data.alt);
+    geo_success(data);
+  }
 };
-
-var imuSocket = new WebSocket("ws://"+hostname+":7000", 'json');
-imuSocket.onmessage = function (e) {
-  var data = JSON.parse(e.data);
-  $('#qnh span.val').html(data.pressure);
-  instruments.update(data, indicators);
-};
-
 </script>
