@@ -1,10 +1,6 @@
 
 
 var baseLayers = {
-  "None" : new L.TileLayer('null'),
-};
-
-var overLayers = {
   "France: Cartabossy" : new L.TileLayer('maps/cartabossy/{z}/{x}/{y}.png', {
     minZoom : 4,
     maxZoom : 13,
@@ -12,6 +8,16 @@ var overLayers = {
     attribution : 'Map data © <a href="http://cartabossy.com/">Cartabossy</a>',
     bounds: L.latLngBounds(L.latLng(41.0,-5.3), L.latLng(51.2,10.1) ),
   }),
+  "France: OACI 2016" : new L.TileLayer('maps/oaci_fr_2016/{z}/{x}/{y}.jpg', {
+    minZoom : 4,
+    maxZoom : 13,
+    maxNativeZoom : 11,
+    attribution : 'Map data © <a href="http://ign.fr/">IGN</a>',
+    bounds: L.latLngBounds(L.latLng(41.0,-5.3), L.latLng(51.2,10.1) ),
+  }),
+};
+
+var overLayers = {
   "France: VAC Approach" : new L.TileLayer('maps/approach_fr/{z}/{x}/{y}.png', {
     minZoom : 4,
     maxZoom : 15,
@@ -28,7 +34,7 @@ var overLayers = {
   }),
 };
 
-var controlLayers = L.control.externLayers(baseLayers, overLayers);
+//var controlLayers = L.control.externLayers(baseLayers, overLayers);
 
 
 /*
@@ -151,7 +157,7 @@ var map = new L.Map('map', {
     zoom : 10,
     minZoom: 4,
     maxZoom: 16,
-    layers: overLayers['France: Cartabossy'],
+    layers: baseLayers['France: OACI 2016'],
     zoomControl: false,
     attributionControl: true,
 });
@@ -162,7 +168,7 @@ var map = new L.Map('map', {
 
 //var menuControl    = new L.menuControl().addTo(map); // Defined by Control.js
 //var fsControl      = new L.fullscreenControl().addTo(map); // Defined by Control.js
-var followAircraft = new L.followControl().addTo(map); // Defined by Control.js
+//var followAircraft = new L.followControl().addTo(map); // Defined by Control.js
 //var recControl     = new L.recControl().addTo(map); // Defined by Control.js
 var nextControl    = new L.nextControl();
 var clearControl   = new L.clearControl();
@@ -173,6 +179,7 @@ var trackPathHist  = new L.polyline(_defaultPosition, {color: '#ff0000', opacity
 //var accuracyCircle = new L.circle(_defaultPosition, 50).addTo(map);
 var aircraftMarker = new L.aircraftMarker(_defaultPosition).addTo(map); // Defined by Marker.js
 var plotHoverMarker = new L.circleMarker(_defaultPosition, {color: '#ff0000', radius: 5});
+var controlLayers = new L.control.layers(baseLayers, overLayers).addTo(map);
 
 
 aircraftMarker.on('click', function(e) {

@@ -34,7 +34,7 @@
 .lvml{behavior:url(#default#VML);display:inline-block;position:absolute;}
 .leaflet-control{position:relative;z-index:7;pointer-events:auto;}
 .leaflet-top,
-.leaflet-bottom{display:none;position:absolute;z-index:1000;pointer-events:none;}
+.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none;}
 .leaflet-top{top:0;}
 .leaflet-right{right:0;}
 .leaflet-bottom{bottom:0;}
@@ -81,7 +81,7 @@
 .leaflet-touch .leaflet-control-zoom-in{font-size:22px;}
 .leaflet-touch .leaflet-control-zoom-out{font-size:24px;}
 .leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,0.4);background:#fff;border-radius:5px;}
-.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px;}
+.leaflet-control-layers-toggle{background-image:url(img/layers.png);width:36px;height:36px;}
 .leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px;}
 .leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px;}
 .leaflet-control-layers .leaflet-control-layers-list,
@@ -106,6 +106,7 @@
 .leaflet-touch .leaflet-control-attribution,
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar{box-shadow:none;}
+.leaflet-control-attribution{display:none;}
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar{border:2px solid rgba(0,0,0,0.2);background-clip:padding-box;}
 .leaflet-popup{position:absolute;text-align:center;}

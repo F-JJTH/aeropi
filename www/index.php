@@ -22,22 +22,7 @@
 </head>
 <body>
   <div id="map"></div>
-  <div id="info">
-    <div id="instruments">
-      <span id="attitude"></span>
-      <!--<span id="heading"></span>
-      <span id="variometer"></span>
-      <span id="airspeed"></span>
-      <span id="altimeter"></span>-->
-    </div>
-    <ul id="textual">
-      <li class="text-instrument" id="alt">ALT: <span class="val">0000</span> ft</li>
-      <li class="text-instrument" id="qnh">QNH: <span class="val">0000</span> Mb</li>
-      <li class="text-instrument" id="gs">GS:  <span class="val">0000</span> kmh</li>
-      <li class="text-instrument" id="hdg">HDG: <span class="val">0000</span> °</li>
-      <li class="text-instrument" id="vs" >VS:  <span class="val">0000</span> ft/min</li>
-    </ul>
-  </div>
+  <svg id="efis"/>
   <div id="toolbar">
     <button id="settings"><span>Param</span></button>
     <button id="leaflet-center-map"><img src="img/followAircraft.svg"></button>
@@ -49,18 +34,42 @@
 
 
 <script src="js/aeropi.js" type="text/javascript"></script>
+<script src="js/aeropi.efis.js" type="text/javascript"></script>
 <script type="text/javascript">
 var hostname = window.location.hostname;
-var instruments = new Instruments();
+
+
+var efis = new Efis("efis", {
+  /*general:{
+    width:  400,
+    height: 480,
+  },*/
+  asi:{
+    aspectRatio: 4,
+    speeds:{
+      vne: 260,
+      vno: 170,
+      vfe: 110,
+      vso: 65,
+      vs:  90,
+    },
+  },
+  alt:{
+    maxAlt:  25000,
+    aspectRatio: 5,
+  },
+});
+
+//var instruments = new Instruments();
 
 // Flight indicators
-var indicators = {
-  attitude: $.flightIndicator('#attitude', 'attitude'),
+//var indicators = {
+//  attitude: $.flightIndicator('#attitude', 'attitude'),
   /*heading : $.flightIndicator('#heading', 'heading'),
   variometer: $.flightIndicator('#variometer', 'variometer'),
   airspeed: $.flightIndicator('#airspeed', 'airspeed'),
   altimeter: $.flightIndicator('#altimeter', 'altimeter')*/
-}
+//}
 
 $('#leaflet-zoom-in').on('click', function(){
   map.zoomIn();
@@ -76,26 +85,38 @@ $('#leaflet-center-map').on('click', function(){
     map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 });
 
-$('#attitude').on('click', function(){
-  indicators.attitude.calibrate();
+$('#efis').on('click', function(){
+  $("#horizon").css("z-index", 0);
+  $("#toolbar").css("z-index", 11);
+  $("#map").css("z-index", 11);
+  $("div.leaflet-control-layers").css("z-index", 11);
+});
+
+map.on('click', function(){
+  $("#efis").css("z-index", 10);
+  $("#toolbar").css("z-index", 0);
+  $("#map").css("z-index", 0);
+  $("div.leaflet-control-layers").css("z-index", 0);
 });
 
 
 var ws = new WebSocket("ws://"+hostname+":7700",'json');
 ws.onmessage = function (e) {
   var data = JSON.parse(e.data);
-  //instruments.update(data, indicators);
   if(data.IMU){
     data = data.IMU;
-    $('#gs span.val').html(data.spd);
-    $('#hdg span.val').html(data.hdg);
-    $('#vs span.val').html(data.vs);
-    $('#qnh span.val').html(data.pressure);
-    instruments.update(data, indicators);
+    //$('#qnh span.val').html(data.pressure);
+    //instruments.update(data, indicators);
+    efis.setAttitude({roll:data.bank, pitch:data.pitch-90});
   }
   if(data.GPS){
     data = data.GPS;
-    $('#alt span.val').html(data.alt);
+    //$('#gs span.val').html(data.spd);
+    //$('#hdg span.val').html(data.hdg);
+    //$('#vs span.val').html(data.vs);
+    //$('#alt span.val').html(data.alt);
+    efis.setAltitude(data.alt);
+    efis.setSpeed(data.spd);
     geo_success(data);
   }
 };

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="400.667px" height="400.666px" viewBox="25 25 350.667 350.666" enable-background="new 0 0 400.667 400.666"
+	 width="400.667px" height="400.666px" viewBox="0 0 400.667 400.666" enable-background="new 0 0 400.667 400.666"
 	 xml:space="preserve">
 <filter  filterUnits="objectBoundingBox" id="AI_Shadow_1">
 	<feGaussianBlur  stdDeviation="5" result="blur" in="SourceAlpha"></feGaussianBlur>
@@ -15,7 +15,6 @@
 	s153-68.503,153-153S284.831,47,200.333,47z M275.85,221.422c1.929-6.813,2.984-13.992,2.984-21.422
 	c0-7.397-1.045-14.546-2.958-21.332l49.113-13.869c3.155,11.193,4.846,23,4.846,35.201c0,12.256-1.704,24.114-4.886,35.351
 	L275.85,221.422z"/>
-<path fill="#FFFFFF" transform="matrix(1.7893505,0,0,1,-264.03012,-0.05305442)" d="m 327.65188,200.04118 12.51703,-6.22671 0,13.45342 z"/>
 <line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="200.333" y1="49.902" x2="200.333" y2="73.334"/>
 <line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="288.559" y1="78.569" x2="274.786" y2="97.525"/>
 <line fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" x1="343.084" y1="153.619" x2="320.799" y2="160.859"/>

@@ -16,6 +16,7 @@ position: absolute;
 left: 92%;
 width: 8%;
 height: 100%;
+z-index: 0;
 }
 
 #toolbar button{
@@ -29,34 +30,16 @@ padding: 0;
 width: 100%;
 }
 
-#info{
+#efis{
 position: absolute;
-width: 40%;
-height: 100%;
-}
-
-#info ul{
-list-style-type: none;
-width: 100%;
-margin: 0 2%;
-}
-
-#info li.text-instrument{
-float: left;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
-width: 46%;
-margin: 2%;
-padding: 1.5%;
-border: 1px solid #2D2D2D;
-color: white;
-box-sizing: border-box;
+margin: 0 0 -4px 0;
+padding: 0;
+z-index: 10;
 }
 
 #map{
 position: absolute;
-left: 42%;
-width: 50%;
+width: 100%;
 height: 100%;
 }
 
