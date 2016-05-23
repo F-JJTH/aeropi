@@ -328,7 +328,7 @@ Efis.prototype.createCompass = function(){
 
     var x1 = this.settings.general.width/2;
     var y1 = this.settings.general.width/4;
-    var x2 = x2;
+    var x2 = x1;
     var y2 = y1+20;
     var radius = this.settings.general.width/3;
 
