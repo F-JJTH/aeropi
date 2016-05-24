@@ -14,6 +14,7 @@
   <!--<script src="js/jquery.flightindicators.js"></script>-->
   <script src="js/leaflet.0.7.7.min.js"></script>
   <script src="js/Marker-Control.js"></script>
+  <script src="js/jquery.efis.js"></script>
 
   <link rel="stylesheet" type="text/css" href="style.css"></link>
   <link rel="stylesheet" type="text/css" href="instruments.css"></link>
@@ -30,15 +31,13 @@
 
 
 <script src="js/aeropi.js" type="text/javascript"></script>
-<script src="js/aeropi.efis.js" type="text/javascript"></script>
 <script type="text/javascript">
 var hostname = window.location.hostname;
 
-
-var efis = new Efis("efis", {
+var options = {
   asi:{
-    aspectRatio: 4,
-    speeds:{
+    ladderSpacing: 4,
+    speed:{
       vne: 260,
       vno: 170,
       vfe: 110,
@@ -48,9 +47,11 @@ var efis = new Efis("efis", {
   },
   alt:{
     maxAlt:  25000,
-    aspectRatio: 5,
+    ladderSpacing: 8,
   },
-});
+};
+
+var efis = $("#efis").efis(options);
 
 //var instruments = new Instruments();
 // Flight indicators
@@ -110,7 +111,7 @@ ws.onmessage = function (e) {
     data = data.GPS;
     efis.setAltitude(data.alt);
     efis.setSpeed(data.spd);
-    efis.setHeading(90);
+    efis.setHeading(data.hdg);
     geo_success(data);
   }
 };

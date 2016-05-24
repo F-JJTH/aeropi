@@ -179,7 +179,7 @@ var trackPathHist  = new L.polyline(_defaultPosition, {color: '#ff0000', opacity
 //var accuracyCircle = new L.circle(_defaultPosition, 50).addTo(map);
 var aircraftMarker = new L.aircraftMarker(_defaultPosition).addTo(map); // Defined by Marker.js
 var plotHoverMarker = new L.circleMarker(_defaultPosition, {color: '#ff0000', radius: 5});
-var controlLayers = new L.control.layers(baseLayers, overLayers).addTo(map);
+//var controlLayers = new L.control.layers(baseLayers, overLayers).addTo(map);
 
 
 aircraftMarker.on('click', function(e) {
