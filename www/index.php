@@ -79,6 +79,7 @@ $('#leaflet-center-map').on('click', function(){
 
 $('#efis').on('click', function(){
   $("#ai").css("z-index", 0);
+  $("#ts").css("z-index", 0);
   $("#asi").css("z-index", 12);
   $("#alt").css("z-index", 12);
   $("#hdg").css("z-index", 12);
@@ -89,6 +90,7 @@ $('#efis').on('click', function(){
 
 map.on('click', function(){
   $("#ai").css("z-index", 10);
+  $("#ts").css("z-index", 12);
   $("#asi").css("z-index", 12);
   $("#alt").css("z-index", 12);
   $("#hdg").css("z-index", 12);
@@ -96,7 +98,6 @@ map.on('click', function(){
   $("#map").css("z-index", 0);
   $("div.leaflet-control-layers").css("z-index", 0);
 });
-
 
 var ws = new WebSocket("ws://"+hostname+":7700",'json');
 ws.onmessage = function (e) {
@@ -106,6 +107,7 @@ ws.onmessage = function (e) {
     efis.setPressure(data.pressure);
     //instruments.update(data, indicators);
     efis.setAttitude({roll:data.bank, pitch:data.pitch-90});
+    //efis.setSlip(data.slip);
   }
   if(data.GPS){
     data = data.GPS;

@@ -173,7 +173,7 @@ L.NextControl = L.Control.extend({
   onAdd: function(map){
     map.hasNextControl = this;
     var container = L.DomUtil.create('div','nextWaypoint');
-    container.innerHTML = '<img src="next.svg" title="Next waypoint"/>';
+    container.innerHTML = '<img src="img/next.svg" title="Next waypoint"/>';
     container.onclick = function(){
       _gotoPositions.shift();
       geo_success(_lastCoord);
@@ -198,7 +198,7 @@ L.ClearControl = L.Control.extend({
   onAdd: function(map){
     map.hasClearControl = this;
     var container = L.DomUtil.create('div','clearRoute');
-    container.innerHTML = '<img src="clear.svg" title="Clear route"/>';
+    container.innerHTML = '<img src="img/clear.svg" title="Clear route"/>';
     container.onclick = function(){
       map.removeLayer(gotoPath);
       _gotoPositions = [];

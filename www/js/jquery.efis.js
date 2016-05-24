@@ -391,7 +391,38 @@
 		main.appendChild(elem);
 		return main;
 	}
-	
+
+	function _createTs() {
+		var main = document.createElementNS(svgNS, "svg");
+		main.setAttribute("id", "ts");
+		main.setAttribute("width", settings.width/5+16);
+		main.setAttribute("height", 48);
+		var center = settings.width/2-settings.width/10;
+		main.setAttribute("style", "position:absolute; top:8px; left:"+(center-8)+"px;");
+		main.appendChild(_createFilters());
+		elem = document.createElementNS(svgNS, "rect");
+		elem.setAttribute("x", 8);
+		elem.setAttribute("y", 8);
+		elem.setAttribute("rx", 16);
+		elem.setAttribute("ry", 16);
+		elem.setAttribute("height", 32);
+		elem.setAttribute("width", settings.width/5);
+		elem.setAttribute("style", "fill:black; fill-opacity:0.12; stroke:white; stroke-width:2; stroke-opacity:0.5;");
+		elem.setAttribute("filter", "url(#shadow)");
+		main.appendChild(elem);
+		elem = document.createElementNS(svgNS, "path");
+		elem.setAttribute("style", "stroke:#CCC; stroke-width:2");
+		elem.setAttribute("d", "M"+(settings.width/10-8)+" 8 v32 M"+(settings.width/10+24)+" 8 v32");
+		main.appendChild(elem);
+		main.ball = document.createElementNS(svgNS, "circle");
+		main.ball.setAttribute("cx", settings.width/10+8);
+		main.ball.setAttribute("cy", 24);
+		main.ball.setAttribute("r", 15);
+		main.ball.setAttribute("style", "fill:#FFF;");
+		main.appendChild(main.ball);
+		return main;
+	}
+
 	function _createFilters() {
 		var filter = null;
 		var defs = document.createElementNS(svgNS, "defs");
@@ -508,6 +539,16 @@
 		alt.pressure.textContent = v;
 	}
 
+	this.setSlip = function(v) {
+		v = parseInt(v);
+		if(v == data.ts) return;
+		var limit = settings.width/10-16;
+		if(v > limit) v = limit;
+		if(v < -limit) v = -limit;
+		data.ts = v
+		ts.ball.setAttribute("transform", "translate("+v+" 0)");
+	}
+
 	var data = {alt:0, pressure:0, spd:0, hdg:0, pitch:0, roll:0};
 	var parent = $(this);
 	var ai     = _createAi();
@@ -518,6 +559,8 @@
 	parent.append(alt);
 	var hdg    = _createHdg();
 	parent.append(hdg);
+	var ts     = _createTs();
+	parent.append(ts);
 
     return this;
   };
