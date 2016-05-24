@@ -9,26 +9,22 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
   <!-- jQuery Core -->
-  <script src="js/jquery.1.11.2.min.js"></script>
-  <script src="js/jqueryui.1.11.2.min.js"></script>
-  <script src="js/jquery.flightindicators.js"></script>  
+  <script src="js/jquery.2.2.4.min.js"></script>
+  <script src="js/jquery-ui.1.11.4.min.js"></script>
+  <!--<script src="js/jquery.flightindicators.js"></script>-->
   <script src="js/leaflet.0.7.7.min.js"></script>
   <script src="js/Marker-Control.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel="stylesheet" type="text/css" href="instruments.css">
-  <link rel="stylesheet" type="text/css" href="leaflet.0.7.7.min.css" />
+  <link rel="stylesheet" type="text/css" href="style.css"></link>
+  <link rel="stylesheet" type="text/css" href="instruments.css"></link>
+  <link rel="stylesheet" type="text/css" href="leaflet.0.7.7.min.css"></link>
+  <link rel="stylesheet" type="text/css" href="js/jquery-ui.1.11.4.min.css"></link>
   <title>aeroPi</title>
 </head>
 <body>
   <div id="map"></div>
-  <svg id="efis"/>
-  <div id="toolbar">
-    <button id="settings"><span>Param</span></button>
-    <button id="leaflet-center-map"><img src="img/followAircraft.svg"></button>
-    <button id="leaflet-zoom-in"><img src="img/zoom-in.png"></button>
-    <button id="leaflet-zoom-out"><img src="img/zoom-out.png"></button>
-  </div>
+  <!--<svg id="efis"/>-->
+  <div id="efis"></div>
 </body>
 </html>
 
@@ -40,10 +36,6 @@ var hostname = window.location.hostname;
 
 
 var efis = new Efis("efis", {
-  /*general:{
-    width:  400,
-    height: 480,
-  },*/
   asi:{
     aspectRatio: 4,
     speeds:{
@@ -61,7 +53,6 @@ var efis = new Efis("efis", {
 });
 
 //var instruments = new Instruments();
-
 // Flight indicators
 //var indicators = {
 //  attitude: $.flightIndicator('#attitude', 'attitude'),
@@ -86,15 +77,21 @@ $('#leaflet-center-map').on('click', function(){
 });
 
 $('#efis').on('click', function(){
-  $("#horizon").css("z-index", 0);
-  $("#toolbar").css("z-index", 11);
+  $("#ai").css("z-index", 0);
+  $("#asi").css("z-index", 12);
+  $("#alt").css("z-index", 12);
+  $("#hdg").css("z-index", 12);
+  //$("#toolbar").css("z-index", 11);
   $("#map").css("z-index", 11);
   $("div.leaflet-control-layers").css("z-index", 11);
 });
 
 map.on('click', function(){
-  $("#efis").css("z-index", 10);
-  $("#toolbar").css("z-index", 0);
+  $("#ai").css("z-index", 10);
+  $("#asi").css("z-index", 12);
+  $("#alt").css("z-index", 12);
+  $("#hdg").css("z-index", 12);
+  //$("#toolbar").css("z-index", 0);
   $("#map").css("z-index", 0);
   $("div.leaflet-control-layers").css("z-index", 0);
 });
@@ -105,18 +102,15 @@ ws.onmessage = function (e) {
   var data = JSON.parse(e.data);
   if(data.IMU){
     data = data.IMU;
-    //$('#qnh span.val').html(data.pressure);
+    efis.setPressure(data.pressure);
     //instruments.update(data, indicators);
     efis.setAttitude({roll:data.bank, pitch:data.pitch-90});
   }
   if(data.GPS){
     data = data.GPS;
-    //$('#gs span.val').html(data.spd);
-    //$('#hdg span.val').html(data.hdg);
-    //$('#vs span.val').html(data.vs);
-    //$('#alt span.val').html(data.alt);
     efis.setAltitude(data.alt);
     efis.setSpeed(data.spd);
+    efis.setHeading(90);
     geo_success(data);
   }
 };
