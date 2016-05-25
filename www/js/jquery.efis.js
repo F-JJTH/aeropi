@@ -501,46 +501,46 @@
      * Public methods
      */
 	this.setSpeed = function(v) {
-		v = parseInt(v);
+		//v = parseInt(v);
 		if(v == data.spd) return;
 		data.spd = v;
 		var t = (v/20)*(settings.height/settings.asi.ladderSpacing);
 		asi.ladder.setAttribute("transform", "translate(0, "+t+")");
-		asi.digits.textContent = v;
+		asi.digits.textContent = parseInt(v);
 	}
 
 	this.setAltitude = function(v) {
-		v = parseInt(v);
+		//v = parseInt(v);
 		if(v == data.alt) return;
 		data.alt = v;
 		var t = (v/200)*(settings.height/settings.alt.ladderSpacing);
 		alt.ladder.setAttribute("transform", "translate(0, "+t+")");
-		alt.digits.textContent = v;
+		alt.digits.textContent = parseInt(v);
 	}
 
 	this.setAttitude = function(params) {
-		pitch = parseInt(-params.pitch)/10*56;
-		roll = parseInt(params.roll);
+		pitch = -params.pitch/10*56;
+		roll = params.roll;
 		ai.horizonAnim.setAttribute("transform", "rotate("+roll+" "+settings.width/2+" "+settings.height/2+") translate(0, "+pitch+")");
 	}
 
 	this.setHeading = function(v) {
-		v = parseInt(v);
+		//v = parseInt(v);
 		if(v == data.hdg) return;
 		data.hdg = v;
 		hdg.ladder.setAttribute("transform", "rotate("+(-v)+" "+(settings.width/4+8)+" "+(settings.width/3+14)+")");
-		hdg.digits.textContent = v;
+		hdg.digits.textContent = parseInt(v);
 	}
 
 	this.setPressure = function(v) {
-		v = parseInt(v);
+		//v = parseInt(v);
 		if(v == data.pressure) return;
 		data.pressure = v;
 		alt.pressure.textContent = v;
 	}
 
 	this.setSlip = function(v) {
-		v = parseInt(v);
+		//v = parseInt(v);
 		if(v == data.ts) return;
 		var limit = settings.width/10-16;
 		if(v > limit) v = limit;

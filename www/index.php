@@ -106,8 +106,9 @@ ws.onmessage = function (e) {
     data = data.IMU;
     efis.setPressure(data.pressure);
     //instruments.update(data, indicators);
-    efis.setAttitude({roll:data.bank, pitch:data.pitch-90});
-    //efis.setSlip(data.slip);
+    efis.setAttitude({roll:data.roll, pitch:data.pitch-90});
+    efis.setSlip(data.yawRate);
+    efis.setHeading(data.heading);
   }
   if(data.GPS){
     data = data.GPS;

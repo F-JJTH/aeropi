@@ -98,17 +98,26 @@ class IMUWorker (threading.Thread):
             pressure = 0
 
         temperature = data["temperature"] if data["temperatureValid"] else 0
-        pitch = self.toDeg(fusionPose[0])
-        bank  = self.toDeg(fusionPose[1])
-        yaw   = self.toDeg(fusionPose[2])
+        pitch = math.degrees(fusionPose[0])
+        roll  = math.degrees(fusionPose[1])
+        yaw   = math.degrees(fusionPose[2])
+        rollRate = math.degrees(data["gyro"][0])
+        yawRate  = math.degrees(data["gyro"][2])
+        gForce   = data["accel"][2]
+        if yaw < 90.1:
+          heading = yaw + 270
+        else:
+          heading = yaw - 90
+        if heading > 360.0:
+          heading = heading - 360.0
 
-        self.data = '{"pressure": %d, "temperature": %.1f, "pitch": %.1f, "bank": %.1f, "yaw": %.1f}' % (pressure, temperature, pitch, bank, yaw)
+        self.data = '{"pressure": %d, "temperature": %.1f, "pitch": %.2f, "roll": %.2f, "heading": %.1f, "rollRate": %.4f, "yawRate": %.4f, "gforce": %.4f}' % (pressure, temperature, pitch, roll, heading, rollRate, yawRate, gForce)
         time.sleep(self.poll_interval*0.0001)
 
   def toDeg(self, number):
     v = math.degrees(number)
-    v = '%.1f' % v
-    v = round(float(v) * 2) / 2
+    #v = '%.1f' % v
+    #v = round(float(v) * 2) / 2
     return v
 
   def get(self):
