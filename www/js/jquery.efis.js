@@ -525,7 +525,8 @@
 	}
 
 	this.setHeading = function(v) {
-		//v = parseInt(v);
+		rV = parseInt(v);
+		if( rV == 0 && (data.hdg > 2 || data.hdg < 357) ) return;
 		if(v == data.hdg) return;
 		data.hdg = v;
 		hdg.ladder.setAttribute("transform", "rotate("+(-v)+" "+(settings.width/4+8)+" "+(settings.width/3+14)+")");
