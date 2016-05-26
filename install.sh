@@ -9,41 +9,80 @@
 echo "Welcome to aeroPi installer"
 echo "###########################"
 
-echo "raspi-config will be launched, then expand filesystem and change user password"
-echo "Then reboot the RPi"
-read -p "Continue the script? <Y/n> " prompt
-if [[ $prompt =~ [nN](o)* ]]
-then
-  exit 0
-fi
 
-echo "Setting hostname..."
-sudo sh -c "echo aeroPi > /etc/hostname"
+echo "Installation step are:"
 
-echo "Installing dependencies..."
-sudo apt-get install gpsd gpsd-clients python-gps i2c-tools apache2 libapache2-mod-php5
+echo "1) Run raspi-config"
+#echo "   expand filesystem"
+echo "   change user password"
+echo "   set hostname"
+echo "*** Reboot ***"
+echo ""
 
-echo "Update RPi..."
-echo "sudo apt-get update"
-echo "sudo apt-get dist-upgrade"
-echo "sudo apt-get clean"
-echo "Then reboot the RPi"
-read -p "Continue the script? <Y/n> " prompt
-if [[ $prompt =~ [nN](o)* ]]
-then
-  exit 0
-fi
+echo "2) Install dependencies"
+echo "   sudo apt-get install gpsd gpsd-clients i2c-tools apache2 libapache2-mod-php5"
+echo ""
 
+echo "3) Update packages"
+echo "   sudo apt-get update"
+echo "   sudo apt-get dist-upgrade"
+echo "   sudo apt-get clean"
+echo "*** Reboot ***"
+echo ""
+
+echo "4) Update RPi"
 echo "sudo rpi-update"
-echo "Then reboot the RPi"
-read -p "Continue the script? <Y/n> " prompt
-if [[ $prompt =~ [nN](o)* ]]
-then
-  exit 0
-fi
+echo "*** Reboot ***"
+echo ""
 
-sudo sh -c "echo '' >> /boot/config.txt"
-sudo sh -c "echo '#Fix for GPS on RPi3' >> /boot/config.txt"
-sudo sh -c "echo 'enable_uart=1' >> /boot/config.txt"
+echo "5) Configure RPi3"
+echo "   append  enable_uart=1  to /boot/config.txt"
+echo "   append  lcd_rotate=2  to /boot/config.txt"
+echo "   append  dtparam=i2c_arm=on  to /boot/config.txt"
+echo ""
+
+echo "6) Quiet boot"
+echo "   append  quiet  to /boot/cmdline.txt"
+echo ""
+
+echo "7) Build Python3.5 from source"
+url="https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tar.xz"
+echo "   sudo apt-get update"
+echo "   sudo apt-get install build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev"
+echo "   mkdir -p ~/.pip/cache"
+echo "   echo '[global]' > ~/.pip/pip.conf"
+echo "   echo 'download_cache = ~/.pip/cache' >> ~/.pip/pip.conf"
+echo "   wget $url -O python.tar.xz"
+echo "   tar xvf python.tar.xz"
+echo "   mv Python* python"
+echo "   cd python"
+echo "   ./configure"
+echo "   make -j 4"
+echo ""
+
+echo "8) Build RTIMULib2 from source"
+echo "   git clone https://github.com/richards-tech/RTIMULib2.git"
+echo "   cd RTIMULib2"
+echo "   python3 setup.py build"
+echo "   sudo python3 setup.py install"
+echo ""
+
+echo "9) Setup daemon"
+echo "   append  stty -F /dev/ttyS0 raw 9600 cs8 clocal -cstopb  to /etc/rc.local"
+echo "   append  python3 /home/pi/aeropi/src/server.py &  to /etc/rc.local"
+echo ""
+
+echo "10) Install aeroPi"
+echo "    git clone ssh://f-jjth@git.code.sf.net/p/aeropi/code aeropi"
+echo ""
+
+dir="~/.config/autostart"
+echo "11) Create autostart app"
+echo "    mkdir -p $dir"
+echo "    echo '[Desktop Entry]' > $dir/aeropi.desktop"
+echo "    echo 'Name=aeropi' >> $dir/aeropi.desktop"
+echo "    echo 'Exec=epiphany http://localhost/' >> $dir/aeropi.desktop"
+echo "    echo 'Type=Application' >> $dir/aeropi.desktop"
+echo ""
 
 echo "Done"
