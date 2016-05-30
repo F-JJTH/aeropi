@@ -42,7 +42,7 @@ echo "   append  dtparam=i2c_arm=on  to /boot/config.txt"
 echo ""
 
 echo "6) Quiet boot"
-echo "   append  quiet  to /boot/cmdline.txt"
+echo "   echo 'dwc_otg.lpm_enable=0 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet' > /boot/cmdline.txt"
 echo ""
 
 echo "7) Build Python3.5 from source"
@@ -83,6 +83,10 @@ echo "    echo '[Desktop Entry]' > $dir/aeropi.desktop"
 echo "    echo 'Name=aeropi' >> $dir/aeropi.desktop"
 echo "    echo 'Exec=epiphany http://localhost/' >> $dir/aeropi.desktop"
 echo "    echo 'Type=Application' >> $dir/aeropi.desktop"
+echo ""
+
+echo "12) Configure Apache2"
+echo "    localhost:80 must point to aeropi/www"
 echo ""
 
 echo "Done"
