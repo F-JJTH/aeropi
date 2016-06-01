@@ -11,47 +11,58 @@ height: 100%;
 background: #222222;
 }
 
-#toolbar{
+#settingsIcon{
 position: absolute;
-left: 92%;
-width: 8%;
-height: 100%;
-z-index: 0;
+margin: 1px;
+z-index: 99;
 }
 
-#toolbar button{
-width: 100%;
-height: 25%;
-margin: 0;
-padding: 0;
-}
-
-#toolbar img{
-width: 100%;
+#settingsDialog{
+width: 760px;
+height: 440px;
 }
 
 #map{
 position: absolute;
 width: 100%;
 height: 100%;
+z-index: 5
 }
 
+#mapMenu{
+position: absolute;
+width: 45%;
+height: 64px;
+z-index: 8;
+left: 27.5%;
+}
 
+#mapMenu ul{
+list-style-type: none;
+width: 100%;
+height: 100%;
+margin: 5px auto 0 auto;
+}
 
+#mapMenu ul li{
+width: 64px;
+height: 100%;
+float: left;
+margin: 0 2px;
+}
 
+#efis{
+position: absolute;
+z-index: 20;
+}
 
-
-.followAircraft, .showMenu, .fullScreen, .record {
-background: white;
+#mapMenu ul li a{
+display: block;
 background: rgba(255, 255, 255, 0.8);
-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
 border-radius: 5px;
-width: 36px;
-height: 36px;
-}
-
-.followAircraft:hover, .showMenu:hover, .fullScreen:hover {
-cursor: pointer;
+width: 54px;
+height: 54px;
 }
 
 .aircraft-marker-icon {

@@ -1,44 +1,45 @@
 (function($){
-	$.fn.efis = function(options){
-		var defaults = {
-			width: $(window).width(),
-			height: $(window).height(),
-			asi:{
-				ladderSpacing: 5, // distance between markers
-				speed: {
-					vne: 0, // never exceed speed (end of orange ruban + red line)
-					vno: 0, // max cruise speed (end of green ruban + start of orange ruban)
-					vfe: 0, // max speed with flaps extended (end of white ruban)
-					vso: 0, // stall speed with flaps extended (start of white ruban)
-					vs: 0,  // stall speed with flaps retracted (start of green ruban)
-				},
-				color: {
-					vne: "red",
-					caution: "orange",
-					normal: "green",
-					flaps: "white",
-				},
+  $.fn.efis = function(options){
+	var defaults = {
+		width: $(window).width(),
+		height: $(window).height(),
+		asi:{
+			tickspacing: 5, // distance between markers
+			speed: {
+				vne: 0, // never exceed speed (end of orange ruban + red line)
+				vno: 0, // max cruise speed (end of green ruban + start of orange ruban)
+				vfe: 0, // max speed with flaps extended (end of white ruban)
+				vso: 0, // stall speed with flaps extended (start of white ruban)
+				vs: 0,  // stall speed with flaps retracted (start of green ruban)
 			},
-			alt:{
-				ladderSpacing: 8, // distance between markers
-				maxAlt: 25000,    // maximum altitude marker
+			color: {
+				vne: "red",
+				caution: "orange",
+				normal: "green",
+				flaps: "white",
 			},
-			ai:{
-				color:{
+		},
+		alt:{
+			tickspacing: 8, // distance between markers
+			maxalt: 25000,    // maximum altitude marker
+		},
+		ai:{
+			color:{
 				ground: "#BF8144", // color of the ground AI
 				sky: "#4C78A9",    // color of the sky AI
 			},
-			offset:{
-				pitch: 0, // offset of the pitch AI
-				roll: 0,  // offset of the roll AI
-			},
 		},
 		compass:{},
+		attitude:{
+			pitchoffset: 0, // offset of the pitch AI
+			rolloffset: 0,  // offset of the roll AI
+		},
 	};
     var settings = $.extend(true, {}, defaults, options);
     var svgNS = "http://www.w3.org/2000/svg";
 	var rectHeight = settings.height-settings.height/6;
 	var topPos = settings.height/16-4;
+	var attitudeOffsetBase = (settings.height / 2 - settings.height / 16) / 4;
 	/*
 	 * Private methods
 	 */
@@ -61,7 +62,7 @@
 		main.appendChild(elem);
 		main.ladder = document.createElementNS(svgNS, "g");
 		main.ladder.setAttribute("id", "asiLadder");
-		var offsetBase = settings.height/settings.asi.ladderSpacing;
+		var offsetBase = settings.height/settings.asi.tickspacing;
 		var tips = (settings.asi.speed.vne / 20) + 8;
 		tips = tips < 12 ? 12 : tips;
 		for(var i=0; i<tips; i++){
@@ -88,7 +89,7 @@
 			main.ladder.appendChild(elem);
 		}
 		// rubans
-		var h = settings.height/settings.asi.ladderSpacing;
+		var h = settings.height/settings.asi.tickspacing;
 		start = -(settings.asi.speed.vno/20)*h;
 		end = -(settings.asi.speed.vne/20)*h-start;
 		elem = document.createElementNS(svgNS, "path");
@@ -133,8 +134,7 @@
 		main.appendChild(main.digits);
 		return main;
 	}
-    
-    
+
     function _createAlt(){
 		var main = document.createElementNS(svgNS, "svg");
 		main.setAttribute("id", "alt");
@@ -154,9 +154,9 @@
 		main.appendChild(elem);
 		main.ladder = document.createElementNS(svgNS, "g");
 		main.ladder.setAttribute("id", "altLadder");
-		var tips = parseInt(settings.alt.maxAlt/200);
+		var tips = parseInt(settings.alt.maxalt/200);
 		var offset = null;
-		var offsetBase = settings.height/settings.alt.ladderSpacing;
+		var offsetBase = settings.height/settings.alt.tickspacing;
 		for(var i=0; i<tips; i++){
 			// large markers
 			elem = document.createElementNS(svgNS, "path");
@@ -325,7 +325,7 @@
 		main.horizonAnim.appendChild(elem);
 		main.horizonAnim.ladder = document.createElementNS(svgNS, "g");
 		main.horizonAnim.ladder.setAttribute("id", "horizonLadder");
-		var offsetBase = (settings.height / 2 - settings.height / 16) / 4;
+		//var offsetBase = (settings.height / 2 - settings.height / 16) / 4;
 		var longLineLength = settings.width / 3.2;
 		var longLeftOffset = (settings.width - longLineLength)/2;
 		var shortLineLength = settings.width / 5;
@@ -334,7 +334,7 @@
 			if(i==3)continue;      
 			elem = document.createElementNS(svgNS, "path");
 			elem.setAttribute("style", "stroke:#FFF; stroke-width:2; stroke-opacity:0.6; fill-opacity:0");
-			offset = (offsetBase*i)+offsetBase;
+			offset = (attitudeOffsetBase*i)+attitudeOffsetBase;
 			elem.setAttribute("d", "M"+longLeftOffset+" "+(offset-8)+" v8 h"+longLineLength+" v-8");
 			main.horizonAnim.ladder.appendChild(elem);
 			// labels
@@ -352,7 +352,7 @@
 			main.horizonAnim.ladder.appendChild(elem);
 			elem = document.createElementNS(svgNS, "path");
 			elem.setAttribute("style", "stroke:#FFF; stroke-width:2; stroke-opacity:0.6; fill-opacity:0");
-			offset = (offsetBase*-i)-offsetBase;
+			offset = (attitudeOffsetBase*-i)-attitudeOffsetBase;
 			elem.setAttribute("d", "M"+longLeftOffset+" "+(offset+8)+" v-8 h"+longLineLength+" v8");
 			main.horizonAnim.ladder.appendChild(elem);
 			elem = document.createElementNS(svgNS, "text");
@@ -371,12 +371,12 @@
 			main.horizonAnim.ladder.appendChild(elem);
 			elem = document.createElementNS(svgNS, "path");
 			elem.setAttribute("style", "stroke:#FFF; stroke-width:2; stroke-opacity:0.4; fill-opacity:0");
-			offset = (offsetBase*i)+offsetBase/2;
+			offset = (attitudeOffsetBase*i)+attitudeOffsetBase/2;
 			elem.setAttribute("d", "M"+shortLeftOffset+" "+offset+" h"+shortLineLength);
 			main.horizonAnim.ladder.appendChild(elem);
 			elem = document.createElementNS(svgNS, "path");
 			elem.setAttribute("style", "stroke:#FFF; stroke-width:2; stroke-opacity:0.4; fill-opacity:0");
-			offset = (offsetBase*-i)-offsetBase/2;
+			offset = (attitudeOffsetBase*-i)-attitudeOffsetBase/2;
 			elem.setAttribute("d", "M"+shortLeftOffset+" "+offset+" h"+shortLineLength);
 			main.horizonAnim.ladder.appendChild(elem);
 		}
@@ -504,7 +504,7 @@
 		//v = parseInt(v);
 		if(v == data.spd) return;
 		data.spd = v;
-		var t = (v/20)*(settings.height/settings.asi.ladderSpacing);
+		var t = (v/20)*(settings.height/settings.asi.tickspacing);
 		asi.ladder.setAttribute("transform", "translate(0, "+t+")");
 		asi.digits.textContent = parseInt(v);
 	}
@@ -513,14 +513,16 @@
 		//v = parseInt(v);
 		if(v == data.alt) return;
 		data.alt = v;
-		var t = (v/200)*(settings.height/settings.alt.ladderSpacing);
+		var t = (v/200)*(settings.height/settings.alt.tickspacing);
 		alt.ladder.setAttribute("transform", "translate(0, "+t+")");
 		alt.digits.textContent = parseInt(v);
 	}
 
 	this.setAttitude = function(params) {
-		pitch = -params.pitch/10*56;
-		roll = params.roll;
+		data.pitch = params.pitch;
+		data.roll = params.roll;
+		pitch = -(params.pitch-settings.attitude.pitchoffset)/10*attitudeOffsetBase;
+		roll = params.roll-settings.attitude.rolloffset;
 		ai.horizonAnim.setAttribute("transform", "rotate("+roll+" "+settings.width/2+" "+settings.height/2+") translate(0, "+pitch+")");
 	}
 
@@ -543,11 +545,80 @@
 	this.setSlip = function(v) {
 		//v = parseInt(v);
 		if(v == data.ts) return;
-		var limit = settings.width/10-16;
+		/*var limit = settings.width/10-16;
 		if(v > limit) v = limit;
-		if(v < -limit) v = -limit;
+		if(v < -limit) v = -limit;*/
+		
+		if(v < -1) v = -1;
+		if(v >  1) v =  1;
+		var mul = settings.width/10-16;
+		
 		data.ts = v
-		ts.ball.setAttribute("transform", "translate("+v+" 0)");
+		ts.ball.setAttribute("transform", "translate("+(-v*mul)+" 0)");
+	}
+	
+	this.getSettings = function(){
+	  return settings;
+	}
+	
+	this.setCalibration = function(params) {
+	  settings.attitude.pitchoffset = params.pitch;
+	  settings.attitude.rolloffset = params.roll;
+	}
+	
+	this.getAttitude = function(){
+	  return {"pitch": data.pitch, "roll": data.roll};
+	}
+	
+	this.setVneSpeed = function(v) {
+	  v = parseInt(v);
+	  settings.asi.speed.vne = v;
+	}
+	
+	this.setVnoSpeed = function(v) {
+	  v = parseInt(v);
+	  settings.asi.speed.vno = v;
+	}
+	
+	this.setVfeSpeed = function(v) {
+	  v = parseInt(v);
+	  settings.asi.speed.vfe = v;
+	}
+	
+	this.setVsoSpeed = function(v) {
+	  v = parseInt(v);
+	  settings.asi.speed.vso = v;
+	}
+	
+	this.setVsSpeed = function(v) {
+	  v = parseInt(v);
+	  settings.asi.speed.vs = v;
+	}
+	
+	this.setSpeedTickSpacing = function(v) {
+	  v = parseInt(v);
+	  settings.asi.tickspacing = v;
+	}
+	
+	this.redrawAsi = function(){
+	  asi.remove();
+	  asi = _createAsi();
+	  parent.append(asi);
+	}
+
+	this.setAltitudeTickSpacing = function(v) {
+	  v = parseInt(v);
+	  settings.alt.tickspacing = v;
+	}
+	
+	this.redrawAlt = function(){
+	  alt.remove();
+	  alt = _createAlt();
+	  parent.append(alt);
+	  alt.pressure.textContent = data.pressure;
+      var t = (data.alt/200)*(settings.height/settings.alt.tickspacing);
+      alt.ladder.setAttribute("transform", "translate(0, "+t+")");
+      alt.digits.textContent = parseInt(data.alt);
 	}
 
 	var data = {alt:0, pressure:0, spd:0, hdg:0, pitch:0, roll:0};

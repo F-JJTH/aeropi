@@ -9,6 +9,7 @@ import os.path
 import math
 import RTIMU
 import gps3
+import json
 
 stopFlag = False
 
@@ -54,10 +55,10 @@ class IMUWorker (threading.Thread):
   def __init__(self):
     threading.Thread.__init__(self)
 
-    if not os.path.exists("RTIMULib.ini"):
+    if not os.path.exists("/etc/RTIMULib.ini"):
       print("Settings file does not exist, will be created")
 
-    self.s = RTIMU.Settings("RTIMULib")
+    self.s = RTIMU.Settings("/etc/RTIMULib")
     self.imu = RTIMU.RTIMU(self.s)
     self.pressure = RTIMU.RTPressure(self.s)
 
@@ -73,7 +74,7 @@ class IMUWorker (threading.Thread):
     self.imu.setGyroEnable(True)
     self.imu.setAccelEnable(True)
     self.imu.setCompassEnable(True)
-    self.poll_interval = self.imu.IMUGetPollInterval()
+    self.poll_interval = self.imu.IMUGetPollInterval()*1.0/1000.0
     self.data = 0
     self.lastData = 0
 
@@ -85,17 +86,17 @@ class IMUWorker (threading.Thread):
         (data["pressureValid"], data["pressure"], data["temperatureValid"], data["temperature"]) = self.pressure.pressureRead()
 
         alt = gpsWorker.getAlt()
-        if alt >= 914.4: #surface S above 3000ft
-          pressure = 1013.25
-        else:
-          if data["pressureValid"]:
-            if type(alt) is float:
-              r = 1.0 - (alt/44330.0)
-              pressure = data["pressure"] / math.pow(r, 5.255)
-            else:
-              pressure = 0
+        #if alt >= 914.4: #surface S above 3000ft
+        #  pressure = 1013.25
+        #else:
+        if data["pressureValid"]:
+          if type(alt) is float:
+            r = 1.0 - (alt/44330.0)
+            pressure = data["pressure"] / math.pow(r, 5.255)
           else:
             pressure = 0
+        else:
+          pressure = 0
 
         temperature = data["temperature"] if data["temperatureValid"] else 0
         pitch = math.degrees(fusionPose[0])
@@ -103,6 +104,7 @@ class IMUWorker (threading.Thread):
         yaw   = math.degrees(fusionPose[2])
         rollRate = math.degrees(data["gyro"][0])
         yawRate  = math.degrees(data["gyro"][2])
+        slip     = data["accel"][1]
         gForce   = data["accel"][2]
         if yaw < 90.1:
           heading = yaw + 270
@@ -111,8 +113,8 @@ class IMUWorker (threading.Thread):
         if heading > 360.0:
           heading = heading - 360.0
 
-        self.data = '{"pressure": %d, "temperature": %.1f, "pitch": %.2f, "roll": %.2f, "heading": %.1f, "rollRate": %.4f, "yawRate": %.4f, "gforce": %.4f}' % (pressure, temperature, pitch, roll, heading, rollRate, yawRate, gForce)
-        time.sleep(self.poll_interval*0.0001)
+        self.data = '{"pressure": %d, "temperature": %.1f, "pitch": %.2f, "roll": %.2f, "heading": %.2f, "gyro": %s, "accel": %s, "compass": %s}' % ( pressure, temperature, pitch, roll, heading, json.dumps(data["gyro"]), json.dumps(data["accel"]), json.dumps(data["compass"]) )
+        time.sleep(self.poll_interval)
 
   def toDeg(self, number):
     v = math.degrees(number)
