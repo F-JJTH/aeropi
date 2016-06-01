@@ -74,6 +74,7 @@ echo ""
 
 echo "10) Install aeroPi"
 echo "    git clone ssh://f-jjth@git.code.sf.net/p/aeropi/code aeropi"
+echo "    sudo ln -s /home/pi/aeropi/src/RTIMULib.ini /etc/RTIMULib.ini"
 echo ""
 
 dir="~/.config/autostart"
