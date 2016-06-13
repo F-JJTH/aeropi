@@ -92,7 +92,7 @@ L.control.externLayers = function(baseLayers,overlays,options){
 L.FollowControl = L.Control.extend({
   onAdd: function(map){
     var container = L.DomUtil.create('div','followAircraft');
-    container.innerHTML='<img src="img/followAircraft.svg" title="Center on Aircraft"/>';
+    container.innerHTML='<img src="img/follow.svg" title="Center on Aircraft"/>';
     container.onclick = function(){
       _followAircraft = true;
       if(_lastPosition != null)
@@ -145,7 +145,7 @@ L.recControl = function(){
 L.FullscreenControl = L.Control.extend({
   onAdd: function(map){
     var container = L.DomUtil.create('div','fullScreen');
-    container.innerHTML = '<img src="fullscreen.svg" title="Fullscreen"/>';
+    container.innerHTML = '<img src="img/fullscreen.svg" title="Fullscreen"/>';
     container.onclick = function(){
       var element = document.documentElement;
       if(element.requestFullscreen){

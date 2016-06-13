@@ -26,9 +26,11 @@
   <title>aeroPi</title>
 </head>
 <body>
+
   <a href="#settingsDialog" id="settingsIcon" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-gear ui-corner-all ui-nodisc-icon ui-btn-b ui-btn-icon-left ui-shadow ui-btn-icon-notext" data-transition="pop"></a>
   <div data-role="popup" data-dismissible="false" id="settingsDialog">
     <div data-role="header" data-theme="a"><h2>Settings</h2></div>
+
     <div role="main">
       <div data-role="tabs" id="tabsSettings">
         <div data-role="navbar">
@@ -39,51 +41,69 @@
             <li><a href="#InfosSettings" data-ajax="false">Infos</a></li>
           </ul>
         </div>
-        <div id="GeneralSettings" style="height:300px; overflow:auto;">
-          General: settings clock, settings magnetic declinaison
+
+        <div id="GeneralSettings" class="page-settings">
+          <table>
+            <tr>
+              <td colspan="2"><label for="cloke">&nbsp;&nbsp;Clock</label><input type="time" name="clock" id="clock" value="0"></td>
+              <td colspan="2"><label for="date">&nbsp;&nbsp;Date</label><input type="date" name="date" id="date" value="0"></td>
+            </tr>
+            <tr>
+              <td><label for="magneticdeclinaison">Magnetic declinaison</label><input type="number" name="magneticdeclinaison" id="magneticdeclinaison" value="0"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><button href="utils.php?action=reboot" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Reboot</button></td>
+              <td><button href="utils.php?action=shutdown" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Shutdown</button></td>
+            </tr>
+          </table>
         </div>
-        <div id="MapSettings" style="height:300px; overflow:auto;">
-          <form class="ui-field-contain">
-            <fieldset data-role="controlgroup" data-type="horizontal">
-              <legend>Show:</legend>
-              <input type="checkbox" name="speedInMapView" id="speedInMapView"><label for="speedInMapView">Speed</label>
-              <input type="checkbox" name="altitudeInMapView" id="altitudeInMapView"><label for="altitudeInMapView">Altitude</label>
-              <input type="checkbox" name="compassInMapView" id="compassInMapView"><label for="compassInMapView">Compass</label>
-              <input type="checkbox" name="trackInMapView" id="trackInMapView"><label for="trackInMapView">Track</label>
-            </fieldset>
-          </form>
-        </div>
-        <div id="EfisSettings" style="height:300px; overflow:auto;">
+
+        <div id="MapSettings" class="page-settings">
           <form class="ui-field-contain">
             <table>
               <tr>
-                <td><label for="speedTickSpacing">Speed tick spacing:</label></td>
-                <td colspan="3"><input type="range" min="2" max="12" value="4" name="speedTickSpacing" id="speedTickSpacing"></td>
+                <td><input type="checkbox" name="altitudeInMapView" id="altitudeInMapView" checked="checked"><label for="altitudeInMapView">Altitude</label></td>
+                <td><input type="checkbox" name="compassInMapView" id="compassInMapView" checked="checked"><label for="compassInMapView">Compass</label></td>
+                <td><input type="checkbox" name="speedInMapView" id="speedInMapView" checked="checked"><label for="speedInMapView">Speed</label></td>
+                <td><input type="checkbox" name="trackInMapView" id="trackInMapView" checked="checked"><label for="trackInMapView">Track</label></td>
               </tr>
               <tr>
-                <td><label for="altitudeTickSpacing">Altitude tick spacing:</label></td>
-                <td colspan="3"><input type="range" min="2" max="12" value="8" name="altitudeTickSpacing" id="altitudeTickSpacing"></td>
+                <td>Layers</td>
+                <td><input type="radio" name="layerInMapView" id="oaciLayer" value="oaci"><label for="oaciLayer">OACI 2016</label></td>
+                <td><input type="radio" name="layerInMapView" id="cartabossyLayer" value="cartabossy"><label for="cartabossyLayer">Cartabossy 2015</label></td>
+                <td></td>
               </tr>
               <tr>
-                <td><label for="vne">Vne speed:</label></td>
-                <td><input type="text" name="vne" id="vne"></td>
-                <td><label for="vfe">Vfe speed</label></td>
-                <td><input type="text" name="vfe" id="vfe"></td>
+                <td>Overlays</td>
+                <td><input type="checkbox" name="vacLndInMapView" id="vacLndInMapView"><label for="vacLndInMapView">VAC Atterrissage</label></td>
+                <td><input type="checkbox" name="vacAppInMapView" id="vacAppInMapView"><label for="vacAppInMapView">VAC Approche</label></td>
+                <td></td>
               </tr>
               <tr>
-                <td><label for="vno">Vno speed</label></td>
-                <td><input type="text" name="vno" id="vno"></td>
-                <td><label for="vso">Vso speed</label></td>
-                <td><input type="text" name="vso" id="vso"></td>
-              </tr>
-              <tr>
-                <td><label for="vs">Vs speed</label></td>
-                <td><input type="text" name="vs" id="vs"></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td><a href="#" onclick="calibrateEfis()" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Calibrate Efis</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -91,7 +111,43 @@
             </table>
           </form>
         </div>
-        <div id="InfosSettings" style="height:300px; overflow:auto;">
+
+        <div id="EfisSettings" class="page-settings">
+          <form class="ui-field-contain">
+            <table>
+              <tr>
+                <td><label for="speedTickSpacing">Speed tick ratio:</label></td>
+                <td><input type="range" min="2" max="12" value="4" name="speedTickSpacing" id="speedTickSpacing"></td>
+                <td><label for="altitudeTickSpacing">Altitude tick ratio:</label></td>
+                <td><input type="range" min="2" max="12" value="8" name="altitudeTickSpacing" id="altitudeTickSpacing"></td>
+              </tr>
+              <tr>
+                <td><label for="vne">Vne speed:</label></td>
+                <td><input type="text" name="vne" id="vne">&nbsp;&nbsp;Kmh</td>
+                <td><label for="vfe">Vfe speed:</label></td>
+                <td><input type="text" name="vfe" id="vfe">&nbsp;&nbsp;Kmh</td>
+              </tr>
+              <tr>
+                <td><label for="vno">Vno speed:</label></td>
+                <td><input type="text" name="vno" id="vno">&nbsp;&nbsp;Kmh</td>
+                <td><label for="vso">Vso speed:</label></td>
+                <td><input type="text" name="vso" id="vso">&nbsp;&nbsp;Kmh</td>
+              </tr>
+              <tr>
+                <td><label for="vs">Vs speed:</label></td>
+                <td><input type="text" name="vs" id="vs">&nbsp;&nbsp;Kmh</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="calibrateEfis()" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Calibrate Efis</a></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </form>
+        </div>
+        <div id="InfosSettings" class="page-settings">
           <table>
             <tr>
               <td></td>
@@ -139,15 +195,16 @@
       <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Ok</a>
     </div>
   </div>
-  <div id="mapMenu">
+  <!--<div id="mapMenu">
     <ul>
-      <li><a href="#"><img src="img/layer.svg"></a></li>
-      <li><a href="#"><img src="img/follow.svg"></a></li>
-      <li><a href="#"><img src="img/route.svg"></a></li>
-      <li><a href="#"><img src="img/next.svg"></a></li>
-      <li><a href="#"><img src="img/clear.svg"></a></li>
+      <li><a href="#" data-user="layer"><img src="img/layer.svg"></a></li>
+      <li><a href="#" data-user="follow"><img src="img/follow.svg"></a></li>
+      <li><a href="#" data-user="route"><img src="img/route.svg"></a></li>
+      <li><a href="#" data-user="fullscreen"><img src="img/fullscreen.svg"></a></li>
+      <li><a href="#" data-user="next"><img src="img/next.svg"></a></li>
+      <li><a href="#" data-user="clear"><img src="img/clear.svg"></a></li>
     </ul>
-  </div>
+  </div>-->
   <div id="map"></div>
   <div id="efis"></div>
 </body>

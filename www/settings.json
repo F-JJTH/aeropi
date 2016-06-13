@@ -1,0 +1,51 @@
+{
+    "map": {
+        "display": {
+            "asi": true,
+            "alt": true,
+            "hdg": true
+        },
+        "overlays": {
+            "vac": {
+                "app": false,
+                "lnd": false
+            }
+        },
+        "layer": "oaci"
+    },
+    "efis": {
+        "asi": {
+            "tickspacing": 5,
+            "speed": {
+                "vne": 260,
+                "vno": 170,
+                "vfe": 110,
+                "vso": 65,
+                "vs": 90
+            },
+            "color": {
+                "vne": "red",
+                "caution": "orange",
+                "normal": "green",
+                "flaps": "white"
+            }
+        },
+        "alt": {
+            "tickspacing": 7,
+            "maxalt": 25000
+        },
+        "ai": {
+            "color": {
+                "ground": "#BF8144",
+                "sky": "#4C78A9"
+            }
+        },
+        "compass": {
+            "magneticdeclinaison": 0
+        },
+        "attitude": {
+            "pitchoffset": 145.5,
+            "rolloffset": -1.98
+        }
+    }
+}

@@ -30,6 +30,7 @@ class GPSWorker (threading.Thread):
         if new_data:
           self.fix.refresh(new_data)
           try:
+            time = self.fix.TPV["time"]
             lat = self.fix.TPV["lat"]
             lon = self.fix.TPV["lon"]
             vs  = float(self.fix.TPV['climb'])*196.85
@@ -37,7 +38,7 @@ class GPSWorker (threading.Thread):
             hdg = self.fix.TPV["track"] if spd > 2 else 0
             self.alt = float(self.fix.TPV["alt"])
             alt = self.alt*3.28084
-            self.data = '{"lat": %s, "lon": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d}' % (lat, lon, hdg, vs, alt, spd)
+            self.data = '{"lat": %s, "lon": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d, "pressure": %d, "temperature": %.1f, "time": %s}' % (lat, lon, hdg, vs, alt, spd, imuWorker.getPressure(), imuWorker.getTemperature(), json.dumps(time))
           except ValueError:
             pass
 
@@ -60,13 +61,13 @@ class IMUWorker (threading.Thread):
 
     self.s = RTIMU.Settings("/etc/RTIMULib")
     self.imu = RTIMU.RTIMU(self.s)
-    self.pressure = RTIMU.RTPressure(self.s)
+    self.pressureSensor = RTIMU.RTPressure(self.s)
 
     if not self.imu.IMUInit():
       print("IMU Init Failed")
       sys.exit(1)
 
-    if not self.pressure.pressureInit():
+    if not self.pressureSensor.pressureInit():
       print("Pressure sensor Init Failed")
       sys.exit(1)
 
@@ -77,13 +78,15 @@ class IMUWorker (threading.Thread):
     self.poll_interval = self.imu.IMUGetPollInterval()*1.0/1000.0
     self.data = 0
     self.lastData = 0
+    self.pressure = 0
+    self.temperature = 0
 
   def run(self):
     while not stopFlag:
       if self.imu.IMURead():
         data = self.imu.getIMUData()
         fusionPose = data["fusionPose"]
-        (data["pressureValid"], data["pressure"], data["temperatureValid"], data["temperature"]) = self.pressure.pressureRead()
+        (data["pressureValid"], data["pressure"], data["temperatureValid"], data["temperature"]) = self.pressureSensor.pressureRead()
 
         alt = gpsWorker.getAlt()
         #if alt >= 914.4: #surface S above 3000ft
@@ -92,13 +95,13 @@ class IMUWorker (threading.Thread):
         if data["pressureValid"]:
           if type(alt) is float:
             r = 1.0 - (alt/44330.0)
-            pressure = data["pressure"] / math.pow(r, 5.255)
+            self.pressure = data["pressure"] / math.pow(r, 5.255)
           else:
-            pressure = 0
+            self.pressure = 0
         else:
-          pressure = 0
+          self.pressure = 0
 
-        temperature = data["temperature"] if data["temperatureValid"] else 0
+        self.temperature = data["temperature"] if data["temperatureValid"] else 0
         pitch = math.degrees(fusionPose[0])
         roll  = math.degrees(fusionPose[1])
         yaw   = math.degrees(fusionPose[2])
@@ -113,7 +116,7 @@ class IMUWorker (threading.Thread):
         if heading > 360.0:
           heading = heading - 360.0
 
-        self.data = '{"pressure": %d, "temperature": %.1f, "pitch": %.2f, "roll": %.2f, "heading": %.2f, "gyro": %s, "accel": %s, "compass": %s}' % ( pressure, temperature, pitch, roll, heading, json.dumps(data["gyro"]), json.dumps(data["accel"]), json.dumps(data["compass"]) )
+        self.data = '{"pitch": %.2f, "roll": %.2f, "heading": %.2f, "gyro": %s, "accel": %s, "compass": %s, "fusionPose": %s}' % ( pitch, roll, heading, json.dumps(data["gyro"]), json.dumps(data["accel"]), json.dumps(data["compass"]), json.dumps(fusionPose) )
         time.sleep(self.poll_interval)
 
   def toDeg(self, number):
@@ -127,6 +130,11 @@ class IMUWorker (threading.Thread):
       self.lastData = self.data
       return self.data
 
+  def getPressure(self):
+    return self.pressure
+
+  def getTemperature(self):
+    return self.temperature
 
 
 class MSGWorker (threading.Thread):

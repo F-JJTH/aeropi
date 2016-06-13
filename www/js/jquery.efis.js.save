@@ -37,7 +37,7 @@
 	};
     var settings = $.extend(true, {}, defaults, options);
     var svgNS = "http://www.w3.org/2000/svg";
-	var rectHeight = settings.height-settings.height/5;
+	var rectHeight = settings.height-settings.height/6;
 	var topPos = settings.height/16-4;
 	var attitudeOffsetBase = (settings.height / 2 - settings.height / 16) / 4;
 	/*
@@ -46,8 +46,8 @@
 	function _createAsi(){
 		var main = document.createElementNS(svgNS, "svg");
 		main.setAttribute("id", "asi");
-		main.setAttribute("width", 116);
-		main.setAttribute("height", rectHeight+44);
+		main.setAttribute("width", 94);
+		main.setAttribute("height", rectHeight+16);
 		main.setAttribute("style", "position:absolute; top:"+topPos+"px; z-index:40;");
 		main.appendChild(_createFilters());
 		elem = document.createElementNS(svgNS, "rect");
@@ -132,19 +132,12 @@
 		main.digits.setAttribute("y", rectHeight/2+8);
 		main.digits.textContent = "000";
 		main.appendChild(main.digits);
-		// Bg Digit
-		var y = rectHeight+14;
-		elem = document.createElementNS(svgNS, "path");
-		elem.setAttribute("style", "fill:#222;");
-		elem.setAttribute("d", "M3 "+y+" h106 v24 h-106 Z");
-		elem.setAttribute("filter", "url(#shadowSmall)");
-		main.appendChild(elem);
-		main.clock = document.createElementNS(svgNS, "text");
-		main.clock.setAttribute("style", "font-size:22px; fill:white");
-		main.clock.setAttribute("x", 8);
-		main.clock.setAttribute("y", y+20);
-		main.clock.textContent = "00:00:00";
-		main.appendChild(main.clock);
+                main.clock = document.createElementNS(svgNS, "text");
+                main.clock.setAttribute("style", "font-size:22px; fill:white");
+                main.clock.setAttribute("x", 32);
+                main.clock.setAttribute("y", y+20);
+                main.clock.textContent = "00h00m00s";
+                main.appendChild(main.pressure);
 		return main;
 	}
 
@@ -218,7 +211,13 @@
 		elem.setAttribute("style", "fill:#222;");
 		elem.setAttribute("d", "M30 "+y+" h62 v24 h-62 Z");
 		elem.setAttribute("filter", "url(#shadowSmall)");
-		main.appendChild(elem);
+		main.appendChild(elem);                // Bg Digit
+                var y = rectHeight+14;
+                elem = document.createElementNS(svgNS, "path");
+                elem.setAttribute("style", "fill:#222;");
+                elem.setAttribute("d", "M30 "+y+" h62 v24 h-62 Z");
+                elem.setAttribute("filter", "url(#shadowSmall)");
+                main.appendChild(elem);
 		main.pressure = document.createElementNS(svgNS, "text");
 		main.pressure.setAttribute("style", "font-size:22px; fill:white");
 		main.pressure.setAttribute("x", 32);
@@ -629,24 +628,9 @@
 	  alt = _createAlt();
 	  parent.append(alt);
 	  alt.pressure.textContent = data.pressure;
-	  var t = (data.alt/200)*(settings.height/settings.alt.tickspacing);
-	  alt.ladder.setAttribute("transform", "translate(0, "+t+")");
-	  alt.digits.textContent = parseInt(data.alt);
-	}
-
-	function _checkTime(v){
-	  if(v<10){v="0"+v};
-	    return v;
-	}
-
-	this.setClock = function(v){
-	  var today = new Date(v);
-	  var h = today.getHours();
-	  var m = today.getMinutes();
-	  var s = today.getSeconds();
-	  m = _checkTime(m);
-	  s = _checkTime(s);
-	  asi.clock.textContent = h+":"+m+":"+s;
+      var t = (data.alt/200)*(settings.height/settings.alt.tickspacing);
+      alt.ladder.setAttribute("transform", "translate(0, "+t+")");
+      alt.digits.textContent = parseInt(data.alt);
 	}
 
 	var data = {alt:0, pressure:0, spd:0, hdg:0, pitch:0, roll:0};

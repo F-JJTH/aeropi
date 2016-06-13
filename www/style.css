@@ -1,21 +1,7 @@
 body, a, ul, li
-h1, h2, h3, h4, span{
-margin: 0;
-padding: 0;
-font-family: sans-serif;
-}
-
-body{
-width: 100%;
-height: 100%;
-background: #222222;
-}
-
-#settingsIcon{
-position: absolute;
-margin: 1px;
-z-index: 99;
-}
+h1, h2, h3, h4, span{margin:0;padding:0;font-family:sans-serif;}
+body{width:100%;height:100%;background:#222222;}
+#settingsIcon{position:absolute;margin:0px;z-index:99;}
 
 #settingsDialog{
 width: 760px;
@@ -26,43 +12,22 @@ height: 440px;
 position: absolute;
 width: 100%;
 height: 100%;
-z-index: 5
-}
-
-#mapMenu{
-position: absolute;
-width: 45%;
-height: 64px;
-z-index: 8;
-left: 27.5%;
-}
-
-#mapMenu ul{
-list-style-type: none;
-width: 100%;
-height: 100%;
-margin: 5px auto 0 auto;
-}
-
-#mapMenu ul li{
-width: 64px;
-height: 100%;
-float: left;
-margin: 0 2px;
+z-index: 40;
+visibility: hidden;
 }
 
 #efis{
 position: absolute;
-z-index: 20;
 }
 
-#mapMenu ul li a{
+.leaflet-control{
 display: block;
 background: rgba(255, 255, 255, 0.8);
 box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
 border-radius: 5px;
-width: 54px;
-height: 54px;
+min-width:50px;
+min-height:50px;
+cursor: pointer;
 }
 
 .aircraft-marker-icon {
@@ -73,3 +38,27 @@ background-color: rgba(255,255,255,0);
 fill: #00ff00;
 }
 
+.page-settings{
+width: 100%;
+height: 300px;
+overflow: auto;
+}
+
+.page-settings table{
+border-collapse: collapse;
+width:100%;
+}
+
+.page-settings table td{
+line-height: 3;
+}
+
+#EfisSettings .ui-input-text{
+width: 30%;
+float: left;
+}
+
+#GeneralSettings .ui-input-text{
+width: 80%;
+float: left;
+}

@@ -34,13 +34,13 @@
 .lvml{behavior:url(#default#VML);display:inline-block;position:absolute;}
 .leaflet-control{position:relative;z-index:7;pointer-events:auto;}
 .leaflet-top,
-.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none;}
+.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none;/*aeropi*/left:27.5%;/**/}
 .leaflet-top{top:0;}
-.leaflet-right{right:0;}
+.leaflet-right{/*right:0;*/}
 .leaflet-bottom{bottom:0;}
 .leaflet-left{left:0;}
-.leaflet-control{float:left;clear:both;}
-.leaflet-right .leaflet-control{float:right;}
+.leaflet-control{float:left;/*clear:both;*/}
+.leaflet-right .leaflet-control{/*float:right;*/}
 .leaflet-top .leaflet-control{margin-top:10px;}
 .leaflet-bottom .leaflet-control{margin-bottom:10px;}
 .leaflet-left .leaflet-control{margin-left:10px;}
@@ -80,8 +80,9 @@
 .leaflet-control-zoom-out{font-size:20px;}
 .leaflet-touch .leaflet-control-zoom-in{font-size:22px;}
 .leaflet-touch .leaflet-control-zoom-out{font-size:24px;}
+/*.leaflet-control-container{background:red;height:72px;}*/
 .leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,0.4);background:#fff;border-radius:5px;}
-.leaflet-control-layers-toggle{background-image:url(img/layers.png);width:36px;height:36px;}
+.leaflet-control-layers-toggle{background-image:url(img/layers.svg);width:46px;height:46px;margin:4px;/*width:100%;height:100%;*/}
 .leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px;}
 .leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px;}
 .leaflet-control-layers .leaflet-control-layers-list,
@@ -90,8 +91,9 @@
 .leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff;}
 .leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px;}
 .leaflet-control-layers label{display:block;}
+//*.leaflet-control-layers form{width:600%;background:rgba(255,255,255,0.7);}*/
 .leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px;}
-.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255, 255, 255, 0.7);margin:0;}
+.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255, 255, 255, 0.8);margin:0;}
 .leaflet-control-attribution,
 .leaflet-control-scale-line{padding:0 5px;color:#333;}
 .leaflet-control-attribution a{text-decoration:none;}
