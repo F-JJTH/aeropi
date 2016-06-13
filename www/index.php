@@ -27,6 +27,21 @@
 </head>
 <body>
 
+  <div data-role="popup" data-dismissible="false" id="settingsQnh">
+    <div data-role="header" data-theme="a"><h2>QNH settings</h2></div>
+    <div role="main">
+      <table>
+        <tr>
+          <td><button id="qnhDecrease">-</button></td>
+          <td><input type="text" id="qnhInput" name="qnhInput" min="950" max="1030" disabled style="width:116px; text-align:center; font-size:24px;"></td>
+          <td><button id="qnhIncrease">+</button></td>
+        </tr>
+      </table>
+	    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Ok</a>
+    </div>
+  </div>
+
+
   <a href="#settingsDialog" id="settingsIcon" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-gear ui-corner-all ui-nodisc-icon ui-btn-b ui-btn-icon-left ui-shadow ui-btn-icon-notext" data-transition="pop"></a>
   <div data-role="popup" data-dismissible="false" id="settingsDialog">
     <div data-role="header" data-theme="a"><h2>Settings</h2></div>
@@ -45,14 +60,14 @@
         <div id="GeneralSettings" class="page-settings">
           <table>
             <tr>
-              <td colspan="2"><label for="cloke">&nbsp;&nbsp;Clock</label><input type="time" name="clock" id="clock" value="0"></td>
-              <td colspan="2"><label for="date">&nbsp;&nbsp;Date</label><input type="date" name="date" id="date" value="0"></td>
+              <td><input type="checkbox" name="summer" id="summer" value="0"><label for="summer">Summer hour</label></td>
+              <td><input type="checkbox" name="null0" id="null0" value="0"><label for="null0">null</label></td>
+              <td><input type="checkbox" name="null1" id="null1" value="0"><label for="null1">null</label></td>
+              <td><input type="checkbox" name="null2" id="null2" value="0"><label for="null2">null</label></td>
             </tr>
             <tr>
-              <td><label for="magneticdeclinaison">Magnetic declinaison</label><input type="number" name="magneticdeclinaison" id="magneticdeclinaison" value="0"></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td colspan="2"><!--<label for="magneticdeclination">Magnetic declinaison</label><input type="number" name="magneticdeclination" id="magneticdeclination" value="0">--></td>
+              <td colspan="2"><label for="timezone">Timezone</label><input type="range" min="-11" max="14" name="timezone" id="timezone" value="0"></td>
             </tr>
             <tr>
               <td></td>

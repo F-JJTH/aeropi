@@ -22,6 +22,7 @@
 		alt:{
 			tickspacing: 8, // distance between markers
 			maxalt: 25000,    // maximum altitude marker
+			qnh: 1013,
 		},
 		ai:{
 			color:{
@@ -33,6 +34,11 @@
 		attitude:{
 			pitchoffset: 0, // offset of the pitch AI
 			rolloffset: 0,  // offset of the roll AI
+		},
+		timezone:{
+			offset: 0,
+			name: "UTC",
+			summer: false,
 		},
 	};
     var settings = $.extend(true, {}, defaults, options);
@@ -212,19 +218,6 @@
 		main.digits.setAttribute("y", rectHeight/2+8);
 		main.digits.textContent = "000";
 		main.appendChild(main.digits);
-		// Bg Digit
-		/*var y = rectHeight+14;
-		elem = document.createElementNS(svgNS, "path");
-		elem.setAttribute("style", "fill:#222;");
-		elem.setAttribute("d", "M30 "+y+" h62 v24 h-62 Z");
-		elem.setAttribute("filter", "url(#shadowSmall)");
-		main.appendChild(elem);
-		main.pressure = document.createElementNS(svgNS, "text");
-		main.pressure.setAttribute("style", "font-size:22px; fill:white");
-		main.pressure.setAttribute("x", 32);
-		main.pressure.setAttribute("y", y+20);
-		main.pressure.textContent = "0000";
-		main.appendChild(main.pressure);*/
 		return main;
 	}
 	
@@ -480,28 +473,29 @@
         // Bg Digit
         elem = document.createElementNS(svgNS, "path");
 		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
-        elem.setAttribute("d", "M62 4 h127 v22 h-127 Z");
+        elem.setAttribute("d", "M"+(width-127-4)+" 4 h127 v22 h-127 Z");
         elem.setAttribute("filter", "url(#shadowSmall)");
         main.appendChild(elem);
-        main.pressure = document.createElementNS(svgNS, "text");
-        main.pressure.setAttribute("style", "font-size:22px; fill:white");
-        main.pressure.setAttribute("text-anchor", "end");
-        main.pressure.setAttribute("x", width-4);
-        main.pressure.setAttribute("y", 22);
-        main.pressure.textContent = "QNH: 0000";
-        main.appendChild(main.pressure);
+        main.qnh = document.createElementNS(svgNS, "text");
+        main.qnh.setAttribute("style", "font-size:22px; fill:white");
+        main.qnh.setAttribute("id", "qnh-box");
+        main.qnh.setAttribute("text-anchor", "end");
+        main.qnh.setAttribute("x", width-6);
+        main.qnh.setAttribute("y", 22);
+        main.qnh.textContent = "QNH: "+settings.alt.qnh;
+        main.appendChild(main.qnh);
         // Bg Digit
         elem = document.createElementNS(svgNS, "path");
 		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
-        elem.setAttribute("d", "M7 32 h182 v22 h-182 Z");
+        elem.setAttribute("d", "M"+(width-182-4)+" 32 h182 v22 h-182 Z");
         elem.setAttribute("filter", "url(#shadowSmall)");
         main.appendChild(elem);
         main.position = document.createElementNS(svgNS, "text");
         main.position.setAttribute("style", "font-size:22px; fill:white");
         main.position.setAttribute("text-anchor", "end");
-        main.position.setAttribute("x", width-4);
+        main.position.setAttribute("x", width-6);
         main.position.setAttribute("y", 50);
-        main.position.textContent = "00.000 00.000";
+        main.position.textContent = "00.00N - 00.00E";
         main.appendChild(main.position);
 
 		return main;
@@ -598,6 +592,9 @@
 	}
 
 	this.setAltitude = function(v) {
+		/* xxx ft for xxxx QNH
+		  so ???? for yyyy QNH
+		*/
 		//v = parseInt(v);
 		if(v == data.alt) return;
 		data.alt = v;
@@ -623,13 +620,6 @@
 		hdg.digits.textContent = parseInt(v);
 	}
 
-	this.setPressure = function(v) {
-		//v = parseInt(v);
-		if(v == data.pressure) return;
-		data.pressure = v;
-		bottomRight.pressure.textContent = "QNH: "+v;
-	}
-
 	this.setSlip = function(v) {
 		//v = parseInt(v);
 		if(v == data.ts) return;
@@ -647,16 +637,35 @@
 
 	this.setClock = function(v){
 	  var today = new Date(v);
+	  var offset = offset = settings.timezone.summer ? settings.timezone.offset+1 : settings.timezone.offset;
+	  today.setHours(today.getUTCHours()+offset);
 	  var h = today.getHours();
 	  var m = today.getMinutes();
 	  var s = today.getSeconds();
+	  h = _checkTime(h);
 	  m = _checkTime(m);
 	  s = _checkTime(s);
 	  bottomLeft.clock.textContent = "Clock: "+h+":"+m+":"+s;
 	}
 	
 	this.setPosition = function(v){
-	  bottomRight.position.textContent = (v.lat).toFixed(3)+" - "+(v.lon).toFixed(3);
+	  var lon = v.lon.toFixed(2);
+	  var lat = v.lat.toFixed(2);
+	  var latLetter = lat < 0 ? "S" : "N";
+	  var lonLetter = lon < 0 ? "O" : "E";
+	  lon = Math.abs(lon);
+	  lat = Math.abs(lat);
+      var str = lat+""+latLetter+" - "+lon+""+lonLetter;
+      if( bottomRight.position.textContent != str )
+		  bottomRight.position.textContent = str;
+	}
+	
+	this.setTimezone = function(v){
+	  settings.timezone.offset = v;
+	}
+	
+	this.setSummer = function(v){
+	  settings.timezone.summer = v;
 	}
 	
 	this.getSettings = function(){
@@ -670,6 +679,18 @@
 	
 	this.getAttitude = function(){
 	  return {"pitch": data.pitch, "roll": data.roll};
+	}
+
+    this.getQnh = function(){
+      return settings.alt.qnh;
+    }
+    
+	this.setQnh = function(v) {
+		//v = parseInt(v);
+		if(v == data.qnh) return;
+		data.qnh = v;
+		settings.alt.qnh = v;
+		bottomRight.qnh.textContent = "QNH: "+v;
 	}
 	
 	this.setVneSpeed = function(v) {
@@ -717,13 +738,13 @@
 	  alt.remove();
 	  alt = _createAlt();
 	  parent.append(alt);
-	  alt.pressure.textContent = data.pressure;
+	  alt.qnh.textContent = data.qnh;
 	  var t = (data.alt/200)*(settings.height/settings.alt.tickspacing);
 	  alt.ladder.setAttribute("transform", "translate(0, "+t+")");
 	  alt.digits.textContent = parseInt(data.alt);
 	}
 
-	var data = {alt:0, pressure:0, spd:0, hdg:0, pitch:0, roll:0};
+	var data = {alt:0, qnh:0, spd:0, hdg:0, pitch:0, roll:0};
 	var parent = $(this);
 	var ai     = _createAi();
 	parent.append(ai);

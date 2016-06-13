@@ -38,7 +38,7 @@ class GPSWorker (threading.Thread):
             hdg = self.fix.TPV["track"] if spd > 2 else 0
             self.alt = float(self.fix.TPV["alt"])
             alt = self.alt*3.28084
-            self.data = '{"lat": %s, "lon": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d, "pressure": %d, "temperature": %.1f, "time": %s}' % (lat, lon, hdg, vs, alt, spd, imuWorker.getPressure(), imuWorker.getTemperature(), json.dumps(time))
+            self.data = '{"lat": %s, "lon": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d, "pressureSL": %.2f, "pressureAlt": %.2f, "temperature": %.1f, "time": %s}' % (lat, lon, hdg, vs, alt, spd, imuWorker.getPressureSL(), imuWorker.getPressureAlt(), imuWorker.getTemperature(), json.dumps(time))
           except ValueError:
             pass
 
@@ -78,7 +78,8 @@ class IMUWorker (threading.Thread):
     self.poll_interval = self.imu.IMUGetPollInterval()*1.0/1000.0
     self.data = 0
     self.lastData = 0
-    self.pressure = 0
+    self.pressureSL = 1013
+    self.pressureAlt = 0
     self.temperature = 0
 
   def run(self):
@@ -95,11 +96,13 @@ class IMUWorker (threading.Thread):
         if data["pressureValid"]:
           if type(alt) is float:
             r = 1.0 - (alt/44330.0)
-            self.pressure = data["pressure"] / math.pow(r, 5.255)
+            self.pressureSL = data["pressure"] / math.pow(r, 5.255)
           else:
-            self.pressure = 0
+            self.pressureSL = 0
         else:
-          self.pressure = 0
+          self.pressureSL = 0
+
+        self.pressureAlt = data["pressure"]
 
         self.temperature = data["temperature"] if data["temperatureValid"] else 0
         pitch = math.degrees(fusionPose[0])
@@ -130,8 +133,11 @@ class IMUWorker (threading.Thread):
       self.lastData = self.data
       return self.data
 
-  def getPressure(self):
-    return self.pressure
+  def getPressureSL(self):
+    return self.pressureSL
+
+  def getPressureAlt(self):
+    return self.pressureAlt
 
   def getTemperature(self):
     return self.temperature
@@ -152,7 +158,7 @@ class MSGWorker (threading.Thread):
       if data:
         self.sendData('{"IMU": %s}' % data)
 
-      time.sleep(0.02)
+      time.sleep(0.1)
 
   async def handler(self, websocket, path):
     self.connected.add(websocket)

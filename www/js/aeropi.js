@@ -125,12 +125,11 @@ var hostname = window.location.hostname;
 
 $(document).ready(function() {
 
-$('#settingsDialog').popup({
-  afterclose: function(e, ui){
-  console.log('resize');
-    window.dispatchEvent(new Event('resize'));
-  }
-});
+	$('#settingsDialog').popup({
+		afterclose: function(e, ui){
+			window.dispatchEvent(new Event('resize'));
+		}
+	});
 
 	/*
 	 * Initialize map
@@ -148,9 +147,7 @@ $('#settingsDialog').popup({
 		Settings = JSON.parse(data);
 		
 		$("#speedTickSpacing").val(Settings.efis.asi.tickspacing).slider("refresh");
-//		$("#speedTickSpacing").slider("refresh");
 		$("#altitudeTickSpacing").val(Settings.efis.alt.tickspacing).slider("refresh");
-//		$("#altitudeTickSpacing").slider("refresh");
 		$("#vne").val(Settings.efis.asi.speed.vne);
 		$("#vno").val(Settings.efis.asi.speed.vno);
 		$("#vfe").val(Settings.efis.asi.speed.vfe);
@@ -162,8 +159,13 @@ $('#settingsDialog').popup({
 		$("#vacLndInMapView").prop("checked", Settings.map.overlays.vac.lnd).checkboxradio("refresh");
 		$("#vacAppInMapView").prop("checked", Settings.map.overlays.vac.app).checkboxradio("refresh");
 		$("input:radio[name=layerInMapView]").filter("[value="+Settings.map.layer+"]").prop("checked", true).checkboxradio("refresh");
+		$("#summer").prop("checked", Settings.efis.timezone.summer).checkboxradio("refresh");
+		$("#timezone").val(Settings.efis.timezone.offset).slider("refresh");
+		$('#qnhInput').val(Settings.efis.alt.qnh);
+		//$("#magneticdeclination").val(Settings.map.magneticdeclination).slider("refresh");
 
 		efis = $("#efis").efis(Settings.efis);
+		
 		
 		if(!Settings.map.display.alt)
 			$("#alt").css("z-index", 39);
@@ -195,11 +197,16 @@ $('#settingsDialog').popup({
 				data = data.GPS;
 				efis.setClock(data.time);
 				efis.setPosition({"lat":data.lat, "lon":data.lon});
-				efis.setPressure(data.pressure);
-				efis.setAltitude(data.alt);
 				efis.setSpeed(data.spd);
 				efis.setHeading(data.hdg);
 				geo_success(data);
+				
+				var altM = data.alt/3.28084;
+				var P  = data.pressureAlt*100;
+				var Pb = efis.getQnh()*100;
+				var h = altM - 44330 * ( Math.pow(P/Pb, 0.190263237) - 1 );
+				var alt = h*3.28084;
+				efis.setAltitude(alt);
 			}
 		};
 		
@@ -207,6 +214,10 @@ $('#settingsDialog').popup({
 			$("#ai").css("visibility", "hidden");
 			$("#ts").css("visibility", "hidden");
 			$("#map").css("visibility", "visible");
+		});
+	
+		$('#qnh-box').on('click', function(e){
+		  $('#settingsQnh').popup('open');
 		});
 	});
 	
@@ -265,7 +276,6 @@ $('#settingsDialog').popup({
 		$("#map").css("visibility", "hidden");
 	});
 
-
 	$('#speedTickSpacing').change(function(){
 		var v = parseInt( $(this).val() );
 		efis.setSpeedTickSpacing(v);
@@ -284,7 +294,6 @@ $('#settingsDialog').popup({
 		var data = {efis:{alt:{tickspacing: v/*settings.alt*/}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
-	
 
 	$('#vne').change(function(){
 		var v = parseInt( $(this).val() );
@@ -322,7 +331,6 @@ $('#settingsDialog').popup({
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
 
-
 	$('#vs').change(function(){
 		var v = parseInt( $(this).val() );
 		efis.setVsSpeed(v);
@@ -331,7 +339,15 @@ $('#settingsDialog').popup({
 		var data = {efis:{asi:{speed:{vs:v}}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
-	
+
+	$('#qnhInput').change(function(){
+		var v = parseInt( $(this).val() );
+		efis.setQnh(v);
+		var settings = efis.getSettings();
+		var data = {efis:{alt:{qnh:v}}};
+		$.get("settings.php", {set: JSON.stringify(data)});
+	});
+
 	$('.exec-cmd').on('click', function(){
 	  var url = $(this).attr("href");
 	  $.get(url);
@@ -374,6 +390,15 @@ $('#settingsDialog').popup({
 			var data = {map:{display:{asi:val}}};
 			$.get("settings.php", {set: JSON.stringify(data)});
 		}
+
+		if(param == 'trackInMapView'){
+			if(val)
+				trackPath.addTo(map);
+			else
+				map.removeLayer(trackPath);
+			var data = {map:{display:{track:val}}};
+			$.get("settings.php", {set: JSON.stringify(data)});
+		}
 		
 		if(param == 'vacLndInMapView'){
 		  if(val)
@@ -407,6 +432,41 @@ $('#settingsDialog').popup({
 		  var data = {map:{layer:val}};
 		  $.get("settings.php", {set: JSON.stringify(data)});
 		}
+	});
+	
+	$("#GeneralSettings input").on('change', function(){
+		var param = $(this).attr('name');
+		var type = $(this).attr('type');
+		var val = $(this).val();
+		
+		if(type == 'checkbox')
+			val = $(this).is(':checked');
+		if(type == 'number')
+			val = parseInt(val);
+
+		if(param == 'timezone'){
+		  efis.setTimezone(val);
+		  var data = {efis:{timezone:{offset:val}}};
+		  $.get("settings.php", {set: JSON.stringify(data)});
+		}
+		
+		if(param == 'summer'){
+		  efis.setSummer(val);
+		  var data = {efis:{timezone:{summer:val}}};
+		  $.get("settings.php", {set: JSON.stringify(data)});
+		}
+	});
+	
+	$("#qnhDecrease").on('click', function(e){
+	  var v = $("#qnhInput").val();
+	  v = parseInt(v)-1;
+	  $("#qnhInput").val(v).trigger("change");
+	});
+
+	$("#qnhIncrease").on('click', function(e){
+	  var v = $("#qnhInput").val();
+	  v = parseInt(v)+1;
+	  $("#qnhInput").val(v).trigger("change");
 	});
 });
 
