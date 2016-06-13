@@ -46,8 +46,8 @@
 	function _createAsi(){
 		var main = document.createElementNS(svgNS, "svg");
 		main.setAttribute("id", "asi");
-		main.setAttribute("width", 116);
-		main.setAttribute("height", rectHeight+44);
+		main.setAttribute("width", 94);
+		main.setAttribute("height", rectHeight+16);
 		main.setAttribute("style", "position:absolute; top:"+topPos+"px; z-index:40;");
 		main.appendChild(_createFilters());
 		elem = document.createElementNS(svgNS, "rect");
@@ -133,7 +133,7 @@
 		main.digits.textContent = "000";
 		main.appendChild(main.digits);
 		// Bg Digit
-		var y = rectHeight+14;
+		/*var y = rectHeight+14;
 		elem = document.createElementNS(svgNS, "path");
 		elem.setAttribute("style", "fill:#222;");
 		elem.setAttribute("d", "M3 "+y+" h106 v24 h-106 Z");
@@ -144,7 +144,7 @@
 		main.clock.setAttribute("x", 8);
 		main.clock.setAttribute("y", y+20);
 		main.clock.textContent = "00:00:00";
-		main.appendChild(main.clock);
+		main.appendChild(main.clock);*/
 		return main;
 	}
 
@@ -152,7 +152,7 @@
 		var main = document.createElementNS(svgNS, "svg");
 		main.setAttribute("id", "alt");
 		main.setAttribute("width", 94);
-		main.setAttribute("height", rectHeight+settings.height/10);
+		main.setAttribute("height", rectHeight+16);
 		main.setAttribute("style", "position:absolute; top:"+topPos+"px; left:"+(settings.width-94)+"px; z-index:40;");
 		main.appendChild(_createFilters());
 		elem = document.createElementNS(svgNS, "rect");
@@ -213,7 +213,7 @@
 		main.digits.textContent = "000";
 		main.appendChild(main.digits);
 		// Bg Digit
-		var y = rectHeight+14;
+		/*var y = rectHeight+14;
 		elem = document.createElementNS(svgNS, "path");
 		elem.setAttribute("style", "fill:#222;");
 		elem.setAttribute("d", "M30 "+y+" h62 v24 h-62 Z");
@@ -224,7 +224,7 @@
 		main.pressure.setAttribute("x", 32);
 		main.pressure.setAttribute("y", y+20);
 		main.pressure.textContent = "0000";
-		main.appendChild(main.pressure);
+		main.appendChild(main.pressure);*/
 		return main;
 	}
 	
@@ -233,7 +233,7 @@
 		main.setAttribute("id", "hdg");
 		main.setAttribute("width", settings.width/2+16);
 		main.setAttribute("height", 74);
-		main.setAttribute("style", "position:absolute; top:"+(settings.height-74)+"px; left:"+(settings.width/4-4)+"px; z-index:40;");
+		main.setAttribute("style", "position:absolute; top:"+(settings.height-74)+"px; left:"+(settings.width/4-8)+"px; z-index:40;");
 		main.appendChild(_createFilters());
 		elem = document.createElementNS(svgNS, "rect");
 		elem.setAttribute("x", 8);
@@ -436,6 +436,77 @@
 		return main;
 	}
 
+	function _createBottomLeftTips() {
+		var main = document.createElementNS(svgNS, "svg");
+		main.setAttribute("id", "bottomLeftTips");
+		main.setAttribute("width", (settings.width-(settings.width/2+16))/2);
+		main.setAttribute("height", settings.height-(rectHeight+settings.height/10)+8);
+		main.setAttribute("style", "position:absolute; top:"+(rectHeight+14+topPos)+"px; z-index:40;");
+        // Bg Digit
+        elem = document.createElementNS(svgNS, "path");
+		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
+        elem.setAttribute("d", "M3 4 h182 v22 h-182 Z");
+        elem.setAttribute("filter", "url(#shadowSmall)");
+        main.appendChild(elem);
+        main.clock = document.createElementNS(svgNS, "text");
+        main.clock.setAttribute("style", "font-size:22px; fill:white");
+        main.clock.setAttribute("x", 6);
+        main.clock.setAttribute("y", 22);
+        main.clock.textContent = "Clock: 00:00:00";
+        main.appendChild(main.clock);
+        // Bg Digit
+        elem = document.createElementNS(svgNS, "path");
+		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
+        elem.setAttribute("d", "M3 32 h182 v22 h-182 Z");
+        elem.setAttribute("filter", "url(#shadowSmall)");
+        main.appendChild(elem);
+        main.eta = document.createElementNS(svgNS, "text");
+        main.eta.setAttribute("style", "font-size:22px; fill:white");
+        main.eta.setAttribute("x", 6);
+        main.eta.setAttribute("y", 50);
+        main.eta.textContent = "ETA: 00:00:00";
+        main.appendChild(main.eta);
+
+		return main;
+	}
+
+	function _createBottomRightTips() {
+		var main = document.createElementNS(svgNS, "svg");
+		var width = (settings.width-(settings.width/2+16))/2;
+		main.setAttribute("id", "bottomRightTips");
+		main.setAttribute("width", width);
+		main.setAttribute("height", settings.height-(rectHeight+settings.height/10)+8);
+		main.setAttribute("style", "position:absolute; top:"+(rectHeight+14+topPos)+"px; left:"+(settings.width-width)+"px; z-index:40;");
+        // Bg Digit
+        elem = document.createElementNS(svgNS, "path");
+		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
+        elem.setAttribute("d", "M62 4 h127 v22 h-127 Z");
+        elem.setAttribute("filter", "url(#shadowSmall)");
+        main.appendChild(elem);
+        main.pressure = document.createElementNS(svgNS, "text");
+        main.pressure.setAttribute("style", "font-size:22px; fill:white");
+        main.pressure.setAttribute("text-anchor", "end");
+        main.pressure.setAttribute("x", width-4);
+        main.pressure.setAttribute("y", 22);
+        main.pressure.textContent = "QNH: 0000";
+        main.appendChild(main.pressure);
+        // Bg Digit
+        elem = document.createElementNS(svgNS, "path");
+		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
+        elem.setAttribute("d", "M7 32 h182 v22 h-182 Z");
+        elem.setAttribute("filter", "url(#shadowSmall)");
+        main.appendChild(elem);
+        main.position = document.createElementNS(svgNS, "text");
+        main.position.setAttribute("style", "font-size:22px; fill:white");
+        main.position.setAttribute("text-anchor", "end");
+        main.position.setAttribute("x", width-4);
+        main.position.setAttribute("y", 50);
+        main.position.textContent = "00.000 00.000";
+        main.appendChild(main.position);
+
+		return main;
+	}
+
 	function _createFilters() {
 		var filter = null;
 		var defs = document.createElementNS(svgNS, "defs");
@@ -510,6 +581,10 @@
 		return defs;
 	}
 
+	function _checkTime(v){
+	  if(v<10){v="0"+v};
+	    return v;
+	}
     /*
      * Public methods
      */
@@ -552,7 +627,7 @@
 		//v = parseInt(v);
 		if(v == data.pressure) return;
 		data.pressure = v;
-		alt.pressure.textContent = v;
+		bottomRight.pressure.textContent = "QNH: "+v;
 	}
 
 	this.setSlip = function(v) {
@@ -568,6 +643,20 @@
 		
 		data.ts = v
 		ts.ball.setAttribute("transform", "translate("+(-v*mul)+" 0)");
+	}
+
+	this.setClock = function(v){
+	  var today = new Date(v);
+	  var h = today.getHours();
+	  var m = today.getMinutes();
+	  var s = today.getSeconds();
+	  m = _checkTime(m);
+	  s = _checkTime(s);
+	  bottomLeft.clock.textContent = "Clock: "+h+":"+m+":"+s;
+	}
+	
+	this.setPosition = function(v){
+	  bottomRight.position.textContent = (v.lat).toFixed(3)+" - "+(v.lon).toFixed(3);
 	}
 	
 	this.getSettings = function(){
@@ -634,21 +723,6 @@
 	  alt.digits.textContent = parseInt(data.alt);
 	}
 
-	function _checkTime(v){
-	  if(v<10){v="0"+v};
-	    return v;
-	}
-
-	this.setClock = function(v){
-	  var today = new Date(v);
-	  var h = today.getHours();
-	  var m = today.getMinutes();
-	  var s = today.getSeconds();
-	  m = _checkTime(m);
-	  s = _checkTime(s);
-	  asi.clock.textContent = h+":"+m+":"+s;
-	}
-
 	var data = {alt:0, pressure:0, spd:0, hdg:0, pitch:0, roll:0};
 	var parent = $(this);
 	var ai     = _createAi();
@@ -661,7 +735,11 @@
 	parent.append(hdg);
 	var ts     = _createTs();
 	parent.append(ts);
-
+	var bottomLeft = _createBottomLeftTips();
+	parent.append(bottomLeft);
+	var bottomRight = _createBottomRightTips();
+	parent.append(bottomRight);
+	
     return this;
   };
 }(jQuery));

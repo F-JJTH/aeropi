@@ -194,6 +194,7 @@ $('#settingsDialog').popup({
 			if(data.GPS){
 				data = data.GPS;
 				efis.setClock(data.time);
+				efis.setPosition({"lat":data.lat, "lon":data.lon});
 				efis.setPressure(data.pressure);
 				efis.setAltitude(data.alt);
 				efis.setSpeed(data.spd);
