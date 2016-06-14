@@ -13,13 +13,13 @@
   <!--<script src="js/jquery-ui.1.11.4.min.js"></script>-->
   <script src="js/jquery.mobile-1.4.5.min.js"></script>
   <!--<script src="js/jquery.flightindicators.js"></script>-->
-  <script src="js/leaflet.0.7.7.min.js"></script>
+  <script src="js/leaflet.1.0.1.js"></script>
   <script src="js/Marker-Control.js"></script>
   <script src="js/jquery.efis.js"></script>
   <script src="js/aeropi.js"></script>
 
   <link rel="stylesheet" type="text/css" href="instruments.css"></link>
-  <link rel="stylesheet" type="text/css" href="leaflet.0.7.7.min.css"></link>
+  <link rel="stylesheet" type="text/css" href="leaflet.1.0.1.css"></link>
   <!--<link rel="stylesheet" type="text/css" href="js/jquery-ui.1.11.4.min.css"></link>-->
   <link rel="stylesheet" type="text/css" href="js/jquery.mobile-1.4.5.min.css"></link>
   <link rel="stylesheet" type="text/css" href="style.css"></link>
