@@ -445,7 +445,7 @@
         main.clock.setAttribute("style", "font-size:22px; fill:white");
         main.clock.setAttribute("x", 6);
         main.clock.setAttribute("y", 22);
-        main.clock.textContent = "Clock: 00:00:00";
+        main.clock.textContent = "Clock: 00:00";
         main.appendChild(main.clock);
         // Bg Digit
         elem = document.createElementNS(svgNS, "path");
@@ -592,10 +592,8 @@
 	}
 
 	this.setAltitude = function(v) {
-		/* xxx ft for xxxx QNH
-		  so ???? for yyyy QNH
-		*/
-		//v = parseInt(v);
+		v = parseInt(v);
+		v = Math.round(v/10)*10;
 		if(v == data.alt) return;
 		data.alt = v;
 		var t = (v/200)*(settings.height/settings.alt.tickspacing);
@@ -604,6 +602,9 @@
 	}
 
 	this.setAttitude = function(params) {
+	    params.pitch = Math.round(params.pitch*20)/20;
+	    params.roll = Math.round(params.roll*20)/20;
+	    if(data.pitch == params.pitch && data.roll == params.roll) return;
 		data.pitch = params.pitch;
 		data.roll = params.roll;
 		pitch = -(params.pitch-settings.attitude.pitchoffset)/10*attitudeOffsetBase;
@@ -645,7 +646,7 @@
 	  h = _checkTime(h);
 	  m = _checkTime(m);
 	  s = _checkTime(s);
-	  bottomLeft.clock.textContent = "Clock: "+h+":"+m+":"+s;
+	  bottomLeft.clock.textContent = "Clock: "+h+":"+m/*+":"+s*/;
 	}
 	
 	this.setPosition = function(v){

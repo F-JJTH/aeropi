@@ -9,7 +9,7 @@
         "overlays": {
             "vac": {
                 "app": false,
-                "lnd": false
+                "lnd": true
             }
         },
         "layer": "oaci"
@@ -34,7 +34,7 @@
         "alt": {
             "tickspacing": 7,
             "maxalt": 25000,
-            "qnh": 1024
+            "qnh": 1023
         },
         "ai": {
             "color": {

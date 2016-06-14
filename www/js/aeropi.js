@@ -35,65 +35,6 @@ var overlays = {
 };
 
 
-/*
-var DefaultSettings = {
-	map: {
-		display: {
-			asi: true,
-			alt: true,
-			hdg: true,
-		},
-		layers: {
-			active: 0,
-		},
-	},
-	efis: {
-		width: $(window).width(),
-		height: $(window).height(),
-		asi:{
-			tickspacing: 5, // distance between markers
-			speed: {
-				vne: 0, // never exceed speed (end of orange ruban + red line)
-				vno: 0, // max cruise speed (end of green ruban + start of orange ruban)
-				vfe: 0, // max speed with flaps extended (end of white ruban)
-				vso: 0, // stall speed with flaps extended (start of white ruban)
-				vs: 0,  // stall speed with flaps retracted (start of green ruban)
-			},
-			color: {
-				vne: "red",
-				caution: "orange",
-				normal: "green",
-				flaps: "white",
-			},
-		},
-		alt:{
-			tickspacing: 8, // distance between markers
-			maxalt: 25000,    // maximum altitude marker
-		},
-		ai:{
-			color:{
-				ground: "#BF8144", // color of the ground AI
-				sky: "#4C78A9",    // color of the sky AI
-			},
-		},
-		compass:{},
-		attitude:{
-			pitchoffset: 0, // offset of the pitch AI
-			rolloffset: 0,  // offset of the roll AI
-		},
-	},
-};
-
-
-//$.get("settings.php", {set: JSON.stringify(DefaultsSettings)});
-
-$.get("settings.php", {get: null}, function(data){
-  console.log( JSON.parse(data) );
-});
-*/
-
-
-
 var _followAircraft = true;
 var _lastCoord = null;
 var _gotoPositions = [];
@@ -471,10 +412,6 @@ $(document).ready(function() {
 });
 
 
-
-
-
-
 function calibrateEfis(){
 	var attitude = efis.getAttitude();
 	efis.setCalibration(attitude);
@@ -491,20 +428,6 @@ function calibrateEfis(){
 	};
 	$.get("settings.php", {set: JSON.stringify(data)});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*
@@ -542,10 +465,6 @@ function geo_success(position, force) {
 }
 
 
-
-
-
-
 /*
  * Compute predictive point given position, bearing and distance
  */
@@ -561,21 +480,3 @@ function destSphere(lat1, lon1, brg, spd) {
 	return new L.latLng(lat*180/Math.PI, lon*180/Math.PI);
 }
 
-
-
-
-
-
-
-
-
-
-//var instruments = new Instruments();
-// Flight indicators
-//var indicators = {
-//  attitude: $.flightIndicator('#attitude', 'attitude'),
-/*heading : $.flightIndicator('#heading', 'heading'),
-variometer: $.flightIndicator('#variometer', 'variometer'),
-airspeed: $.flightIndicator('#airspeed', 'airspeed'),
-altimeter: $.flightIndicator('#altimeter', 'altimeter')*/
-//}

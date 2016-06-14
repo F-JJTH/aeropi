@@ -61,9 +61,9 @@
           <table>
             <tr>
               <td><input type="checkbox" name="summer" id="summer" value="0"><label for="summer">Summer hour</label></td>
-              <td><input type="checkbox" name="null0" id="null0" value="0"><label for="null0">null</label></td>
-              <td><input type="checkbox" name="null1" id="null1" value="0"><label for="null1">null</label></td>
-              <td><input type="checkbox" name="null2" id="null2" value="0"><label for="null2">null</label></td>
+              <td><!--<input type="checkbox" name="null0" id="null0" value="0"><label for="null0">null</label>--></td>
+              <td><!--<input type="checkbox" name="null1" id="null1" value="0"><label for="null1">null</label>--></td>
+              <td><!--<input type="checkbox" name="null2" id="null2" value="0"><label for="null2">null</label>--></td>
             </tr>
             <tr>
               <td colspan="2"><!--<label for="magneticdeclination">Magnetic declinaison</label><input type="number" name="magneticdeclination" id="magneticdeclination" value="0">--></td>
