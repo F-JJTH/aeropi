@@ -591,6 +591,10 @@
 		asi.digits.textContent = parseInt(v);
 	}
 
+	this.getSpeed = function(){
+	  return data.spd;
+	}
+
 	this.setAltitude = function(v) {
 		v = parseInt(v);
 		v = Math.round(v/10)*10;
@@ -661,6 +665,10 @@
 		  bottomRight.position.textContent = str;
 	}
 	
+	this.setETA = function(v){
+	  bottomLeft.eta.textContent = "ETA: "+v;
+	}
+
 	this.setTimezone = function(v){
 	  settings.timezone.offset = v;
 	}

@@ -197,6 +197,11 @@ $(document).ready(function() {
 	});
 
 	map.on('contextmenu', function(e) {
+		if(_lastCoord == null){
+			alert("Please wait for GPS signal");
+			return;
+		}
+
 		if(!map.hasClearControl)
 			clearControl.addTo(map);
 
@@ -453,6 +458,30 @@ function geo_success(position, force) {
 		p = p.concat(_gotoPositions);
 		gotoPath.setLatLngs(p);
 		gotoPath.addTo(map);
+
+		/* ETA computation */
+		var nextWptDist = Math.round(p[0].distanceTo(p[1]))/1000;
+		var nextWptETA = (nextWptDist/efis.getSpeed())*60;
+		nextWptETA = Math.round(nextWptETA*10)/10;
+		var totalDist = 0;
+		var tmp = null;
+		$.each(p, function(i, ll){
+			if(tmp == null){
+				tmp = ll;
+				return;
+			}
+			totalDist += Math.round(ll.distanceTo(tmp))/1000;
+			tmp = ll;
+		});
+		var totalETA = (totalDist/efis.getSpeed())*60;
+		totalETA = Math.round(totalETA*10)/10;
+		var gotoDurationStr = "";
+		var totalSec = totalETA*60;
+		var hh = parseInt(totalSec/3600)%24;
+		var mm = parseInt(totalSec/60)%60;
+		var ss = totalSec%60;
+			gotoDurationStr += pad(hh)+":"+pad(mm)+":"+pad(ss);
+		efis.setETA(gotoDurationStr);
 	}
 
 	trackPath.addLatLng(_lastPosition);
@@ -462,6 +491,11 @@ function geo_success(position, force) {
 
 	var nextPoint = destSphere(_lat, _lon, _hdg, _spd > 5 ? _spd : 17);
 	predictivePath.setLatLngs([_lastPosition, nextPoint]);
+}
+
+
+function pad(n) {
+    return (n < 10) ? ("0" + n) : n;
 }
 
 
