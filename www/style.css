@@ -33,6 +33,7 @@ cursor: pointer;
 
 .aircraft-marker-icon {
 background-color: rgba(255,255,255,0);
+transform-origin: 50% 50%;
 }
 
 .aircraft-marker-icon path {
