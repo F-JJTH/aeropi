@@ -40,7 +40,7 @@ var _defaultPosition = new L.latLng(44, 5);
 var _lastPosition = _defaultPosition;
 var _locationListener = null;
 var _plot = null;
-var _timer = null;
+var _saveLastPositionTimer = null;
 var _pauseTimer = false;
 
 
@@ -119,6 +119,15 @@ $(document).ready(function() {
 
 		efis = $("#efis").efis(Settings.efis);
 		
+		efis.setPosition(Settings.general.lastposition);
+		geo_success({
+		  "lat": Settings.general.lastposition.lat,
+		  "lng": Settings.general.lastposition.lng,
+		  "spd": 0,
+		  "hdg": 0,
+		  "alt": 0
+		});
+		
 		
 		if(!Settings.map.display.alt)
 			$("#alt").css("z-index", 39);
@@ -149,7 +158,7 @@ $(document).ready(function() {
 			if(data.GPS){
 				data = data.GPS;
 				efis.setClock(data.time);
-				efis.setPosition({"lat":data.lat, "lon":data.lon});
+				efis.setPosition({"lat":data.lat, "lng":data.lng});
 				if(Settings.general.unit.speed == "kt")
 					data.spd = parseInt(data.spd*0.539957);
 				efis.setSpeed(data.spd);
@@ -499,19 +508,24 @@ function calibrateEfis(){
 
 function geo_success(position, force) {
 	var _lat = position.lat;
-	var _lon = position.lon;
+	var _lng = position.lng;
 	var _alt = position.alt;
 	var _hdg = position.hdg;
 	var _spd = position.spd;
 	//_spd = Math.round(27.78); //100kmh
-	_lastPosition = new L.LatLng(_lat, _lon);
+	_lastPosition = new L.LatLng(_lat, _lng);
 	_lastCoord = position;
 	force = (typeof force === "undefined") ? false : force; // force to update Plot
 
 	aircraftMarker.setLatLng(_lastPosition);
 	aircraftMarker.setHeading(_hdg);
-	var data = {general:{lastposition:_lastPosition}};
-	$.get("settings.php", {set: JSON.stringify(data)});
+
+	if(_saveLastPositionTimer == null) _saveLastPositionTimer = new Date().getTime();
+	if( (new Date().getTime() - _saveLastPositionTimer > 1000*60) ){ //each 1 minute
+	  var data = {general:{lastposition:_lastPosition}};
+	  $.get("settings.php", {set: JSON.stringify(data)});
+	  _saveLastPositionTimer = new Date().getTime();
+	}
 
 	if(_gotoPositions.length != 0){
 		var p = new Array(_lastPosition);
@@ -556,7 +570,7 @@ function geo_success(position, force) {
 	if(_followAircraft)
 	map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 
-	var nextPoint = destSphere(_lat, _lon, _hdg, _spd > 5 ? _spd : 17);
+	var nextPoint = destSphere(_lat, _lng, _hdg, _spd > 5 ? _spd : 17);
 	predictivePath.setLatLngs([_lastPosition, nextPoint]);
 }
 
@@ -570,14 +584,14 @@ function pad(n) {
  * Compute predictive point given position, bearing and distance
  */
 
-function destSphere(lat1, lon1, brg, spd) {
+function destSphere(lat1, lng1, brg, spd) {
 	var R    = 6372.7976; // Earth radius
 	var dist = (spd*0.3)/R; // 5 minutes
 	var lat1 = lat1*Math.PI/180;
-	var lon1 = lon1*Math.PI/180;
+	var lng1 = lng1*Math.PI/180;
 	var brg  = brg*Math.PI/180;
 	var lat  = Math.asin(Math.sin(lat1)*Math.cos(dist) + Math.cos(lat1)*Math.sin(dist)*Math.cos(brg));
-	var lon  = lon1 + Math.atan2(Math.sin(brg)*Math.sin(dist)*Math.cos(lat1), Math.cos(dist)-Math.sin(lat1)*Math.sin(lat));
-	return new L.latLng(lat*180/Math.PI, lon*180/Math.PI);
+	var lng  = lng1 + Math.atan2(Math.sin(brg)*Math.sin(dist)*Math.cos(lat1), Math.cos(dist)-Math.sin(lat1)*Math.sin(lat));
+	return new L.latLng(lat*180/Math.PI, lng*180/Math.PI);
 }
 

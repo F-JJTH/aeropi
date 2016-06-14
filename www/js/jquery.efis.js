@@ -654,13 +654,13 @@
 	}
 	
 	this.setPosition = function(v){
-	  var lon = v.lon.toFixed(2);
+	  var lng = v.lng.toFixed(2);
 	  var lat = v.lat.toFixed(2);
 	  var latLetter = lat < 0 ? "S" : "N";
-	  var lonLetter = lon < 0 ? "O" : "E";
-	  lon = Math.abs(lon);
+	  var lngLetter = lng < 0 ? "O" : "E";
+	  lng = Math.abs(lng);
 	  lat = Math.abs(lat);
-      var str = lat+""+latLetter+" - "+lon+""+lonLetter;
+      var str = lat+""+latLetter+" - "+lng+""+lngLetter;
       if( bottomRight.position.textContent != str )
 		  bottomRight.position.textContent = str;
 	}

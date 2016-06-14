@@ -34,7 +34,7 @@
         "alt": {
             "tickspacing": 5,
             "maxalt": 25000,
-            "qnh": 1022
+            "qnh": 1020
         },
         "ai": {
             "color": {
@@ -56,8 +56,8 @@
     },
     "general": {
         "lastposition": {
-            "lat": 44.111078333,
-            "lng": 5.107548333
+            "lat": 44.111136667,
+            "lng": 5.107453333
         },
         "unit": {
             "altitude": "ft",
