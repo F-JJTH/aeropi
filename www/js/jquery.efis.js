@@ -43,9 +43,9 @@
 	};
     var settings = $.extend(true, {}, defaults, options);
     var svgNS = "http://www.w3.org/2000/svg";
-	var rectHeight = settings.height-settings.height/5;
+	var rectHeight = settings.height-settings.height/2.8;
 	var topPos = settings.height/16-4;
-	var attitudeOffsetBase = (settings.height / 2 - settings.height / 16) / 4;
+	var attitudeOffsetBase = (settings.height / 2 - settings.height / 8) / 4;
 	/*
 	 * Private methods
 	 */
@@ -747,7 +747,6 @@
 	  alt.remove();
 	  alt = _createAlt();
 	  parent.append(alt);
-	  alt.qnh.textContent = data.qnh;
 	  var t = (data.alt/200)*(settings.height/settings.alt.tickspacing);
 	  alt.ladder.setAttribute("transform", "translate(0, "+t+")");
 	  alt.digits.textContent = parseInt(data.alt);

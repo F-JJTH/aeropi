@@ -1,2 +1,4 @@
 __pycache__/
 maps/
+SRTM3/
+RTIMULib.ini

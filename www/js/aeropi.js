@@ -1,5 +1,3 @@
-
-
 var baseLayers = {
 	"France: OACI 2016" : new L.TileLayer('maps/oaci_fr_2016/{z}/{x}/{y}.jpg', {
 		minZoom : 4,
@@ -62,6 +60,7 @@ var controlLayers = L.control.externLayers(baseLayers, overlays);
 //var controlLayers = L.control.layers(baseLayers, overlays);
 
 var hostname = window.location.hostname;
+var activeTab = null;
 
 
 $(document).ready(function() {
@@ -69,7 +68,14 @@ $(document).ready(function() {
 	$('#settingsDialog').popup({
 		afterclose: function(e, ui){
 			window.dispatchEvent(new Event('resize'));
+		},
+		afteropen: function(e, ui){
+		  $(activeTab).addClass('ui-btn-active');
 		}
+	});
+	
+	$('#tabsSettings ul a').on('click', function(e){
+	  activeTab = $(this);
 	});
 
 	/*
@@ -105,6 +111,12 @@ $(document).ready(function() {
 		$('#qnhInput').val(Settings.efis.alt.qnh);
 		//$("#magneticdeclination").val(Settings.map.magneticdeclination).slider("refresh");
 
+		if(Settings.general.unit.speed == "kt"){
+		  $.each(Settings.efis.asi.speed, function(i, speed){
+		    Settings.efis.asi.speed[i] = parseInt(speed*0.539957);
+		  });
+		}
+
 		efis = $("#efis").efis(Settings.efis);
 		
 		
@@ -138,6 +150,8 @@ $(document).ready(function() {
 				data = data.GPS;
 				efis.setClock(data.time);
 				efis.setPosition({"lat":data.lat, "lon":data.lon});
+				if(Settings.general.unit.speed == "kt")
+					data.spd = parseInt(data.spd*0.539957);
 				efis.setSpeed(data.spd);
 				efis.setHeading(data.hdg);
 				geo_success(data);
@@ -147,6 +161,9 @@ $(document).ready(function() {
 				var Pb = efis.getQnh()*100;
 				var h = altM - 44330 * ( Math.pow(P/Pb, 0.190263237) - 1 );
 				var alt = h*3.28084;
+				
+				if(Settings.general.unit.altitude == 'm')
+					alt = h;
 				efis.setAltitude(alt);
 			}
 		};
@@ -169,7 +186,7 @@ $(document).ready(function() {
 
 
 	/*
-	 * Attach feature to the map
+	 * Attach features to the map
 	 */
 	if(hostname != "localhost" && hostname != "127.0.0.1")
 		fsControl.addTo(map); // Defined by Control.js
@@ -189,7 +206,7 @@ $(document).ready(function() {
 	aircraftMarker.on('click', function(e) {
 		_followAircraft = true;
 		if(_lastPosition != null)
-		map.panTo(_lastPosition, {animate: true, noMoveStart: true});
+			map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 	});
 
 	map.on('dragstart', function(e) {
@@ -226,7 +243,6 @@ $(document).ready(function() {
 		var v = parseInt( $(this).val() );
 		efis.setSpeedTickSpacing(v);
 		efis.redrawAsi();
-		//var settings = efis.getSettings();
 		var data = {efis: {asi: {tickspacing: v/*settings.asi.tickspacing*/}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
@@ -236,52 +252,61 @@ $(document).ready(function() {
 		var v = parseInt( $(this).val() );
 		efis.setAltitudeTickSpacing(v);
 		efis.redrawAlt();
-		var settings = efis.getSettings();
 		var data = {efis:{alt:{tickspacing: v/*settings.alt*/}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
 
 	$('#vne').change(function(){
 		var v = parseInt( $(this).val() );
-		efis.setVneSpeed(v);
+		if(Settings.general.unit.speed == "kt")
+		    efis.setVneSpeed(parseInt(v*0.539957));
+		else
+			efis.setVneSpeed(v);
 		efis.redrawAsi();
-		var settings = efis.getSettings();
 		var data = {efis:{asi:{speed:{vne:v}}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
 	
 	$('#vno').change(function(){
 		var v = parseInt( $(this).val() );
-		efis.setVnoSpeed(v);
+		if(Settings.general.unit.speed == "kt")
+		    efis.setVnoSpeed(parseInt(v*0.539957));
+		else
+			efis.setVnoSpeed(v);
 		efis.redrawAsi();
-		var settings = efis.getSettings();
 		var data = {efis:{asi:{speed:{vno:v}}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
 	
 	$('#vfe').change(function(){
 		var v = parseInt( $(this).val() );
-		efis.setVfeSpeed(v);
+		if(Settings.general.unit.speed == "kt")
+		    efis.setVfeSpeed(parseInt(v*0.539957));
+		else
+			efis.setVfeSpeed(v);
 		efis.redrawAsi();
-		var settings = efis.getSettings();
 		var data = {efis:{asi:{speed:{vfe:v}}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
 	
 	$('#vso').change(function(){
 		var v = parseInt( $(this).val() );
-		efis.setVsoSpeed(v);
+		if(Settings.general.unit.speed == "kt")
+		    efis.setVsoSpeed(parseInt(v*0.539957));
+		else
+			efis.setVsoSpeed(v);
 		efis.redrawAsi();
-		var settings = efis.getSettings();
 		var data = {efis:{asi:{speed:{vso:v}}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
 
 	$('#vs').change(function(){
 		var v = parseInt( $(this).val() );
-		efis.setVsSpeed(v);
+		if(Settings.general.unit.speed == "kt")
+		    efis.setVsSpeed(parseInt(v*0.539957));
+		else
+			efis.setVsSpeed(v);
 		efis.redrawAsi();
-		var settings = efis.getSettings();
 		var data = {efis:{asi:{speed:{vs:v}}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
@@ -289,7 +314,6 @@ $(document).ready(function() {
 	$('#qnhInput').change(function(){
 		var v = parseInt( $(this).val() );
 		efis.setQnh(v);
-		var settings = efis.getSettings();
 		var data = {efis:{alt:{qnh:v}}};
 		$.get("settings.php", {set: JSON.stringify(data)});
 	});
@@ -303,12 +327,10 @@ $(document).ready(function() {
 	$("#MapSettings input").on('change', function(){
 		var param = $(this).attr('name');
 		var type = $(this).attr('type');
-		var val = 0;
+		var val = $(this).val();
 
 		if(type == 'checkbox')
 			val = $(this).is(':checked');
-		if(type == 'radio')
-		    val = $(this).val();
 	
 		if(param == 'compassInMapView'){
 			if(val)
@@ -380,7 +402,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("#GeneralSettings input").on('change', function(){
+	$("#GeneralSettings input, #GeneralSettings select").on('change', function(){
 		var param = $(this).attr('name');
 		var type = $(this).attr('type');
 		var val = $(this).val();
@@ -395,10 +417,46 @@ $(document).ready(function() {
 		  var data = {efis:{timezone:{offset:val}}};
 		  $.get("settings.php", {set: JSON.stringify(data)});
 		}
-		
+
 		if(param == 'summer'){
 		  efis.setSummer(val);
 		  var data = {efis:{timezone:{summer:val}}};
+		  $.get("settings.php", {set: JSON.stringify(data)});
+		}
+
+		if(param == 'speedUnit'){
+		  $.get("settings.php", {get: null}, function(data){
+		  	var S = JSON.parse(data);
+		  	
+		  	var mul = 1;
+		  	if(val == 'kt')
+		  	  mul = 0.539957;
+
+		  	efis.setVneSpeed(parseInt(S.efis.asi.speed.vne*mul));
+		  	efis.setVnoSpeed(parseInt(S.efis.asi.speed.vno*mul));
+		  	efis.setVfeSpeed(parseInt(S.efis.asi.speed.vfe*mul));
+		  	efis.setVsoSpeed(parseInt(S.efis.asi.speed.vso*mul));
+		  	efis.setVsSpeed(parseInt(S.efis.asi.speed.vs*mul));
+		  	efis.redrawAsi();
+		  });
+		  Settings.general.unit.speed = val;
+		  var data = {general:{unit:{speed:val}}};
+		  $.get("settings.php", {set: JSON.stringify(data)});
+		}
+		
+		if(param == 'elevationUnit'){
+		  var data = {general:{unit:{elevation:val}}};
+		  $.get("settings.php", {set: JSON.stringify(data)});
+		}
+		
+		if(param == 'altitudeUnit'){
+		  Settings.general.unit.altitude = val;
+		  var data = {general:{unit:{altitude:val}}};
+		  $.get("settings.php", {set: JSON.stringify(data)});
+		}
+		
+		if(param == 'distanceUnit'){
+		  var data = {general:{unit:{distance:val}}};
 		  $.get("settings.php", {set: JSON.stringify(data)});
 		}
 	});
@@ -452,6 +510,8 @@ function geo_success(position, force) {
 
 	aircraftMarker.setLatLng(_lastPosition);
 	aircraftMarker.setHeading(_hdg);
+	var data = {general:{lastposition:_lastPosition}};
+	$.get("settings.php", {set: JSON.stringify(data)});
 
 	if(_gotoPositions.length != 0){
 		var p = new Array(_lastPosition);
@@ -473,15 +533,22 @@ function geo_success(position, force) {
 			totalDist += Math.round(ll.distanceTo(tmp))/1000;
 			tmp = ll;
 		});
-		var totalETA = (totalDist/efis.getSpeed())*60;
-		totalETA = Math.round(totalETA*10)/10;
-		var gotoDurationStr = "";
-		var totalSec = totalETA*60;
-		var hh = parseInt(totalSec/3600)%24;
-		var mm = parseInt(totalSec/60)%60;
-		var ss = totalSec%60;
+		
+		var spd = efis.getSpeed();
+		
+		if(spd < 5){
+		  efis.setETA("Infinity");
+		}else{
+			var totalETA = (totalDist/efis.getSpeed())*60;
+			totalETA = Math.round(totalETA*10)/10;
+			var gotoDurationStr = "";
+			var totalSec = totalETA*60;
+			var hh = parseInt(totalSec/3600)%24;
+			var mm = parseInt(totalSec/60)%60;
+			var ss = totalSec%60;
 			gotoDurationStr += pad(hh)+":"+pad(mm)+":"+pad(ss);
-		efis.setETA(gotoDurationStr);
+			efis.setETA(gotoDurationStr);
+		}
 	}
 
 	trackPath.addLatLng(_lastPosition);

@@ -44,13 +44,12 @@
 
   <a href="#settingsDialog" id="settingsIcon" data-rel="popup" data-position-to="window" class="ui-btn ui-icon-gear ui-corner-all ui-nodisc-icon ui-btn-b ui-btn-icon-left ui-shadow ui-btn-icon-notext" data-transition="pop"></a>
   <div data-role="popup" data-dismissible="false" id="settingsDialog">
-    <div data-role="header" data-theme="a"><h2>Settings</h2></div>
-
+    <!--<div data-role="header" data-theme="a"><h2>Settings</h2></div>-->
     <div role="main">
       <div data-role="tabs" id="tabsSettings">
         <div data-role="navbar">
           <ul>
-            <li><a href="#GeneralSettings" data-ajax="false">General</a></li>
+            <li><a href="#GeneralSettings" data-ajax="false" class="ui-btn-active">General</a></li>
             <li><a href="#MapSettings" data-ajax="false">Map</a></li>
             <li><a href="#EfisSettings" data-ajax="false">Efis</a></li>
             <li><a href="#InfosSettings" data-ajax="false">Infos</a></li>
@@ -58,170 +57,199 @@
         </div>
 
         <div id="GeneralSettings" class="page-settings">
-          <table>
-            <tr>
-              <td><input type="checkbox" name="summer" id="summer" value="0"><label for="summer">Summer hour</label></td>
-              <td><!--<input type="checkbox" name="null0" id="null0" value="0"><label for="null0">null</label>--></td>
-              <td><!--<input type="checkbox" name="null1" id="null1" value="0"><label for="null1">null</label>--></td>
-              <td><!--<input type="checkbox" name="null2" id="null2" value="0"><label for="null2">null</label>--></td>
-            </tr>
-            <tr>
-              <td colspan="2"><!--<label for="magneticdeclination">Magnetic declinaison</label><input type="number" name="magneticdeclination" id="magneticdeclination" value="0">--></td>
-              <td colspan="2"><label for="timezone">Timezone</label><input type="range" min="-11" max="14" name="timezone" id="timezone" value="0"></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td><button href="utils.php?action=reboot" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Reboot</button></td>
-              <td><button href="utils.php?action=shutdown" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Shutdown</button></td>
-            </tr>
-          </table>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Time</h3></div>
+            <div class="ui-body ui-body-a">
+              <div class="ui-grid-a">
+                <div class="ui-block-a">
+                  <input type="checkbox" name="summer" id="summer" value="0"><label for="summer">Summer hour</label>
+                </div>
+                <div class="ui-block-b" style="text-align:center">
+                  <label for="timezone">Timezone<input type="range" min="-11" max="14" name="timezone" id="timezone" value="0"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Units</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-c">
+              <div class="ui-block-a">
+                <div class="ui-field-contain">
+                  <label for="altitudeUnit">Altitude</label>
+                  <select name="altitudeUnit" id="altitudeUnit" data-role="slider" data-mini="true"><option value="ft">ft</option><option value="m">m</option></select>
+                </div>
+              </div>
+              <div class="ui-block-b">
+                <div class="ui-field-contain">
+                  <label for="elevationUnit">Elevation</label>
+                  <select name="elevationUnit" id="elevationUnit" data-role="slider" data-mini="true"><option value="ft">ft</option><option value="m">m</option></select>
+                </div>
+              </div>
+              <div class="ui-block-c">
+                <div class="ui-field-contain">
+                  <label for="distanceUnit">Distance</label>
+                  <select name="distanceUnit" id="distanceUnit" data-role="slider" data-mini="true"><option value="nm">nm</option><option value="km">km</option></select>
+                </div>
+              </div>
+              <div class="ui-block-d">
+                <div class="ui-field-contain">
+                  <label for="speedUnit">Speed</label>
+                  <select name="speedUnit" id="speedUnit" data-role="slider" data-mini="true"><option value="kmh">kmh</option><option value="kt">kt</option></select>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Power</h3></div>
+            <div class="ui-body ui-body-a">
+              <div class="ui-grid-a">
+                <div class="ui-block-a">
+                  <button href="utils.php?action=reboot" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Reboot</button>
+                </div>
+                <div class="ui-block-b">
+                  <button href="utils.php?action=shutdown" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Shutdown</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="MapSettings" class="page-settings">
-          <form class="ui-field-contain">
-            <table>
-              <tr>
-                <td><input type="checkbox" name="altitudeInMapView" id="altitudeInMapView" checked="checked"><label for="altitudeInMapView">Altitude</label></td>
-                <td><input type="checkbox" name="compassInMapView" id="compassInMapView" checked="checked"><label for="compassInMapView">Compass</label></td>
-                <td><input type="checkbox" name="speedInMapView" id="speedInMapView" checked="checked"><label for="speedInMapView">Speed</label></td>
-                <td><input type="checkbox" name="trackInMapView" id="trackInMapView" checked="checked"><label for="trackInMapView">Track</label></td>
-              </tr>
-              <tr>
-                <td>Layers</td>
-                <td><input type="radio" name="layerInMapView" id="oaciLayer" value="oaci"><label for="oaciLayer">OACI 2016</label></td>
-                <td><input type="radio" name="layerInMapView" id="cartabossyLayer" value="cartabossy"><label for="cartabossyLayer">Cartabossy 2015</label></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Overlays</td>
-                <td><input type="checkbox" name="vacLndInMapView" id="vacLndInMapView"><label for="vacLndInMapView">VAC Atterrissage</label></td>
-                <td><input type="checkbox" name="vacAppInMapView" id="vacAppInMapView"><label for="vacAppInMapView">VAC Approche</label></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </form>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Layers</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-a">
+              <div class="ui-block-a" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="radio" name="layerInMapView" id="oaciLayer" value="oaci"><label for="oaciLayer">OACI 2016</label>
+                </div>
+              </div>
+              <div class="ui-block-b" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="radio" name="layerInMapView" id="cartabossyLayer" value="cartabossy"><label for="cartabossyLayer">Cartabossy 2015</label>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Overlays</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-a">
+              <div class="ui-block-a" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="checkbox" name="vacLndInMapView" id="vacLndInMapView"><label for="vacLndInMapView">VAC Atterrissage</label>
+                </div>
+              </div>
+              <div class="ui-block-b" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="checkbox" name="vacAppInMapView" id="vacAppInMapView"><label for="vacAppInMapView">VAC Approche</label>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Map options</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-c">
+              <div class="ui-block-a" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="checkbox" name="altitudeInMapView" id="altitudeInMapView" checked="checked"><label for="altitudeInMapView">Altitude</label>
+                </div>
+              </div>
+              <div class="ui-block-b" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="checkbox" name="compassInMapView" id="compassInMapView" checked="checked"><label for="compassInMapView">Compass</label>
+                </div>
+              </div>
+              <div class="ui-block-c" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="checkbox" name="speedInMapView" id="speedInMapView" checked="checked"><label for="speedInMapView">Speed</label></select>
+                </div>
+              </div>
+              <div class="ui-block-d" style="text-align:center;">
+                <div class="ui-field-contain">
+                  <input type="checkbox" name="trackInMapView" id="trackInMapView" checked="checked"><label for="trackInMapView">Track</label></select>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
         </div>
 
         <div id="EfisSettings" class="page-settings">
-          <form class="ui-field-contain">
-            <table>
-              <tr>
-                <td><label for="speedTickSpacing">Speed tick ratio:</label></td>
-                <td><input type="range" min="2" max="12" value="4" name="speedTickSpacing" id="speedTickSpacing"></td>
-                <td><label for="altitudeTickSpacing">Altitude tick ratio:</label></td>
-                <td><input type="range" min="2" max="12" value="8" name="altitudeTickSpacing" id="altitudeTickSpacing"></td>
-              </tr>
-              <tr>
-                <td><label for="vne">Vne speed:</label></td>
-                <td><input type="text" name="vne" id="vne">&nbsp;&nbsp;Kmh</td>
-                <td><label for="vfe">Vfe speed:</label></td>
-                <td><input type="text" name="vfe" id="vfe">&nbsp;&nbsp;Kmh</td>
-              </tr>
-              <tr>
-                <td><label for="vno">Vno speed:</label></td>
-                <td><input type="text" name="vno" id="vno">&nbsp;&nbsp;Kmh</td>
-                <td><label for="vso">Vso speed:</label></td>
-                <td><input type="text" name="vso" id="vso">&nbsp;&nbsp;Kmh</td>
-              </tr>
-              <tr>
-                <td><label for="vs">Vs speed:</label></td>
-                <td><input type="text" name="vs" id="vs">&nbsp;&nbsp;Kmh</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td colspan="2"><a href="#" onclick="calibrateEfis()" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Calibrate Efis</a></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </form>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Speeds (kmh)</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-d">
+              <div class="ui-block-a">
+                <div class="ui-field-contain">
+                  <label for="vne">Vne</label><input type="text" name="vne" id="vne">
+                </div>
+              </div>
+              <div class="ui-block-b">
+                <div class="ui-field-contain">
+                  <label for="vfe">Vfe</label><input type="text" name="vfe" id="vfe">
+                </div>
+              </div>
+              <div class="ui-block-c">
+                <div class="ui-field-contain">
+                  <label for="vno">Vno</label><input type="text" name="vno" id="vno">
+                </div>
+              </div>
+              <div class="ui-block-d">
+                <div class="ui-field-contain">
+                  <label for="vso">Vso</label><input type="text" name="vso" id="vso">
+                </div>
+              </div>
+              <div class="ui-block-e">
+                <div class="ui-field-contain">
+                  <label for="vs">Vs</label><input type="text" name="vs" id="vs">
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Ticks ratio</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-a">
+              <div class="ui-block-a">
+                <div class="ui-field-contain">
+                  <label for="speedTickSpacing">Speed<input type="range" min="2" max="12" value="4" name="speedTickSpacing" id="speedTickSpacing"></label>
+                </div>
+              </div>
+              <div class="ui-block-b">
+                <div class="ui-field-contain">
+                  <label for="altitudeTickSpacing">Altitude<input type="range" min="2" max="12" value="8" name="altitudeTickSpacing" id="altitudeTickSpacing"></label>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <a href="#" onclick="calibrateEfis()" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Calibrate Efis</a>
         </div>
-        <div id="InfosSettings" class="page-settings">
-          <table>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </table>
-        </div>
+
+        <div id="InfosSettings" class="page-settings"></div>
       </div>
       <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Ok</a>
     </div>
   </div>
-  <!--<div id="mapMenu">
-    <ul>
-      <li><a href="#" data-user="layer"><img src="img/layer.svg"></a></li>
-      <li><a href="#" data-user="follow"><img src="img/follow.svg"></a></li>
-      <li><a href="#" data-user="route"><img src="img/route.svg"></a></li>
-      <li><a href="#" data-user="fullscreen"><img src="img/fullscreen.svg"></a></li>
-      <li><a href="#" data-user="next"><img src="img/next.svg"></a></li>
-      <li><a href="#" data-user="clear"><img src="img/clear.svg"></a></li>
-    </ul>
-  </div>-->
+
   <div id="map"></div>
   <div id="efis"></div>
+
 </body>
 </html>
 
