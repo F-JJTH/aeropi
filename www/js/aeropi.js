@@ -391,7 +391,7 @@ $(document).ready(function() {
     saveSettings(data);
   });
   
-  _plotTimer = new Date().getTime() - 1000*10; // soustract 40s for the first update
+  _plotTimer = new Date().getTime() - 1000*10; // soustract 10s for the first update
 });
 
 function calibrateEfis(){
@@ -420,7 +420,6 @@ function computeSpeed(s){
 */
 function geo_success(position){
   //position.spd = Math.round(27.78); //100kmh
-
   _lastCoord = position;
   _lastPosition = L.latLng(position.lat, position.lng);
   aircraftMarker.setLatLng(_lastPosition);
@@ -442,10 +441,6 @@ function geo_success(position){
   if(_followAircraft)
     map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 
-  /*if(position.spd > 5){
-    var nextPoint = destSphere(position.lat, position.lng, position.hdg, position.spd);
-    predictivePath.setLatLngs([_lastPosition, nextPoint]);
-  }*/
   var speed = position.spd > 5 ? position.spd : 17;
   var nextPoint = destSphere(position.lat, position.lng, position.hdg, speed);
   predictivePath.setLatLngs([_lastPosition, nextPoint]);
@@ -518,9 +513,6 @@ function destSphere(lat1, lng1, brg, spd){
  */
 
 function updatePlot(path, spd, alt, force) {
-/*  if(!Options.get("graphic-enabled"))
-	return;
-*/
   // Check that we update plot every 10s when not forced
   if(!force)
     if( (_plotTimer == null) || (new Date().getTime() - _plotTimer < 1000*10))
@@ -563,11 +555,11 @@ function updatePlot(path, spd, alt, force) {
         elevArr.push(elevation);
       });
       
-      if(/*!Options.get("distance-unit")*/ Settings.general.unit.distance == 'nm') /*Nm*/
+      if(Settings.general.unit.distance == 'nm')
         spd = Math.round(spd*0.539957);
 
       var yOffset = 200;
-      if(/*Options.get("altitude-unit")*/ Settings.general.unit.elevation == 'ft')
+      if(Settings.general.unit.elevation == 'ft')
         yOffset = 500;
       var xMax = ((Math.round(spd)*300))/1000;
       var yMax = Math.max.apply(null, elevArr)+yOffset;
@@ -582,7 +574,7 @@ function updatePlot(path, spd, alt, force) {
           min: 0,
           max: xMax,
           tickFormatter: function(v){
-            var unit = /*Options.get("distance-unit") ? "Km" : "Nm"*/ Settings.general.unit.distance;
+            var unit = Settings.general.unit.distance;
             return v + " "+unit;
           },
         },
@@ -590,7 +582,7 @@ function updatePlot(path, spd, alt, force) {
           min: 0,
           max: yMax,
           tickFormatter: function(v){
-            var unit = /*Options.get("altitude-unit") ? "Ft" : "M"*/ Settings.general.unit.elevation;
+            var unit = Settings.general.unit.elevation;
             return v + " "+unit;
           },
         },
