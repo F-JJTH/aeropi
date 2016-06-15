@@ -82,7 +82,7 @@ $(document).ready(function() {
     attributionControl: false,
   });
 
-  $.get("settings.php", {get: null}, function(data){
+  $.get("utils.php", {action: 'loadSettings'}, function(data){
     Settings = JSON.parse(data);
     $("#vs").val(Settings.efis.asi.speed.vs);
     $('#qnhInput').val(Settings.efis.alt.qnh);
@@ -388,7 +388,7 @@ $(document).ready(function() {
         break;
     }
     Settings = $.extend(true, {}, Settings, data);
-    $.get("settings.php", {set: JSON.stringify(data)});
+    saveSettings(data);
   });
   
   _plotTimer = new Date().getTime() - 1000*10; // soustract 40s for the first update
@@ -403,7 +403,11 @@ function calibrateEfis(){
     pitchoffset: attitude.pitch,
     rolloffset: attitude.roll,
   }}};
-  $.get("settings.php", {set: JSON.stringify(data)});
+  saveSettings(data);
+}
+
+function saveSettings(data){
+  $.get("utils.php", {action: 'saveSettings', v: JSON.stringify(data) });
 }
 
 function computeSpeed(s){
@@ -428,7 +432,7 @@ function geo_success(position){
 
   if( (new Date().getTime() - _saveLastPositionTimer > 1000*60) ){ //each 1 minute
     var data = {general:{lastposition:_lastPosition}};
-    $.get("settings.php", {set: JSON.stringify(data)});
+    saveSettings(data);
     _saveLastPositionTimer = new Date().getTime();
   }
 
