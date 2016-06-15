@@ -40,6 +40,10 @@
 			name: "UTC",
 			summer: false,
 		},
+		unit:{
+			alt: "ft",
+			asi: "kmh",
+		},
 	};
     var settings = $.extend(true, {}, defaults, options);
     var svgNS = "http://www.w3.org/2000/svg";
@@ -582,19 +586,6 @@
     /*
      * Public methods
      */
-	this.setSpeed = function(v) {
-		//v = parseInt(v);
-		if(v == data.spd) return;
-		data.spd = v;
-		var t = (v/20)*(settings.height/settings.asi.tickspacing);
-		asi.ladder.setAttribute("transform", "translate(0, "+t+")");
-		asi.digits.textContent = parseInt(v);
-	}
-
-	this.getSpeed = function(){
-	  return data.spd;
-	}
-
 	this.setAltitude = function(v) {
 		v = parseInt(v);
 		v = Math.round(v/10)*10;
@@ -701,35 +692,48 @@
 		settings.alt.qnh = v;
 		bottomRight.qnh.textContent = "QNH: "+v;
 	}
-	
-	this.setVneSpeed = function(v) {
+
+
+	this.setSpeed = function(v) {
+		//v = parseInt(v);
+		//if(data.spd == v) return;
+		data.spd = settings.unit.asi == 'kt' ? parseInt(v*0.539956803) : v;
+/*		v = settings.unit.asi == 'kt' ? parseInt(v*0.539956803) : v;*/
+		var t = (data.spd/20)*(settings.height/settings.asi.tickspacing);
+		asi.ladder.setAttribute("transform", "translate(0, "+t+")");
+		asi.digits.textContent = parseInt(data.spd);
+	}
+
+	this.getSpeed = function(){
+	  return data.spd;
+	}
+
+	this.setSpeedLimit = function(param, v){
 	  v = parseInt(v);
-	  settings.asi.speed.vne = v;
+	  settings.asi.speed[param] = v;
+	  this.redrawAsi();
+	  this.setSpeed(this.getSpeed());
 	}
 	
-	this.setVnoSpeed = function(v) {
-	  v = parseInt(v);
-	  settings.asi.speed.vno = v;
-	}
-	
-	this.setVfeSpeed = function(v) {
-	  v = parseInt(v);
-	  settings.asi.speed.vfe = v;
-	}
-	
-	this.setVsoSpeed = function(v) {
-	  v = parseInt(v);
-	  settings.asi.speed.vso = v;
-	}
-	
-	this.setVsSpeed = function(v) {
-	  v = parseInt(v);
-	  settings.asi.speed.vs = v;
+	this.setSpeedUnit = function(v){
+	  if(v != 'kmh' && v != 'kt')
+	    return;
+	  if(settings.unit.asi == v)
+	    return;
+
+	  settings.unit.asi = v;
+	  for(var p in settings.asi.speed){
+	    settings.asi.speed[p] = v=="kt" ? settings.asi.speed[p]*0.539956803 : settings.asi.speed[p]*1.852;
+        settings.asi.speed[p] = settings.asi.speed[p];
+	  }
+	  this.redrawAsi();
+	  this.setSpeed(this.getSpeed());
 	}
 	
 	this.setSpeedTickSpacing = function(v) {
 	  v = parseInt(v);
 	  settings.asi.tickspacing = v;
+	  this.redrawAsi();
 	}
 	
 	this.redrawAsi = function(){
@@ -741,6 +745,7 @@
 	this.setAltitudeTickSpacing = function(v) {
 	  v = parseInt(v);
 	  settings.alt.tickspacing = v;
+	  this.redrawAlt();
 	}
 	
 	this.redrawAlt = function(){

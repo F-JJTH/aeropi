@@ -100,13 +100,8 @@ $(document).ready(function() {
     $("#vacAppInMapView").prop("checked", Settings.map.overlays.vac.app).checkboxradio("refresh");
     $("input:radio[name=layerInMapView]").filter("[value="+Settings.map.layer+"]").prop("checked", true).checkboxradio("refresh");
 
-    if(Settings.general.unit.speed == "kt"){
-      $.each(Settings.efis.asi.speed, function(i, speed){
-        Settings.efis.asi.speed[i] = parseInt(speed*0.539957);
-      });
-    }
-
     efis = $("#efis").efis(Settings.efis);
+    efis.setSpeedUnit(Settings.general.unit.speed);
     efis.setPosition(Settings.general.lastposition);
     geo_success({
       "lat": Settings.general.lastposition.lat,
@@ -144,12 +139,12 @@ $(document).ready(function() {
       }
       if(data.GPS){
         data = data.GPS;
+        data.spd = 60;
         efis.setClock(data.time);
         efis.setPosition({"lat":data.lat, "lng":data.lng});
-        if(Settings.general.unit.speed == "kt")
-          data.spd = parseInt(data.spd*0.539957);
         efis.setSpeed(data.spd);
-        efis.setHeading(data.hdg);
+        if(data.spd > 2)
+          efis.setHeading(data.hdg);
         geo_success(data);
 
         var altM = data.alt/3.28084;
@@ -178,7 +173,6 @@ $(document).ready(function() {
     // Because leafletjs seems to require it
     window.dispatchEvent(new Event('resize'));
   }, 2000);
-
 
   /*
    * Attach features to the map
@@ -226,82 +220,20 @@ $(document).ready(function() {
     $("#map").css("visibility", "hidden");
   });
 
-  $('#speedTickSpacing').change(function(){
-    var v = parseInt( $(this).val() );
-    efis.setSpeedTickSpacing(v);
-    efis.redrawAsi();
-    var data = {efis: {asi: {tickspacing: v/*settings.asi.tickspacing*/}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
+  $("#qnhDecrease").on('click', function(e){
+    var v = $("#qnhInput").val();
+    v = parseInt(v)-1;
+    if(v < 950)
+      return;
+    $("#qnhInput").val(v).trigger("change");
   });
 
-  $('#altitudeTickSpacing').change(function(){
-    var v = parseInt( $(this).val() );
-    efis.setAltitudeTickSpacing(v);
-    efis.redrawAlt();
-    var data = {efis:{alt:{tickspacing: v/*settings.alt*/}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
-  });
-
-  $('#vne').change(function(){
-    var v = parseInt( $(this).val() );
-    if(Settings.general.unit.speed == "kt")
-      efis.setVneSpeed(parseInt(v*0.539957));
-    else
-      efis.setVneSpeed(v);
-    efis.redrawAsi();
-    var data = {efis:{asi:{speed:{vne:v}}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
-  });
-
-  $('#vno').change(function(){
-    var v = parseInt( $(this).val() );
-    if(Settings.general.unit.speed == "kt")
-      efis.setVnoSpeed(parseInt(v*0.539957));
-    else
-      efis.setVnoSpeed(v);
-    efis.redrawAsi();
-    var data = {efis:{asi:{speed:{vno:v}}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
-  });
-
-  $('#vfe').change(function(){
-    var v = parseInt( $(this).val() );
-    if(Settings.general.unit.speed == "kt")
-      efis.setVfeSpeed(parseInt(v*0.539957));
-    else
-      efis.setVfeSpeed(v);
-    efis.redrawAsi();
-    var data = {efis:{asi:{speed:{vfe:v}}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
-  });
-
-  $('#vso').change(function(){
-    var v = parseInt( $(this).val() );
-    if(Settings.general.unit.speed == "kt")
-      efis.setVsoSpeed(parseInt(v*0.539957));
-    else
-      efis.setVsoSpeed(v);
-    efis.redrawAsi();
-    var data = {efis:{asi:{speed:{vso:v}}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
-  });
-
-  $('#vs').change(function(){
-    var v = parseInt( $(this).val() );
-    if(Settings.general.unit.speed == "kt")
-      efis.setVsSpeed(parseInt(v*0.539957));
-    else
-      efis.setVsSpeed(v);
-    efis.redrawAsi();
-    var data = {efis:{asi:{speed:{vs:v}}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
-  });
-
-  $('#qnhInput').change(function(){
-    var v = parseInt( $(this).val() );
-    efis.setQnh(v);
-    var data = {efis:{alt:{qnh:v}}};
-    $.get("settings.php", {set: JSON.stringify(data)});
+  $("#qnhIncrease").on('click', function(e){
+    var v = $("#qnhInput").val();
+    v = parseInt(v)+1;
+    if(v > 1030)
+      return;
+    $("#qnhInput").val(v).trigger("change");
   });
 
   $('.exec-cmd').on('click', function(){
@@ -309,148 +241,128 @@ $(document).ready(function() {
     $.get(url);
   });
 
-  $("#MapSettings input").on('change', function(){
+  $("#settingsDialog input, #settingsDialog select, #qnhInput").on('change', function(){
     var param = $(this).attr('name');
-    var type = $(this).attr('type');
-    var val = $(this).val();
+    var type  = $(this).attr('type');
+    var val   = type == 'checkbox' ? $(this).is(':checked') : $(this).val();
+    var data  = undefined;
 
-    if(type == 'checkbox')
-      val = $(this).is(':checked');
+    switch(param){
+      case 'qnhInput':
+        efis.setQnh(val);
+        data = {efis:{alt:{qnh:parseInt(val)}}};
+        break;
 
-    if(param == 'compassInMapView'){
-      if(val)
-        $("#hdg").css("z-index", 40);
-      else
-        $("#hdg").css("z-index", 39);
-      var data = {map:{display:{hdg:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
+      case 'vs':
+      case 'vso':
+      case 'vfe':
+      case 'vno':
+      case 'vne':
+        efis.setSpeedLimit(param, computeSpeed(val));
+        var speed = {};
+        speed[param] = parseInt(val);
+        data = {'efis':{'asi':{'speed':speed}}};
+        break;
+
+      case 'speedTickSpacing':
+        efis.setSpeedTickSpacing(val);
+        data = {efis: {asi: {tickspacing: parseInt(val)}}};
+        break;
+
+      case 'altitudeTickSpacing':
+        efis.setAltitudeTickSpacing(val);
+        data = {efis: {alt: {tickspacing: parseInt(val)}}};
+        break;
+
+      case 'compassInMapView':
+        if(val)
+          $("#hdg").css("z-index", 40);
+        else
+          $("#hdg").css("z-index", 39);
+        data = {map:{display:{hdg:val}}};
+        break;
+
+      case 'altitudeInMapView':
+        if(val)
+          $("#alt").css("z-index", 40);
+        else
+          $("#alt").css("z-index", 39);
+        data = {map:{display:{alt:val}}};
+        break;
+
+      case 'speedInMapView':
+        if(val)
+          $("#asi").css("z-index", 40);
+        else
+          $("#asi").css("z-index", 39);
+        data = {map:{display:{asi:val}}};
+        break;
+
+      case 'trackInMapView':
+        if(val)
+          trackPath.addTo(map);
+        else
+          map.removeLayer(trackPath);
+        data = {map:{display:{track:val}}};
+        break;
+
+      case 'vacLndInMapView':
+        if(val)
+          map.addLayer(overlays["France: VAC Landing"]);
+        else
+          map.removeLayer(overlays["France: VAC Landing"]);
+        data = {map:{overlays:{vac:{lnd:val}}}};
+        break;
+
+      case 'vacAppInMapView':
+        if(val)
+          map.addLayer(overlays["France: VAC Approach"]);
+        else
+          map.removeLayer(overlays["France: VAC Approach"]);
+        data = {map:{overlays:{vac:{app:val}}}};
+        break;
+
+      case 'layerInMapView':
+        if(val == 'cartabossy'){
+          map.removeLayer(baseLayers["France: OACI 2016"]);
+          map.addLayer(baseLayers["France: Cartabossy 2015"]);
+        }
+        if(val == 'oaci'){
+          map.removeLayer(baseLayers["France: Cartabossy 2015"]);
+          map.addLayer(baseLayers["France: OACI 2016"]);
+        }
+        data = {map:{layer:val}};
+        break;
+
+      case 'timezone':
+        efis.setTimezone(val);
+        data = {efis:{timezone:{offset:parseInt(val)}}};
+        break;
+
+      case 'summer':
+        efis.setSummer(val);
+        data = {efis:{timezone:{summer:val}}};
+        break;
+
+      case 'speedUnit':
+        efis.setSpeedUnit(val);
+        data = {general:{unit:{speed:val}}};
+        break;
+
+      case 'elevationUnit':
+        data = {general:{unit:{elevation:val}}};
+        break;
+
+      case 'altitudeUnit':
+        data = {general:{unit:{altitude:val}}};
+        break;
+
+      case 'distanceUnit':
+        data = {general:{unit:{distance:val}}};
+        break;
     }
-
-    if(param == 'altitudeInMapView'){
-      if(val)
-        $("#alt").css("z-index", 40);
-      else
-        $("#alt").css("z-index", 39);
-      var data = {map:{display:{alt:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'speedInMapView'){
-      if(val)
-        $("#asi").css("z-index", 40);
-      else
-        $("#asi").css("z-index", 39);
-      var data = {map:{display:{asi:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'trackInMapView'){
-      if(val)
-        trackPath.addTo(map);
-      else
-        map.removeLayer(trackPath);
-      var data = {map:{display:{track:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'vacLndInMapView'){
-      if(val)
-        map.addLayer(overlays["France: VAC Landing"]);
-      else
-        map.removeLayer(overlays["France: VAC Landing"]);
-      var data = {map:{overlays:{vac:{lnd:val}}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'vacAppInMapView'){
-      if(val)
-        map.addLayer(overlays["France: VAC Approach"]);
-      else
-        map.removeLayer(overlays["France: VAC Approach"]);
-      var data = {map:{overlays:{vac:{app:val}}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'layerInMapView'){
-      if(val == 'cartabossy'){
-        map.removeLayer(baseLayers["France: OACI 2016"]);
-        map.addLayer(baseLayers["France: Cartabossy 2015"]);
-      }
-      if(val == 'oaci'){
-        map.removeLayer(baseLayers["France: Cartabossy 2015"]);
-        map.addLayer(baseLayers["France: OACI 2016"]);
-      }
-      var data = {map:{layer:val}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-  });
-
-  $("#GeneralSettings input, #GeneralSettings select").on('change', function(){
-    var param = $(this).attr('name');
-    var type = $(this).attr('type');
-    var val = $(this).val();
-    if(type == 'checkbox')
-      val = $(this).is(':checked');
-    if(type == 'number')
-      val = parseInt(val);
-
-    if(param == 'timezone'){
-      efis.setTimezone(val);
-      var data = {efis:{timezone:{offset:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'summer'){
-      efis.setSummer(val);
-      var data = {efis:{timezone:{summer:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'speedUnit'){
-      $.get("settings.php", {get: null}, function(data){
-        var S = JSON.parse(data);
-        var mul = 1;
-        if(val == 'kt')
-          mul = 0.539957;
-        efis.setVneSpeed(parseInt(S.efis.asi.speed.vne*mul));
-        efis.setVnoSpeed(parseInt(S.efis.asi.speed.vno*mul));
-        efis.setVfeSpeed(parseInt(S.efis.asi.speed.vfe*mul));
-        efis.setVsoSpeed(parseInt(S.efis.asi.speed.vso*mul));
-        efis.setVsSpeed(parseInt(S.efis.asi.speed.vs*mul));
-        efis.redrawAsi();
-      });
-      Settings.general.unit.speed = val;
-      var data = {general:{unit:{speed:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'elevationUnit'){
-      var data = {general:{unit:{elevation:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'altitudeUnit'){
-      Settings.general.unit.altitude = val;
-      var data = {general:{unit:{altitude:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-
-    if(param == 'distanceUnit'){
-      var data = {general:{unit:{distance:val}}};
-      $.get("settings.php", {set: JSON.stringify(data)});
-    }
-  });
-
-  $("#qnhDecrease").on('click', function(e){
-    var v = $("#qnhInput").val();
-    v = parseInt(v)-1;
-    $("#qnhInput").val(v).trigger("change");
-  });
-
-  $("#qnhIncrease").on('click', function(e){
-    var v = $("#qnhInput").val();
-    v = parseInt(v)+1;
-    $("#qnhInput").val(v).trigger("change");
+    Settings = $.extend(true, {}, Settings, data);
+    $.get("settings.php", {set: JSON.stringify(data)});
   });
 });
 
@@ -464,6 +376,11 @@ function calibrateEfis(){
     rolloffset: attitude.roll,
   }}};
   $.get("settings.php", {set: JSON.stringify(data)});
+}
+
+function computeSpeed(s){
+  s = Settings.general.unit.speed == "kt" ? s*0.539957 : s;
+  return parseInt(s);
 }
 
 /*
@@ -480,7 +397,8 @@ function geo_success(position, force) {
   _lastCoord = position;
   force = (typeof force === "undefined") ? false : force; // force to update Plot
   aircraftMarker.setLatLng(_lastPosition);
-  aircraftMarker.setHeading(_hdg);
+  if(_spd > 5)
+    aircraftMarker.setHeading(_hdg);
 
   if(_saveLastPositionTimer == null) _saveLastPositionTimer = new Date().getTime();
   if( (new Date().getTime() - _saveLastPositionTimer > 1000*60) ){ //each 1 minute
@@ -496,7 +414,7 @@ function geo_success(position, force) {
     gotoPath.addTo(map);
     /* ETA computation */
     var nextWptDist = Math.round(p[0].distanceTo(p[1]))/1000;
-    var nextWptETA = (nextWptDist/efis.getSpeed())*60;
+    var nextWptETA = (nextWptDist/_spd)*60;
     nextWptETA = Math.round(nextWptETA*10)/10;
     var totalDist = 0;
     var tmp = null;
@@ -508,12 +426,13 @@ function geo_success(position, force) {
       totalDist += Math.round(ll.distanceTo(tmp))/1000;
       tmp = ll;
     });
+
     var spd = efis.getSpeed();
 
     if(spd < 5){
       efis.setETA("Infinity");
     }else{
-      var totalETA = (totalDist/efis.getSpeed())*60;
+      var totalETA = (totalDist/_spd)*60;
       totalETA = Math.round(totalETA*10)/10;
       var gotoDurationStr = "";
       var totalSec = totalETA*60;
@@ -529,8 +448,10 @@ function geo_success(position, force) {
   if(_followAircraft)
     map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 
-  var nextPoint = destSphere(_lat, _lng, _hdg, _spd > 5 ? _spd : 17);
-  predictivePath.setLatLngs([_lastPosition, nextPoint]);
+  if(_spd > 5){
+    var nextPoint = destSphere(_lat, _lng, _hdg, _spd);
+    predictivePath.setLatLngs([_lastPosition, nextPoint]);
+  }
 }
 
 function pad(n){return (n < 10) ? ("0" + n) : n;}
@@ -540,7 +461,7 @@ function pad(n){return (n < 10) ? ("0" + n) : n;}
 */
 function destSphere(lat1, lng1, brg, spd){
   var R    = 6372.7976; // Earth radius
-  var dist = (spd*0.3)/R; // 5 minutes
+  var dist = ((spd*5)/60)/R; // 5 minutes
   var lat1 = lat1*Math.PI/180;
   var lng1 = lng1*Math.PI/180;
   var brg  = brg*Math.PI/180;

@@ -28,12 +28,12 @@
 <body>
 
   <div data-role="popup" data-dismissible="false" id="settingsQnh">
-    <div data-role="header" data-theme="a"><h2>QNH settings</h2></div>
+    <div data-role="header" data-theme="a"><h2>QNH (hPa)</h2></div>
     <div role="main">
       <table>
         <tr>
           <td><button id="qnhDecrease">-</button></td>
-          <td><input type="text" id="qnhInput" name="qnhInput" min="950" max="1030" disabled style="width:116px; text-align:center; font-size:24px;"></td>
+          <td><input type="text" id="qnhInput" name="qnhInput" disabled style="width:116px; text-align:center; font-size:24px;"></td>
           <td><button id="qnhIncrease">+</button></td>
         </tr>
       </table>
