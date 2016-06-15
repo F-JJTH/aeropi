@@ -34,7 +34,7 @@
         "alt": {
             "tickspacing": 6,
             "maxalt": 25000,
-            "qnh": 1004
+            "qnh": 1007
         },
         "ai": {
             "color": {
@@ -52,12 +52,14 @@
         "timezone": {
             "summer": false,
             "offset": 1
-        }
+        },
+        "etaType": "wp",
+        "dstType": "wp"
     },
     "general": {
         "lastposition": {
-            "lat": 44.111018333,
-            "lng": 5.10739
+            "lat": 44.111078333,
+            "lng": 5.107541667
         },
         "unit": {
             "altitude": "ft",

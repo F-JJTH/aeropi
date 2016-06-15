@@ -43,7 +43,10 @@
 		unit:{
 			alt: "ft",
 			asi: "kmh",
+			dst: "nm",
 		},
+		etaType: 'total',
+		dstType: 'wp',
 	};
     var settings = $.extend(true, {}, defaults, options);
     var svgNS = "http://www.w3.org/2000/svg";
@@ -436,13 +439,13 @@
 	function _createBottomLeftTips() {
 		var main = document.createElementNS(svgNS, "svg");
 		main.setAttribute("id", "bottomLeftTips");
-		main.setAttribute("width", (settings.width-(settings.width/2+16))/2);
+		main.setAttribute("width", settings.width/3.5);
 		main.setAttribute("height", settings.height-(rectHeight+settings.height/10)+8);
 		main.setAttribute("style", "position:absolute; top:"+(rectHeight+14+topPos)+"px; z-index:40;");
         // Bg Digit
         elem = document.createElementNS(svgNS, "path");
 		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
-        elem.setAttribute("d", "M3 4 h182 v22 h-182 Z");
+        elem.setAttribute("d", "M3 4 h142 v22 h-142 Z");
         elem.setAttribute("filter", "url(#shadowSmall)");
         main.appendChild(elem);
         main.clock = document.createElementNS(svgNS, "text");
@@ -454,15 +457,29 @@
         // Bg Digit
         elem = document.createElementNS(svgNS, "path");
 		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
-        elem.setAttribute("d", "M3 32 h182 v22 h-182 Z");
+        elem.setAttribute("d", "M3 32 h200 v22 h-200 Z");
         elem.setAttribute("filter", "url(#shadowSmall)");
         main.appendChild(elem);
         main.eta = document.createElementNS(svgNS, "text");
         main.eta.setAttribute("style", "font-size:22px; fill:white");
         main.eta.setAttribute("x", 6);
         main.eta.setAttribute("y", 50);
+        main.eta.setAttribute("id", "eta-box");
         main.eta.textContent = "ETA: 00:00:00";
         main.appendChild(main.eta);
+        // Bg Digit
+        elem = document.createElementNS(svgNS, "path");
+		elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
+        elem.setAttribute("d", "M3 60 h184 v22 h-184 Z");
+        elem.setAttribute("filter", "url(#shadowSmall)");
+        main.appendChild(elem);
+        main.dst = document.createElementNS(svgNS, "text");
+        main.dst.setAttribute("style", "font-size:22px; fill:white");
+        main.dst.setAttribute("x", 6);
+        main.dst.setAttribute("y", 78);
+        main.dst.setAttribute("id", "dst-box");
+        main.dst.textContent = "DST: 0km";
+        main.appendChild(main.dst);
 
 		return main;
 	}
@@ -657,7 +674,58 @@
 	}
 	
 	this.setETA = function(v){
-	  bottomLeft.eta.textContent = "ETA: "+v;
+	  data.eta = v;
+	  var hms = {h:0, m:0, s:0};
+      var t = settings.etaType == 'wp' ? ' WP' : '';
+	  if(data.eta == 'Infinity'){
+	    bottomLeft.eta.textContent = 'ETA'+t+': Infinity';
+	    return;
+	  }
+      if(data.eta != 0){
+        var totalSec = data.eta[settings.etaType]*60;
+        hms = {
+          h: parseInt(totalSec/3600)%24,
+          m: parseInt(totalSec/60)%60,
+          s: totalSec%60
+        };
+      }
+	  bottomLeft.eta.textContent = 'ETA'+t+': '+this.pad(hms.h)+":"+this.pad(hms.m)+":"+this.pad(hms.s);
+	}
+	
+	this.pad = function(n){
+	  return (n < 10) ? ("0" + n) : n;
+	}
+	
+	this.setDST = function(v){
+	  data.dst = v;
+	  var distance = 0;
+	  var t = settings.dstType == 'wp' ? ' WP' : '';
+      if(data.dst != 0){
+	    distance = data.dst[settings.dstType];
+	    if(settings.unit.dst == 'nm')
+	      distance = distance * 0.539956803;
+      }
+	  bottomLeft.dst.textContent = 'DST'+t+': '+Math.round(distance, 1)+settings.unit.dst;
+	}
+	
+	this.setDistanceUnit = function(v){
+	  if(v != 'km' && v != 'nm')
+	    return;
+	  if(settings.unit.dst == v)
+	    return;
+
+	  settings.unit.dst = v;
+	  this.setDST(data.dst);
+	}
+	
+	this.setETAType = function(v){
+	  settings.etaType = v;
+	  this.setETA(data.eta);
+	}
+	
+	this.setDSTType = function(v){
+	  settings.dstType = v;
+	  this.setDST(data.dst);
 	}
 
 	this.setTimezone = function(v){
@@ -692,7 +760,6 @@
 		settings.alt.qnh = v;
 		bottomRight.qnh.textContent = "QNH: "+v;
 	}
-
 
 	this.setSpeed = function(v) {
 		//v = parseInt(v);
@@ -757,7 +824,7 @@
 	  alt.digits.textContent = parseInt(data.alt);
 	}
 
-	var data = {alt:0, qnh:0, spd:0, hdg:0, pitch:0, roll:0};
+	var data = {alt:0, qnh:0, spd:0, hdg:0, pitch:0, roll:0, eta:0, dst:0};
 	var parent = $(this);
 	var ai     = _createAi();
 	parent.append(ai);

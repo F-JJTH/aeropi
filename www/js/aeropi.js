@@ -102,6 +102,9 @@ $(document).ready(function() {
 
     efis = $("#efis").efis(Settings.efis);
     efis.setSpeedUnit(Settings.general.unit.speed);
+    efis.setDistanceUnit(Settings.general.unit.distance);
+    efis.setETA(0);
+    efis.setDST(0);
     efis.setPosition(Settings.general.lastposition);
     geo_success({
       "lat": Settings.general.lastposition.lat,
@@ -139,7 +142,7 @@ $(document).ready(function() {
       }
       if(data.GPS){
         data = data.GPS;
-        data.spd = 60;
+        //data.spd = 60;
         efis.setClock(data.time);
         efis.setPosition({"lat":data.lat, "lng":data.lng});
         efis.setSpeed(data.spd);
@@ -166,6 +169,18 @@ $(document).ready(function() {
 
     $('#qnh-box').on('click', function(e){
       $('#settingsQnh').popup('open');
+    });
+
+    $('#eta-box').on('click', function(e){
+      var t = Settings.efis.etaType == 'wp' ? 'total' : 'wp';
+      Settings.efis.etaType = t;
+      efis.setETAType(t);
+    });
+
+    $('#dst-box').on('click', function(e){
+      var t = Settings.efis.dstType == 'wp' ? 'total' : 'wp';
+      Settings.efis.dstType = t;
+      efis.setDSTType(t);
     });
   });
 
@@ -358,6 +373,7 @@ $(document).ready(function() {
         break;
 
       case 'distanceUnit':
+        efis.setDistanceUnit(val);
         data = {general:{unit:{distance:val}}};
         break;
     }
@@ -386,72 +402,78 @@ function computeSpeed(s){
 /*
 * Executed on geolocation success
 */
-function geo_success(position, force) {
-  var _lat = position.lat;
-  var _lng = position.lng;
-  var _alt = position.alt;
-  var _hdg = position.hdg;
-  var _spd = position.spd;
-  //_spd = Math.round(27.78); //100kmh
-  _lastPosition = L.latLng(_lat, _lng);
-  _lastCoord = position;
-  force = (typeof force === "undefined") ? false : force; // force to update Plot
-  aircraftMarker.setLatLng(_lastPosition);
-  if(_spd > 5)
-    aircraftMarker.setHeading(_hdg);
+function geo_success(position){
+  //position.spd = Math.round(27.78); //100kmh
 
-  if(_saveLastPositionTimer == null) _saveLastPositionTimer = new Date().getTime();
+  _lastCoord = position;
+  _lastPosition = L.latLng(position.lat, position.lng);
+  aircraftMarker.setLatLng(_lastPosition);
+  if(position.spd > 5)
+    aircraftMarker.setHeading(position.hdg);
+
+  if(_saveLastPositionTimer == null)
+    _saveLastPositionTimer = new Date().getTime();
+
   if( (new Date().getTime() - _saveLastPositionTimer > 1000*60) ){ //each 1 minute
     var data = {general:{lastposition:_lastPosition}};
     $.get("settings.php", {set: JSON.stringify(data)});
     _saveLastPositionTimer = new Date().getTime();
   }
 
-  if(_gotoPositions.length != 0){
-    var p = [_lastPosition];
-    p = p.concat(_gotoPositions);
-    gotoPath.setLatLngs(p);
-    gotoPath.addTo(map);
-    /* ETA computation */
-    var nextWptDist = Math.round(p[0].distanceTo(p[1]))/1000;
-    var nextWptETA = (nextWptDist/_spd)*60;
-    nextWptETA = Math.round(nextWptETA*10)/10;
-    var totalDist = 0;
-    var tmp = null;
-    $.each(p, function(i, ll){
-      if(tmp == null){
-        tmp = ll;
-        return;
-      }
-      totalDist += Math.round(ll.distanceTo(tmp))/1000;
-      tmp = ll;
-    });
-
-    var spd = efis.getSpeed();
-
-    if(spd < 5){
-      efis.setETA("Infinity");
-    }else{
-      var totalETA = (totalDist/_spd)*60;
-      totalETA = Math.round(totalETA*10)/10;
-      var gotoDurationStr = "";
-      var totalSec = totalETA*60;
-      var hh = parseInt(totalSec/3600)%24;
-      var mm = parseInt(totalSec/60)%60;
-      var ss = totalSec%60;
-      gotoDurationStr += pad(hh)+":"+pad(mm)+":"+pad(ss);
-      efis.setETA(gotoDurationStr);
-    }
-  }
+  updateFlightPlan(position.spd);
   trackPath.addLatLng(_lastPosition);
 
   if(_followAircraft)
     map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 
-  if(_spd > 5){
-    var nextPoint = destSphere(_lat, _lng, _hdg, _spd);
+  if(position.spd > 5){
+    var nextPoint = destSphere(position.lat, position.lng, position.hdg, position.spd);
     predictivePath.setLatLngs([_lastPosition, nextPoint]);
   }
+}
+
+function getDistanceFromNextWpt(path){
+  var points = path.getLatLngs();
+  return Math.round( points[0].distanceTo(points[1]) ) / 1000;
+}
+
+function getDistanceInPath(path){
+  var points = path.getLatLngs();
+  var dist = 0;
+  for(var i=0; i<(points.length-1); i++){
+    dist += Math.round( points[i].distanceTo(points[i+1]) ) / 1000;
+  }
+  return dist;
+}
+
+function getETAFromDistanceAndSpeed(distance, speed){
+  var eta = (distance/speed)*60;
+  return Math.round(eta*10)/10;
+}
+
+function updateFlightPlan(currentSpeed){
+  if(_gotoPositions.length == 0)
+    return;
+
+  var p = [_lastPosition];
+  p = p.concat(_gotoPositions);
+  gotoPath.setLatLngs(p);
+  gotoPath.addTo(map);
+
+  /* ETA computation */
+  var nextWptDST = getDistanceFromNextWpt(gotoPath);
+  var nextWptETA = getETAFromDistanceAndSpeed(nextWptDST, currentSpeed);
+
+  var totalDST = getDistanceInPath(gotoPath);
+  var totalETA = getETAFromDistanceAndSpeed(totalDST, currentSpeed);
+
+  efis.setDST({"wp": nextWptDST, "total": totalDST});
+
+  if(currentSpeed < 5){
+    efis.setETA("Infinity");
+    return;
+  }
+  efis.setETA({"wp": nextWptETA, "total": totalETA});
 }
 
 function pad(n){return (n < 10) ? ("0" + n) : n;}

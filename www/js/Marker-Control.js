@@ -204,7 +204,8 @@ L.ClearControl = L.Control.extend({
       _gotoPositions = [];
       geo_success(_lastCoord);
       map.removeControl(clearControl);
-      efis.setETA("00:00:00");
+      efis.setETA(0);
+      efis.setDST(0);
       if(map.hasNextControl)
         map.removeControl(nextControl);
       return true;
