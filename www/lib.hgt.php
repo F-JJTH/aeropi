@@ -166,7 +166,7 @@ function getElevations($path_req, $samples_req){
   global $SRTM3_dir;
   $path = parsePath($path_req);
   $segments = getSampledSegmentsPoints($path, $samples_req);
-  $res = array();
+  $results = array();
   foreach($segments as &$segment){
     foreach($segment['points'] as &$point){
       $cell = getCellFromPoint($point);
@@ -175,7 +175,7 @@ function getElevations($path_req, $samples_req){
       fseek($fp, ($cell*2)-2);
       $bytes = fread($fp, 2);
       $elevation = unpack('n', $bytes)[1];
-      $res[] = array(
+      $results[] = array(
         'elevation' => $elevation,
         'location' => $point,
         'resolution' => 1

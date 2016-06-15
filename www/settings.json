@@ -16,7 +16,7 @@
     },
     "efis": {
         "asi": {
-            "tickspacing": 5,
+            "tickspacing": 6,
             "speed": {
                 "vne": 260,
                 "vno": 170,
@@ -34,7 +34,7 @@
         "alt": {
             "tickspacing": 6,
             "maxalt": 25000,
-            "qnh": 1007
+            "qnh": 1021
         },
         "ai": {
             "color": {
@@ -46,8 +46,8 @@
             "magneticdeclinaison": 0
         },
         "attitude": {
-            "pitchoffset": 163.05,
-            "rolloffset": -0.6
+            "pitchoffset": 162.05,
+            "rolloffset": -0.25
         },
         "timezone": {
             "summer": false,
@@ -58,13 +58,13 @@
     },
     "general": {
         "lastposition": {
-            "lat": 44.111078333,
-            "lng": 5.107541667
+            "lat": 44.1111,
+            "lng": 5.107535
         },
         "unit": {
             "altitude": "ft",
             "elevation": "ft",
-            "distance": "km",
+            "distance": "nm",
             "speed": "kmh"
         }
     }

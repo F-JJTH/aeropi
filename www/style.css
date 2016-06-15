@@ -21,6 +21,18 @@ visibility: hidden;
 position: absolute;
 }
 
+#groundElevation{
+position: absolute;
+z-index: 45;
+width: 80%;
+height: 25%;
+top: 75%;
+left: 10%;
+background: rgba( 255, 255, 255, 0.8);
+border-radius: 15px;
+visibility: hidden;
+}
+
 .leaflet-control{
 display: block;
 background: rgba(255, 255, 255, 0.8);

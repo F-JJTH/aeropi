@@ -13,8 +13,7 @@ if( isset($_GET["action"])) {
 
   if($action == "elevation"){
     include_once('lib.hgt.php');
-    $results = getElevations($_GET['path'], $_GET['samples']);
-    echo $results;
+    echo getElevations($_GET['path'], $_GET['samples']);
   }
 }
 ?>

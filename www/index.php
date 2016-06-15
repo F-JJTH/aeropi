@@ -17,7 +17,9 @@
   <script src="js/Marker-Control.js"></script>
   <script src="js/jquery.efis.js"></script>
   <script src="js/aeropi.js"></script>
-
+  <script src="js/jquery.flot.min.js"></script>
+  <script src="js/jquery.flot.time.js"></script>
+  <script src="js/jquery.flot.threshold.js"></script>
   <link rel="stylesheet" type="text/css" href="instruments.css"></link>
   <link rel="stylesheet" type="text/css" href="leaflet.1.0.1.css"></link>
   <!--<link rel="stylesheet" type="text/css" href="js/jquery-ui.1.11.4.min.css"></link>-->
@@ -107,12 +109,15 @@
           <div class="ui-corner-all custom-corners">
             <div class="ui-bar ui-bar-a"><h3>Power</h3></div>
             <div class="ui-body ui-body-a">
-              <div class="ui-grid-a">
+              <div class="ui-grid-b">
                 <div class="ui-block-a">
                   <button href="utils.php?action=reboot" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Reboot</button>
                 </div>
                 <div class="ui-block-b">
                   <button href="utils.php?action=shutdown" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Shutdown</button>
+                </div>
+                <div class="ui-block-c">
+                  <button href="#" onclick="$('#settingsDialog').popup('close'); location.reload(true); return false;" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Reload</button>
                 </div>
               </div>
             </div>
@@ -249,6 +254,7 @@
 
   <div id="map"></div>
   <div id="efis"></div>
+  <div id="groundElevation"></div>
 
 </body>
 </html>

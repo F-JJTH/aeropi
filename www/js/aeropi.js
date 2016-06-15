@@ -33,6 +33,7 @@ var overlays = {
 };
 
 var _plot = null;
+var _plotTimer = null;
 var _activeTab = null;
 var _lastCoord = null;
 var _gotoPositions = [];
@@ -99,6 +100,10 @@ $(document).ready(function() {
     $("#vacLndInMapView").prop("checked", Settings.map.overlays.vac.lnd).checkboxradio("refresh");
     $("#vacAppInMapView").prop("checked", Settings.map.overlays.vac.app).checkboxradio("refresh");
     $("input:radio[name=layerInMapView]").filter("[value="+Settings.map.layer+"]").prop("checked", true).checkboxradio("refresh");
+    $("#altitudeUnit").val(Settings.general.unit.altitude).slider("refresh");
+    $("#elevationUnit").val(Settings.general.unit.elevation).slider("refresh");
+    $("#speedUnit").val(Settings.general.unit.speed).slider("refresh");
+    $("#distanceUnit").val(Settings.general.unit.distance).slider("refresh");
 
     efis = $("#efis").efis(Settings.efis);
     efis.setSpeedUnit(Settings.general.unit.speed);
@@ -165,6 +170,11 @@ $(document).ready(function() {
       $("#ai").css("visibility", "hidden");
       $("#ts").css("visibility", "hidden");
       $("#map").css("visibility", "visible");
+    });
+    
+    $('#alt').on('click', function(){
+      var v = $('#groundElevation').css('visibility') == 'hidden' ? 'visible' : 'hidden';
+      $('#groundElevation').css('visibility', v);
     });
 
     $('#qnh-box').on('click', function(e){
@@ -380,6 +390,8 @@ $(document).ready(function() {
     Settings = $.extend(true, {}, Settings, data);
     $.get("settings.php", {set: JSON.stringify(data)});
   });
+  
+  _plotTimer = new Date().getTime() - 1000*10; // soustract 40s for the first update
 });
 
 function calibrateEfis(){
@@ -426,10 +438,14 @@ function geo_success(position){
   if(_followAircraft)
     map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 
-  if(position.spd > 5){
+  /*if(position.spd > 5){
     var nextPoint = destSphere(position.lat, position.lng, position.hdg, position.spd);
     predictivePath.setLatLngs([_lastPosition, nextPoint]);
-  }
+  }*/
+  var speed = position.spd > 5 ? position.spd : 17;
+  var nextPoint = destSphere(position.lat, position.lng, position.hdg, speed);
+  predictivePath.setLatLngs([_lastPosition, nextPoint]);
+  updatePlot(predictivePath, speed, position.alt, false);
 }
 
 function getDistanceFromNextWpt(path){
@@ -483,7 +499,7 @@ function pad(n){return (n < 10) ? ("0" + n) : n;}
 */
 function destSphere(lat1, lng1, brg, spd){
   var R    = 6372.7976; // Earth radius
-  var dist = ((spd*5)/60)/R; // 5 minutes
+  var dist = (spd*0.3)/R; // 5 minutes
   var lat1 = lat1*Math.PI/180;
   var lng1 = lng1*Math.PI/180;
   var brg  = brg*Math.PI/180;
@@ -492,3 +508,109 @@ function destSphere(lat1, lng1, brg, spd){
   return L.latLng(lat*180/Math.PI, lng*180/Math.PI);
 }
 
+
+/*
+ * Update plot draw
+ */
+
+function updatePlot(path, spd, alt, force) {
+/*  if(!Options.get("graphic-enabled"))
+	return;
+*/
+  // Check that we update plot every 10s when not forced
+  if(!force)
+    if( (_plotTimer == null) || (new Date().getTime() - _plotTimer < 1000*10))
+      return;
+
+  _plotTimer = new Date().getTime();
+
+  var positions = path.getLatLngs();
+  var lat1 = positions[0].lat;
+  var lon1 = positions[0].lng;
+  var lat2 = positions[1].lat;
+  var lon2 = positions[1].lng;
+  var altitude = alt;
+  var pathLength = Math.round(positions[0].distanceTo(positions[1])/100);
+
+  $.ajax({
+    type: 'GET',
+    url: 'utils.php?action=elevation',
+    cache: false,
+    data: {
+      path: lat1+","+lon1+"|"+lat2+","+lon2,
+      samples: pathLength,
+    },
+    dataType: 'json',
+    success: function (data) {
+      if(Settings.general.unit.elevation == 'm')
+        altitude = Math.round(altitude / 3.2808);
+      var elevArr = [altitude];
+      var elevationData = [];
+      $.each(data.results, function (index, element) {
+        var point = new L.latLng(element.location.lat, element.location.lng);
+        var distance = Math.round(positions[0].distanceTo(point))/1000;
+        var elevation = Math.round(element.elevation);
+        if(Settings.general.unit.distance == 'nm')
+          distance = distance * 0.539957;
+        if(Settings.general.unit.elevation == 'ft')
+          elevation = Math.round(elevation * 3.2808);
+
+        elevationData.push([distance, elevation]);
+        elevArr.push(elevation);
+      });
+      
+      if(/*!Options.get("distance-unit")*/ Settings.general.unit.distance == 'nm') /*Nm*/
+        spd = Math.round(spd*0.539957);
+
+      var yOffset = 200;
+      if(/*Options.get("altitude-unit")*/ Settings.general.unit.elevation == 'ft')
+        yOffset = 500;
+      var xMax = ((Math.round(spd)*300))/1000;
+      var yMax = Math.max.apply(null, elevArr)+yOffset;
+
+      var options = {
+        canvas: true,
+        series: {
+          lines: { show: true },
+          points: { show: false },
+        },
+        xaxis: {
+          min: 0,
+          max: xMax,
+          tickFormatter: function(v){
+            var unit = /*Options.get("distance-unit") ? "Km" : "Nm"*/ Settings.general.unit.distance;
+            return v + " "+unit;
+          },
+        },
+        yaxis: {
+          min: 0,
+          max: yMax,
+          tickFormatter: function(v){
+            var unit = /*Options.get("altitude-unit") ? "Ft" : "M"*/ Settings.general.unit.elevation;
+            return v + " "+unit;
+          },
+        },
+      };
+
+      var currentAlt = [[0, altitude], [xMax, altitude]];
+      _plot = $.plot($('#groundElevation'),
+        [
+          {
+            color: "#f00",
+            data: elevationData,
+            lines:{
+              show: true,
+              fill: true,
+              fillColor: "rgba(0,255,0,0.2)"
+            },
+            threshold: {
+              below: altitude,
+              color: '#0f0'
+            }
+          },
+          {color: "#00f", data: currentAlt},
+        ],
+        options);
+    }
+  });
+}
