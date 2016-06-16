@@ -34,12 +34,12 @@ visibility: hidden;
 }
 
 .leaflet-control{
-display: block;
+/*display: block;*/
 background: rgba(255, 255, 255, 0.8);
 box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
 border-radius: 5px;
-min-width:50px;
-min-height:50px;
+min-width:48px;
+max-height:48px;
 cursor: pointer;
 }
 

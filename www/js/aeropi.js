@@ -56,6 +56,32 @@ var trackPath       = L.polyline(_defaultPosition, {color: '#ff0000', opacity: 0
 var plotHoverMarker = L.circleMarker(_defaultPosition, {color: '#ff0000', radius: 5});
 var trackPathHist   = L.polyline(_defaultPosition, {color: '#ff0000', opacity: 0.4, clickable: false});
 
+var M = 0.0289644;
+var g = 9.80665;
+var R = 8.31432;
+var p_default = 101325;
+var t_default = 288.15;
+
+function altcalc(a, k, i) {
+  if ((a / i) < (101325 / 22632.1)) {
+    var d = - 0.0065;
+    var e = 0;
+    var j = Math.pow((i / a), (R * d) / (g * M));
+    return e + ((k * ((1 / j) - 1)) / d)
+  } else {
+    if ((a / i) < (101325 / 5474.89)) {
+      var e = 11000;
+      var b = k - 71.5;
+      var f = (R * b * (Math.log(i / a))) / (( - g) * M);
+      var l = 101325;
+      var c = 22632.1;
+      var h = ((R * b * (Math.log(l / c))) / (( - g) * M)) + e;
+      return h + f
+    }
+  }
+  return NaN
+}
+
 $(document).ready(function() {
   $('#settingsDialog').popup({
     afterclose: function(e, ui){
@@ -125,14 +151,14 @@ $(document).ready(function() {
       $("#asi").css("z-index", 39);
     if(!Settings.map.display.hdg)
       $("#hdg").css("z-index", 39);
-    if(Settings.map.overlays.vac.lnd)
-      map.addLayer(overlays["France: VAC Landing"]);
-    if(Settings.map.overlays.vac.app)
-      map.addLayer(overlays["France: VAC Approach"]);
     if(Settings.map.layer == 'oaci')
       map.addLayer(baseLayers["France: OACI 2016"]);
     if(Settings.map.layer == 'cartabossy')
       map.addLayer(baseLayers["France: Cartabossy 2015"]);
+    if(Settings.map.overlays.vac.lnd)
+      map.addLayer(overlays["France: VAC Landing"]);
+    if(Settings.map.overlays.vac.app)
+      map.addLayer(overlays["France: VAC Approach"]);
 
     var ws = new WebSocket("ws://"+_hostname+":7700");
     ws.onmessage = function (e) {
@@ -155,13 +181,18 @@ $(document).ready(function() {
           efis.setHeading(data.hdg);
         geo_success(data);
 
-        var altM = data.alt/3.28084;
+/*        var altM = data.alt/3.28084;
         var P  = data.pressureAlt*100;
         var Pb = efis.getQnh()*100;
         var h = altM - 44330 * ( Math.pow(P/Pb, 0.190263237) - 1 );
         var alt = h*3.28084;
         if(Settings.general.unit.altitude == 'm')
           alt = h;
+        efis.setAltitude(alt);
+*/
+        var alt = altcalc( efis.getQnh()*100, 288.15, data.pressureAlt*100);
+        if(Settings.general.unit.altitude == 'ft')
+          alt = alt*3.28084;
         efis.setAltitude(alt);
       }
     };
@@ -248,7 +279,7 @@ $(document).ready(function() {
   $("#qnhDecrease").on('click', function(e){
     var v = $("#qnhInput").val();
     v = parseInt(v)-1;
-    if(v < 950)
+    if(v < 900)
       return;
     $("#qnhInput").val(v).trigger("change");
   });
@@ -256,7 +287,7 @@ $(document).ready(function() {
   $("#qnhIncrease").on('click', function(e){
     var v = $("#qnhInput").val();
     v = parseInt(v)+1;
-    if(v > 1030)
+    if(v > 1080)
       return;
     $("#qnhInput").val(v).trigger("change");
   });
