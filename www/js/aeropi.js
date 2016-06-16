@@ -179,7 +179,7 @@ $(document).ready(function() {
         efis.setSpeed(data.spd);
         if(data.spd > 2)
           efis.setHeading(data.hdg);
-        geo_success(data);
+
 
 /*        var altM = data.alt/3.28084;
         var P  = data.pressureAlt*100;
@@ -190,9 +190,12 @@ $(document).ready(function() {
           alt = h;
         efis.setAltitude(alt);
 */
-        var alt = altcalc( efis.getQnh()*100, 288.15, data.pressureAlt*100);
-        if(Settings.general.unit.altitude == 'ft')
-          alt = alt*3.28084;
+        var altM = altcalc( efis.getQnh()*100, 288.15, data.pressureAlt*100);
+        var alt = altM*3.28084;
+        data.alt = alt;
+        geo_success(data);
+        if(Settings.general.unit.altitude == 'm')
+          alt = altM;
         efis.setAltitude(alt);
       }
     };
@@ -262,7 +265,7 @@ $(document).ready(function() {
       return;
     if(!map.hasClearControl)
       clearControl.addTo(map);
-    if(_gotoPositions.length > 1 && !map.hasNextControl)
+    if(_gotoPositions.length > 0 && !map.hasNextControl)
       nextControl.addTo(map);
     _gotoPositions.push(e.latlng);
     geo_success(_lastCoord);
