@@ -75,6 +75,7 @@
 		main.appendChild(elem);
 		main.ladder = document.createElementNS(svgNS, "g");
 		main.ladder.setAttribute("id", "asiLadder");
+		main.ladder.style.transition = "all 1s";
 		var offsetBase = settings.height/settings.asi.tickspacing;
 		var tips = (settings.asi.speed.vne / 20) + 8;
 		tips = tips < 12 ? 12 : tips;
@@ -180,6 +181,7 @@
 		main.appendChild(elem);
 		main.ladder = document.createElementNS(svgNS, "g");
 		main.ladder.setAttribute("id", "altLadder");
+		main.ladder.style.transition = "all 1s";
 		var tips = parseInt(settings.alt.maxalt/200);
 		var offset = null;
 		var offsetBase = settings.height/settings.alt.tickspacing;
@@ -247,6 +249,8 @@
 		main.appendChild(elem);
 		main.ladder = document.createElementNS(svgNS, "g");
 		main.ladder.setAttribute("id", "compassLadder");
+		main.ladder.style.transition = "all 1s";
+		main.ladder.style.transformOrigin = (settings.width/4+8)+"px "+(settings.width/3+14)+"px";
 		var radius = settings.width/3;
 		var x1 = settings.width/4+8;
 		var y1 = radius+14;
@@ -314,6 +318,8 @@
 		// Animated parts
 		main.horizonAnim = document.createElementNS(svgNS, "g");
 		main.horizonAnim.setAttribute("id", "horizonAnim");
+		main.horizonAnim.style.transition = "all 0.5s";
+		main.horizonAnim.style.transformOrigin =  settings.width/2+"px "+settings.height/2+"px";
 		// ground
 		elem = document.createElementNS(svgNS, "rect");
 		elem.setAttribute("id","ground");
@@ -432,6 +438,7 @@
 		main.ball.setAttribute("cy", 24);
 		main.ball.setAttribute("r", 15);
 		main.ball.setAttribute("style", "fill:#FFF;");
+		main.ball.style.transition = "all 1s";
 		main.appendChild(main.ball);
 		return main;
 	}
@@ -609,7 +616,7 @@
 		if(v == data.alt) return;
 		data.alt = v;
 		var t = (v/200)*(settings.height/settings.alt.tickspacing);
-		alt.ladder.setAttribute("transform", "translate(0, "+t+")");
+		alt.ladder.style.transform = "translate(0px, "+t+"px)";
 		alt.digits.textContent = parseInt(v);
 	}
 
@@ -621,7 +628,7 @@
 		data.roll = params.roll;
 		pitch = -(params.pitch-settings.attitude.pitchoffset)/10*attitudeOffsetBase;
 		roll = -(params.roll-settings.attitude.rolloffset);
-		ai.horizonAnim.setAttribute("transform", "rotate("+roll+" "+settings.width/2+" "+settings.height/2+") translate(0, "+pitch+")");
+		ai.horizonAnim.style.transform = "rotate("+roll+"deg) translate(0px, "+pitch+"px)";
 	}
 
 	this.setHeading = function(v) {
@@ -629,7 +636,7 @@
 		if( rV == 0 && (data.hdg > 2 || data.hdg < 357) ) return;
 		if(v == data.hdg) return;
 		data.hdg = v;
-		hdg.ladder.setAttribute("transform", "rotate("+(-v)+" "+(settings.width/4+8)+" "+(settings.width/3+14)+")");
+		hdg.ladder.style.transform = "rotate("+(-v)+"deg";
 		hdg.digits.textContent = parseInt(v);
 	}
 
@@ -645,7 +652,7 @@
 		var mul = settings.width/10-16;
 		
 		data.ts = v
-		ts.ball.setAttribute("transform", "translate("+(-v*mul)+" 0)");
+		ts.ball.style.transform = "translate("+(-v*mul)+"px, 0px)";
 	}
 
 	this.setClock = function(v){
@@ -767,7 +774,7 @@
 		data.spd = settings.unit.asi == 'kt' ? parseInt(v*0.539956803) : v;
 /*		v = settings.unit.asi == 'kt' ? parseInt(v*0.539956803) : v;*/
 		var t = (data.spd/20)*(settings.height/settings.asi.tickspacing);
-		asi.ladder.setAttribute("transform", "translate(0, "+t+")");
+		asi.ladder.style.transform = "translate(0px, "+t+"px)";
 		asi.digits.textContent = parseInt(data.spd);
 	}
 

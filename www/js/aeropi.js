@@ -166,6 +166,7 @@ $(document).ready(function() {
       if(data.IMU){
         data = data.IMU;
         efis.setSlip(data.accel[0]);
+        //efis.setSlip(data.slip);
         //efis.setHeading(data.heading);
         //efis.setPressure(data.pressure);
         //instruments.update(data, indicators);

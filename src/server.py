@@ -36,6 +36,8 @@ class GPSWorker (threading.Thread):
             vs  = float(self.fix.TPV['climb'])*196.85
             spd = float(self.fix.TPV["speed"])*3.6
             hdg = self.fix.TPV["track"] if spd > 2 else 0
+            if type(hdg) is str:
+              hdg = 0
             self.alt = float(self.fix.TPV["alt"])
             alt = self.alt*3.28084
             self.data = '{"lat": %s, "lng": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d, "pressureSL": %.2f, "pressureAlt": %.2f, "temperature": %.1f, "time": %s}' % (lat, lng, hdg, vs, alt, spd, imuWorker.getPressureSL(), imuWorker.getPressureAlt(), imuWorker.getTemperature(), json.dumps(time))
