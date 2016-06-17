@@ -1,14 +1,14 @@
 /*Derived marker implementing rotation*/
 L.RotatedMarker = L.Marker.extend({
   options: {
-    heading:0
+    compass:0
   },
   _setPos: function(pos){
     L.Marker.prototype._setPos.call(this, pos);
     if(L.DomUtil.TRANSFORM){
-      this._icon.style[L.DomUtil.TRANSFORM]+='rotate('+this.options.heading+'deg)';
+      this._icon.style[L.DomUtil.TRANSFORM]+='rotate('+this.options.compass+'deg)';
     }else if(L.Browser.ie){
-      var rad=this.options.heading*(Math.PI/180),costheta=Math.cos(rad),sintheta=Math.sin(rad);
+      var rad=this.options.compass*(Math.PI/180),costheta=Math.cos(rad),sintheta=Math.sin(rad);
       this._icon.style.filter+='progid:DXImageTransform.Microsoft.Matrix(sizingMethod=\'autoexpand\',M11='+costheta+',M12='+(-sintheta)+',M21='+sintheta+',M22='+costheta+')';
     }
   }
@@ -17,7 +17,7 @@ L.RotatedMarker = L.Marker.extend({
 /*Derived rotating marker drawing an aircraft*/
 L.AircraftMarker = L.RotatedMarker.extend({
   options: {
-    heading: 0,
+    compass: 0,
     clickable: true,
     keyboard: false,
     getProperties: function(){
@@ -43,8 +43,8 @@ L.AircraftMarker = L.RotatedMarker.extend({
   onRemove: function(map){
     L.RotatedMarker.prototype.onRemove.call(this,map);
   },
-  setHeading: function(hdg){
-    this.options.heading=hdg;
+  setCompass: function(compass){
+    this.options.compass=compass;
   }
 });
 

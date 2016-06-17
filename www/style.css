@@ -67,20 +67,24 @@ width:100%;
 line-height: 3;
 }*/
 
-#EfisSettings .ui-input-text{
+#EfisSettings .ui-input-text, #EMSSettings .ui-input-text{
 width: 95%;
 }
 
-#EfisSettings .ui-grid-d input[type="text"]{
+#EfisSettings .ui-grid-d input[type="text"], #EMSSettings .ui-grid-b input[type="text"]{
 text-align: center;
 }
 
-#EfisSettings .ui-grid-d > div{
+#EfisSettings .ui-grid-d > div, #EMSSettings .ui-grid-b > div{
 text-align: center;
 }
 
-#EfisSettings .ui-grid-a > div{
+#EfisSettings .ui-grid-a > div, #EMSSettings .ui-grid-a > div{
 text-align: center;
+}
+
+#EMSSettings .ui-state-disabled{
+opacity: 1;
 }
 
 #GeneralSettings .ui-input-text{

@@ -18,11 +18,14 @@
 				normal: "green",
 				flaps: "white",
 			},
+			source: "gps",
 		},
 		alt:{
 			tickspacing: 8, // distance between markers
 			maxalt: 25000,    // maximum altitude marker
 			qnh: 1013,
+			pressure: 1000.0,
+			source: "baro",
 		},
 		ai:{
 			color:{
@@ -30,7 +33,9 @@
 				sky: "#4C78A9",    // color of the sky AI
 			},
 		},
-		compass:{},
+		compass:{
+			source: "gps",
+		},
 		attitude:{
 			pitchoffset: 0, // offset of the pitch AI
 			rolloffset: 0,  // offset of the roll AI
@@ -230,9 +235,9 @@
 		return main;
 	}
 	
-	function _createHdg(){
+	function _createCompass(){
 		var main = document.createElementNS(svgNS, "svg");
-		main.setAttribute("id", "hdg");
+		main.setAttribute("id", "compass");
 		main.setAttribute("width", settings.width/2+16);
 		main.setAttribute("height", 74);
 		main.setAttribute("style", "position:absolute; top:"+(settings.height-74)+"px; left:"+(settings.width/4-8)+"px; z-index:40;");
@@ -318,7 +323,7 @@
 		// Animated parts
 		main.horizonAnim = document.createElementNS(svgNS, "g");
 		main.horizonAnim.setAttribute("id", "horizonAnim");
-		main.horizonAnim.style.transition = "all 0.5s";
+		//main.horizonAnim.style.transition = "all 0.4s";
 		main.horizonAnim.style.transformOrigin =  settings.width/2+"px "+settings.height/2+"px";
 		// ground
 		elem = document.createElementNS(svgNS, "rect");
@@ -438,7 +443,7 @@
 		main.ball.setAttribute("cy", 24);
 		main.ball.setAttribute("r", 15);
 		main.ball.setAttribute("style", "fill:#FFF;");
-		main.ball.style.transition = "all 1s";
+		//main.ball.style.transition = "all 1s";
 		main.appendChild(main.ball);
 		return main;
 	}
@@ -612,6 +617,7 @@
      */
 	this.setAltitude = function(v) {
 		v = parseInt(v);
+		//if( v == 0) return;
 		v = Math.round(v/10)*10;
 		if(v == data.alt) return;
 		data.alt = v;
@@ -630,14 +636,23 @@
 		roll = -(params.roll-settings.attitude.rolloffset);
 		ai.horizonAnim.style.transform = "rotate("+roll+"deg) translate(0px, "+pitch+"px)";
 	}
+	
+	this.setPressure = function(v) {
+		//if(v < 300 || v > 1400) return;
+		data.pressure = v;
+	}
+	
+	this.getPressure = function(){
+		return data.pressure;
+	}
 
-	this.setHeading = function(v) {
-		rV = parseInt(v);
-		if( rV == 0 && (data.hdg > 2 || data.hdg < 357) ) return;
-		if(v == data.hdg) return;
-		data.hdg = v;
-		hdg.ladder.style.transform = "rotate("+(-v)+"deg";
-		hdg.digits.textContent = parseInt(v);
+	this.setCompass = function(v) {
+		if(v == data.compass) return;
+		data.compass = v;
+		compass.ladder.style.transform = "rotate("+(-v)+"deg";
+		if(v < 0 && settings.compass.source != "gps")
+		  v = 360 + v;
+		compass.digits.textContent = parseInt(v);
 	}
 
 	this.setSlip = function(v) {
@@ -743,6 +758,18 @@
 	  settings.timezone.summer = v;
 	}
 	
+	this.setSpeedSource = function(v){
+	  settings.asi.source = v;
+	}
+	
+	this.setCompassSource = function(v){
+	  settings.compass.source = v;
+	}
+	
+	this.setAltitudeSource = function(v){
+	  settings.alt.source = v;
+	}
+	
 	this.getSettings = function(){
 	  return settings;
 	}
@@ -831,7 +858,7 @@
 	  alt.digits.textContent = parseInt(data.alt);
 	}
 
-	var data = {alt:0, qnh:0, spd:0, hdg:0, pitch:0, roll:0, eta:0, dst:0};
+	var data = {alt:0, qnh:0, spd:0, compass:0, pitch:0, roll:0, eta:0, dst:0, pressure:0};
 	var parent = $(this);
 	var ai     = _createAi();
 	parent.append(ai);
@@ -839,8 +866,8 @@
 	parent.append(asi);
 	var alt    = _createAlt();
 	parent.append(alt);
-	var hdg    = _createHdg();
-	parent.append(hdg);
+	var compass    = _createCompass();
+	parent.append(compass);
 	var ts     = _createTs();
 	parent.append(ts);
 	var bottomLeft = _createBottomLeftTips();

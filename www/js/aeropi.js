@@ -82,6 +82,51 @@ function altcalc(a, k, i) {
   return NaN
 }
 
+function toDecimal(v, d) {
+  return parseFloat(v.toFixed(d));
+}
+
+function hsv2rgb(h, s, v) {
+  var r, g, b;
+
+  var i = Math.floor(h * 6);
+  var f = h * 6 - i;
+  var p = v * (1 - s);
+  var q = v * (1 - f * s);
+  var t = v * (1 - (1 - f) * s);
+
+  switch (i % 6) {
+    case 0: r = v, g = t, b = p; break;
+    case 1: r = q, g = v, b = p; break;
+    case 2: r = p, g = v, b = t; break;
+    case 3: r = p, g = q, b = v; break;
+    case 4: r = t, g = p, b = v; break;
+    case 5: r = v, g = p, b = q; break;
+  }
+
+  return [ parseInt(r * 255), parseInt(g * 255), parseInt(b * 255) ];
+}
+
+function getHueFromTemp(v) {
+  var h = 0;
+  if(v < 70)
+    h = -4.7143e-3 * v + 0.66;
+  if(v >= 70 && v < 95)
+    h = -6.8e-3 * v + 0.806;
+  if(v >= 95)
+    h = -6.4e-3 * v + 0.768;
+  return h;
+}
+
+function getHueFromPress(v) {
+  var h = 0;
+  if(v >= 3 && v < 5)
+    h = 0.165 * v - 0.495;
+  if(v >= 5 && v < 7)
+    h = -0.165 * v + 1.155;
+  return h;
+}
+
 $(document).ready(function() {
   $('#settingsDialog').popup({
     afterclose: function(e, ui){
@@ -121,7 +166,7 @@ $(document).ready(function() {
     $("#altitudeTickSpacing").val(Settings.efis.alt.tickspacing).slider("refresh");
     $("#summer").prop("checked", Settings.efis.timezone.summer).checkboxradio("refresh");
     $("#speedInMapView").prop("checked", Settings.map.display.asi).checkboxradio("refresh");
-    $("#compassInMapView").prop("checked", Settings.map.display.hdg).checkboxradio("refresh");
+    $("#compassInMapView").prop("checked", Settings.map.display.compass).checkboxradio("refresh");
     $("#altitudeInMapView").prop("checked", Settings.map.display.alt).checkboxradio("refresh");
     $("#vacLndInMapView").prop("checked", Settings.map.overlays.vac.lnd).checkboxradio("refresh");
     $("#vacAppInMapView").prop("checked", Settings.map.overlays.vac.app).checkboxradio("refresh");
@@ -130,6 +175,9 @@ $(document).ready(function() {
     $("#elevationUnit").val(Settings.general.unit.elevation).slider("refresh");
     $("#speedUnit").val(Settings.general.unit.speed).slider("refresh");
     $("#distanceUnit").val(Settings.general.unit.distance).slider("refresh");
+    $("#speedSource").val(Settings.efis.asi.source).slider("refresh");
+    $("#compassSource").val(Settings.efis.compass.source).slider("refresh");
+    $("#altitudeSource").val(Settings.efis.alt.source).slider("refresh");
 
     efis = $("#efis").efis(Settings.efis);
     efis.setSpeedUnit(Settings.general.unit.speed);
@@ -141,7 +189,7 @@ $(document).ready(function() {
       "lat": Settings.general.lastposition.lat,
       "lng": Settings.general.lastposition.lng,
       "spd": 0,
-      "hdg": 0,
+      "compass": 0,
       "alt": 0
     });
 
@@ -149,8 +197,8 @@ $(document).ready(function() {
       $("#alt").css("z-index", 39);
     if(!Settings.map.display.asi)
       $("#asi").css("z-index", 39);
-    if(!Settings.map.display.hdg)
-      $("#hdg").css("z-index", 39);
+    if(!Settings.map.display.compass)
+      $("#compass").css("z-index", 39);
     if(Settings.map.layer == 'oaci')
       map.addLayer(baseLayers["France: OACI 2016"]);
     if(Settings.map.layer == 'cartabossy')
@@ -165,11 +213,17 @@ $(document).ready(function() {
       var data = JSON.parse(e.data);
       if(data.IMU){
         data = data.IMU;
-        efis.setSlip(data.accel[0]);
-        //efis.setSlip(data.slip);
-        //efis.setHeading(data.heading);
-        //efis.setPressure(data.pressure);
-        //instruments.update(data, indicators);
+        data.roll = toDecimal(data.roll, 2);
+        data.pitch = toDecimal(data.pitch, 2);
+        data.slipball = toDecimal(data.slipball, 2);
+        data.pressure = toDecimal(data.pressure, 2);
+        data.temperature = toDecimal(data.temperature, 1);
+        if(Settings.efis.compass.source != "gps"){
+          data.compass = parseInt(data.yaw)+83;
+          efis.setCompass(data.compass);
+        }
+        efis.setSlip(data.slipball);
+        efis.setPressure(data.pressure);
         efis.setAttitude({roll:data.roll, pitch:data.pitch});
       }
       if(data.GPS){
@@ -178,26 +232,46 @@ $(document).ready(function() {
         efis.setClock(data.time);
         efis.setPosition({"lat":data.lat, "lng":data.lng});
         efis.setSpeed(data.spd);
-        if(data.spd > 2)
-          efis.setHeading(data.hdg);
+        if(Settings.efis.compass.source == "gps"){
+          if(data.spd > 2)
+            efis.setCompass(data.compass);
+          else
+            efis.setCompass(0);
+        }
 
-
-/*        var altM = data.alt/3.28084;
-        var P  = data.pressureAlt*100;
-        var Pb = efis.getQnh()*100;
-        var h = altM - 44330 * ( Math.pow(P/Pb, 0.190263237) - 1 );
-        var alt = h*3.28084;
-        if(Settings.general.unit.altitude == 'm')
-          alt = h;
-        efis.setAltitude(alt);
-*/
-        var altM = altcalc( efis.getQnh()*100, 288.15, data.pressureAlt*100);
-        var alt = altM*3.28084;
-        data.alt = alt;
+        data.altPress = altcalc(efis.getQnh()*100, 288.15, efis.getPressure()*100)*3.28084;
         geo_success(data);
+        
+        var alt = data.altPress;
+        if(Settings.efis.alt.source == 'gps')
+          alt = data.alt;
         if(Settings.general.unit.altitude == 'm')
-          alt = altM;
+          alt /= 3.28084;
+
         efis.setAltitude(alt);
+      }
+      if(data.EMS){
+        data = data.EMS;
+        $("input#cht0").val(data.cht0+" °C");
+        var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht0), 1, 1)+")";
+        $("input#cht0").css({backgroundColor: col});
+        
+        $("input#cht1").val(data.cht1+" °C");
+        var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht1), 1, 1)+")";
+        $("input#cht1").css({backgroundColor: col});
+        
+        $("input#oilTemp").val(data.oilTemp+" °C");
+        var col = "rgb("+hsv2rgb(getHueFromTemp(data.oilTemp), 1, 1)+")";
+        $("input#oilTemp").css({backgroundColor: col});
+
+        $("input#oilPress").val(data.oilPress+" Bar");
+        var col = "rgb("+hsv2rgb(getHueFromPress(data.oilPress), 1, 1)+")";
+        $("input#oilPress").css({backgroundColor: col});
+        
+        $("input#fuelPress").val(data.fuelPress+" Bar");
+        $("input#MaP").val(data.MaP+" \"");
+        $("input#voltage").val(data.voltage+" V");
+        $("input#load").val(data.load+" A");
       }
     };
 
@@ -336,10 +410,10 @@ $(document).ready(function() {
 
       case 'compassInMapView':
         if(val)
-          $("#hdg").css("z-index", 40);
+          $("#compass").css("z-index", 40);
         else
-          $("#hdg").css("z-index", 39);
-        data = {map:{display:{hdg:val}}};
+          $("#compass").css("z-index", 39);
+        data = {map:{display:{compass:val}}};
         break;
 
       case 'altitudeInMapView':
@@ -421,6 +495,20 @@ $(document).ready(function() {
         efis.setDistanceUnit(val);
         data = {general:{unit:{distance:val}}};
         break;
+
+      case 'speedSource':
+        efis.setSpeedSource(val);
+        data = {efis:{asi:{source:val}}};
+        break;
+
+      case 'compassSource':
+        efis.setCompassSource(val);
+        data = {efis:{compass:{source:val}}};
+        break;
+      case 'altitudeSource':
+        efis.setAltitudeSource(val);
+        data = {efis:{alt:{source:val}}};
+        break;
     }
     Settings = $.extend(true, {}, Settings, data);
     saveSettings(data);
@@ -459,7 +547,7 @@ function geo_success(position){
   _lastPosition = L.latLng(position.lat, position.lng);
   aircraftMarker.setLatLng(_lastPosition);
   if(position.spd > 5)
-    aircraftMarker.setHeading(position.hdg);
+    aircraftMarker.setCompass(position.compass);
 
   if(_saveLastPositionTimer == null)
     _saveLastPositionTimer = new Date().getTime();
@@ -477,7 +565,7 @@ function geo_success(position){
     map.panTo(_lastPosition, {animate: true, noMoveStart: true});
 
   var speed = position.spd > 5 ? position.spd : 17;
-  var nextPoint = destSphere(position.lat, position.lng, position.hdg, speed);
+  var nextPoint = destSphere(position.lat, position.lng, position.compass, speed);
   predictivePath.setLatLngs([_lastPosition, nextPoint]);
   updatePlot(predictivePath, speed, position.alt, false);
 }

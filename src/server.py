@@ -10,8 +10,16 @@ import math
 import RTIMU
 import gps3
 import json
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_MCP3008
 
+
+SPI_PORT   = 0
+SPI_DEVICE = 0
 stopFlag = False
+
+def clamp(minimum, value, maximum):
+  return min(maximum, max(minimum, value))
 
 
 class GPSWorker (threading.Thread):
@@ -20,37 +28,56 @@ class GPSWorker (threading.Thread):
 
     self.session = gps3.GPSDSocket(host='localhost')
     self.fix = gps3.Fix()
-    self.data = 0
-    self.lastData = 0
-    self.alt = 0
+    self.oldData = {}
+    self.newData = {}
+    self.data = {'lat':0.0, 'lng':0.0, 'time':0, 'alt':0, 'spd':0, 'climb':0, 'compass':0}
 
   def run(self):
     while not stopFlag:
       for new_data in self.session:
+        if stopFlag:
+          break
+      
         if new_data:
           self.fix.refresh(new_data)
+          '''
+          GPS data are:
+          	speed: double
+          	device: string
+          	epy: double
+          	ept: double
+          	epc: double
+          	track: double
+          	eps: double
+          	lat: double
+          	epd: n/a
+          	time: aaaa-mm-ddThh:mm:ss.000Z
+          	mode: int
+          	epx: double
+          	epv: double
+          	tag: string
+          	alt: double
+          	lon: double
+          	climb: double
+          '''
           try:
-            time = self.fix.TPV["time"]
-            lat = self.fix.TPV["lat"]
-            lng = self.fix.TPV["lon"]
-            vs  = float(self.fix.TPV['climb'])*196.85
-            spd = float(self.fix.TPV["speed"])*3.6
-            hdg = self.fix.TPV["track"] if spd > 2 else 0
-            if type(hdg) is str:
-              hdg = 0
-            self.alt = float(self.fix.TPV["alt"])
-            alt = self.alt*3.28084
-            self.data = '{"lat": %s, "lng": %s, "hdg": %d, "vs": %d, "alt": %d, "spd": %d, "pressureSL": %.2f, "pressureAlt": %.2f, "temperature": %.1f, "time": %s}' % (lat, lng, hdg, vs, alt, spd, imuWorker.getPressureSL(), imuWorker.getPressureAlt(), imuWorker.getTemperature(), json.dumps(time))
+            self.data['lat']   = self.fix.TPV['lat']
+            self.data['lng']   = self.fix.TPV['lon']
+            self.data['time']  = self.fix.TPV['time']
+            self.data['alt']   = clamp(0, int(float(self.fix.TPV['alt'])*3.28084), 35000)
+            self.data['spd']   = clamp(0, int(float(self.fix.TPV['speed'])*3.6), 500)
+            self.data['climb'] = clamp(-5000, int(float(self.fix.TPV['climb'])*196.5), 5000)
+            self.data['compass']   = self.fix.TPV['track'] if self.data['spd'] > 2 else 0
+            if type(self.data['compass']) is str:
+                self.data['compass'] = 0.0
+            self.newData = '%s' % json.dumps(self.data)
           except ValueError:
             pass
 
   def get(self):
-    if self.lastData is not self.data:
-      self.lastData = self.data
+    if self.oldData is not self.newData:
+      self.oldData = self.newData
       return self.data
-
-  def getAlt(self):
-    return self.alt
 
 
 
@@ -77,72 +104,143 @@ class IMUWorker (threading.Thread):
     self.imu.setGyroEnable(True)
     self.imu.setAccelEnable(True)
     self.imu.setCompassEnable(True)
-    self.poll_interval = self.imu.IMUGetPollInterval()*1.0/1000.0
-    self.data = 0
-    self.lastData = 0
-    self.pressureSL = 1013
-    self.pressureAlt = 0
-    self.temperature = 0
+    self.oldData = {}
+    self.newData = {}
+    self.data = {'temperature':15, 'pressure':850, 'pitch':0, 'roll':0, 'yaw':0}
 
   def run(self):
     while not stopFlag:
       if self.imu.IMURead():
-        data = self.imu.getIMUData()
-        fusionPose = data["fusionPose"]
-        (data["pressureValid"], data["pressure"], data["temperatureValid"], data["temperature"]) = self.pressureSensor.pressureRead()
+        '''
+        IMU data are:
+		    pressure: double
+		    temperature: double
+		    accel:(double, double, double)
+		    compassValid: bool
+		    humidityValid: bool
+		    timestamp: timestamp
+		    compass: (double, double, double)
+		    fusionQPose: (double, double, double, double)
+		    fusionPose: (double, double, double)
+		    humidity: double
+		    pressureValid: bool
+		    fusionQPoseValid: bool
+		    gyroValid: bool
+		    accelValid: bool
+		    temperatureValid: bool
+		    gyro: (double, double, double)
+		    fusionPoseValid: bool
+		Pressure data are:
+			pressureValid: bool
+			pressure: double
+			temperatureValid: bool
+			temperature: double
+        '''
+        self.data = self.imu.getIMUData()
+        (self.data["pressureValid"], self.data["pressure"], self.data["temperatureValid"], self.data["temperature"]) = self.pressureSensor.pressureRead()
+        self.data['temperature'] = self.data['temperature'] if self.data['temperatureValid'] else 0.0
+        self.data['temperature'] = clamp(-30, self.data['temperature'], 90)
+        self.data['pressure'] = self.data['pressure'] if self.data['pressureValid'] else 0.0
+        self.data['pressure'] = clamp(850, self.data['pressure'], 1250)
+        self.data['pitch'] = clamp(-180, math.degrees(self.data['fusionPose'][0]), 180)
+        self.data['roll'] = clamp(-180, math.degrees(self.data['fusionPose'][1]), 180)
+        self.data['yaw'] = math.degrees(self.data['fusionPose'][2])
+        self.data['slipball'] = self.data['accel'][0]
+        del self.data['timestamp']
+        del self.data['accelValid']
+        del self.data['compassValid']
+        del self.data['fusionPoseValid']
+        del self.data['fusionQPoseValid']
+        del self.data['gyroValid']
+        del self.data['humidityValid']
+        del self.data['temperatureValid']
+        del self.data['pressureValid']
+        del self.data['humidity']
+        
+        self.newData = '%s' % json.dumps(self.data)
 
-        alt = gpsWorker.getAlt()
-        #if alt >= 914.4: #surface S above 3000ft
-        #  pressure = 1013.25
-        #else:
-        if data["pressureValid"]:
-          if type(alt) is float:
-            r = 1.0 - (alt/44330.0)
-            self.pressureSL = data["pressure"] / math.pow(r, 5.255)
-          else:
-            self.pressureSL = 0
-        else:
-          self.pressureSL = 0
-
-        self.pressureAlt = data["pressure"]
-
-        self.temperature = data["temperature"] if data["temperatureValid"] else 0
-        pitch = math.degrees(fusionPose[0])
-        roll  = math.degrees(fusionPose[1])
-        yaw   = math.degrees(fusionPose[2])
-        rollRate = math.degrees(data["gyro"][0])
-        yawRate  = math.degrees(data["gyro"][2])
-        slip     = data["accel"][1]
-        gForce   = data["accel"][2]
+        '''
         if yaw < 90.1:
           heading = yaw + 270
         else:
           heading = yaw - 90
         if heading > 360.0:
           heading = heading - 360.0
-
-        self.data = '{"pitch": %.2f, "roll": %.2f, "heading": %.2f, "gyro": %s, "accel": %s, "compass": %s, "fusionPose": %s}' % ( pitch, roll, heading, json.dumps(data["gyro"]), json.dumps(data["accel"]), json.dumps(data["compass"]), json.dumps(fusionPose) )
-        time.sleep(self.poll_interval)
-
-  def toDeg(self, number):
-    v = math.degrees(number)
-    #v = '%.1f' % v
-    #v = round(float(v) * 2) / 2
-    return v
+        '''
+        time.sleep(1.0/20.0)
 
   def get(self):
-    if self.lastData is not self.data:
-      self.lastData = self.data
+    if self.oldData is not self.newData:
+      self.oldData = self.newData
       return self.data
 
-  def getPressureSL(self):
-    return self.pressureSL
 
-  def getPressureAlt(self):
-    return self.pressureAlt
+class EMSWorker (threading.Thread):
+  def __init__(self):
+    threading.Thread.__init__(self)
+    self.mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+    self.oldData = {}
+    self.newData = {}
+    self.data = {'MaP':0, 'cht0':0, 'cht1':0, 'oilTemp':0, 'oilPress':0, 'fuelPress':0, 'voltage':0, 'load':0}
+    self.A = 1.572032517e-3
+    self.B = 2.731146045e-4
+    self.C = -2.867504522e-7
+    self.V_Ref = 5.095
+    self.R_Ref = 220
+    self.basicResistorSerie = [10, 31, 52, 71, 88, 106, 124, 140, 155, 170, 184]
+    self.precision = 5
+    self.completeResistorSerie = self.getCompleteResistorSerie()
 
-  def getTemperature(self):
-    return self.temperature
+  def run(self):
+    while not stopFlag:
+      self.data['oilPress'] = self.getPressure(self.mcp.read_adc(0))
+      self.data['oilTemp'] = self.getTemperature(self.mcp.read_adc(1))
+      self.data['cht0'] = self.getTemperature(self.mcp.read_adc(2))
+      #self.data['cht1'] = self.getTemperature(self.mcp.read_adc(3))
+      #self.data['MaP'] = self.mcp.read_adc(4)
+      #self.data['fuelPress'] = self.mcp.read_adc(5)
+      #self.data['voltage'] = self.mcp.read_adc(6)
+      #self.data['load'] = self.mcp.read_adc(7)
+      
+      self.newData = '%s' % json.dumps(self.data);
+      time.sleep(0.5);
+
+  def getResistance(self, value):
+    Vout = (value*self.V_Ref)/1024
+    return int((Vout*self.R_Ref)/(self.V_Ref-Vout))
+    
+  def getTemperature(self, value):
+    T = 0
+    R = self.getResistance(value)
+    if R < 3200 and R is not 0: # above this resistance we are negative
+      T = 1/(self.A + self.B*math.log(R) + self.C*math.pow(math.log(R),3) )-273.15;
+    return int(T)
+  
+  def getPressure(self, value):
+    P = 0.0
+    R = self.getResistance(value)
+    return self.find_nearest(self.completeResistorSerie, R) / self.precision
+
+  def find_nearest(self, array, value):
+    n = [abs(i-value) for i in array]
+    idx = n.index(min(n))
+    return idx
+
+  def getCompleteResistorSerie(self):
+    serie = []
+    for i in range(len(self.basicResistorSerie)-1):
+      ratio = (self.basicResistorSerie[i+1] - self.basicResistorSerie[i]) / self.precision
+      for m in range(0, self.precision):
+        value = round(self.basicResistorSerie[i]+ratio*m, 1)
+        serie.append(value)
+    serie.append(self.basicResistorSerie[-1])
+    return serie
+
+  def get(self):
+    if self.oldData is not self.newData:
+      self.oldData = self.newData
+      return self.data
+
 
 
 class MSGWorker (threading.Thread):
@@ -152,15 +250,19 @@ class MSGWorker (threading.Thread):
 
   def run(self):
     while not stopFlag:
-      data = gpsWorker.get()
-      if data:
-        self.sendData('{"GPS": %s}' % data)
+      gps = gpsWorker.get()
+      if gps:
+        self.sendData('{"GPS": %s}' % json.dumps(gps))
 
-      data = imuWorker.get()
-      if data:
-        self.sendData('{"IMU": %s}' % data)
+      imu = imuWorker.get()
+      if imu:
+        self.sendData('{"IMU": %s}' % json.dumps(imu))
 
-      time.sleep(0.1)
+      ems = emsWorker.get()
+      if ems:
+        self.sendData('{"EMS": %s}' % json.dumps(ems))
+
+      time.sleep(1.0/100.0)
 
   async def handler(self, websocket, path):
     self.connected.add(websocket)
@@ -182,11 +284,13 @@ if __name__ == "__main__":
   print('aeroPi server')
   gpsWorker = GPSWorker()
   imuWorker = IMUWorker()
+  emsWorker = EMSWorker()
   msgWorker = MSGWorker()
 
   try:
     gpsWorker.start()
     imuWorker.start()
+    emsWorker.start()
     msgWorker.start()
 
     ws_server = websockets.serve(msgWorker.handler, '0.0.0.0', 7700)

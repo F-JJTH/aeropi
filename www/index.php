@@ -54,6 +54,7 @@
             <li><a href="#GeneralSettings" data-ajax="false" class="ui-btn-active">General</a></li>
             <li><a href="#MapSettings" data-ajax="false">Map</a></li>
             <li><a href="#EfisSettings" data-ajax="false">Efis</a></li>
+            <li><a href="#EMSSettings" data-ajax="false">EMS</a></li>
             <li><a href="#InfosSettings" data-ajax="false">Infos</a></li>
           </ul>
         </div>
@@ -117,7 +118,7 @@
                   <button href="utils.php?action=shutdown" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow exec-cmd">Shutdown</button>
                 </div>
                 <div class="ui-block-c">
-                  <button href="#" onclick="$('#settingsDialog').popup('close'); location.reload(true); return false;" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Reload</button>
+                  <a href="/" data-ajax="false" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Reload</a>
                 </div>
               </div>
             </div>
@@ -243,9 +244,93 @@
             </div>
             </div>
           </div>
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Source</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-b">
+              <div class="ui-block-a">
+                <div class="ui-field-contain">
+                  <label for="speedSource">Speed</label>
+                  <select name="speedSource" id="speedSource" data-role="slider" data-mini="true"><option value="gps">GPS</option><option value="air">Air</option></select>
+                </div>
+              </div>
+              <div class="ui-block-b">
+                <div class="ui-field-contain">
+                  <label for="compassSource">Compass</label>
+                  <select name="compassSource" id="compassSource" data-role="slider" data-mini="true"><option value="gps">GPS</option><option value="compass">Mag</option></select>
+                </div>
+              </div>
+              <div class="ui-block-c">
+                <div class="ui-field-contain">
+                  <label for="altitudeSource">Altitude</label>
+                  <select name="altitudeSource" id="altitudeSource" data-role="slider" data-mini="true"><option value="gps">GPS</option><option value="baro">Baro</option></select>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
           <a href="#" onclick="calibrateEfis()" class="ui-btn ui-corner-all ui-nodisc-icon ui-btn-b ui-shadow">Calibrate Efis</a>
         </div>
-
+        <div id="EMSSettings" class="page-settings">
+          <br/>
+          <div class="ui-corner-all custom-corners">
+            <div class="ui-bar ui-bar-a"><h3>Sensors</h3></div>
+            <div class="ui-body ui-body-a">
+            <div class="ui-grid-b">
+              <div class="ui-block-a">
+                <div class="ui-field-contain">
+                  <label for="cht0">CHT0</label><input type="text" name="cht0" id="cht0" disabled>
+                </div>
+              </div>
+              <div class="ui-block-b">
+                <div class="ui-field-contain">
+                  <label for="cht1">CHT1</label><input type="text" name="cht1" id="cht1" disabled>
+                </div>
+              </div>
+              <div class="ui-block-c">
+                <div class="ui-field-contain">
+                  <label for="oilTemp">Oil temperature</label><input type="text" name="oilTemp" id="oilTemp" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="ui-grid-b">
+              <div class="ui-block-a">
+                <div class="ui-field-contain">
+                  <label for="fuelPress">Fuel pressure</label><input type="text" name="fuelPress" id="fuelPress" disabled>
+                </div>
+              </div>
+              <div class="ui-block-b">
+                <div class="ui-field-contain">
+                  <label for="oilPress">Oil pressure</label><input type="text" name="oilPress" id="oilPress" disabled>
+                </div>
+              </div>
+              <div class="ui-block-c">
+                <div class="ui-field-contain">
+                  <label for="MaP">MaP</label><input type="text" name="MaP" id="MaP" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="ui-grid-b">
+              <div class="ui-block-a">
+                <div class="ui-field-contain">
+                  <label for="voltage">Voltage</label><input type="text" name="voltage" id="voltage" disabled>
+                </div>
+              </div>
+              <div class="ui-block-b">
+                <div class="ui-field-contain">
+                  <label for="load">Load</label><input type="text" name="load" id="load" disabled>
+                </div>
+              </div>
+              <div class="ui-block-c">
+                <div class="ui-field-contain">
+                  <label for="rpm">RPM</label><input type="text" name="rpm" id="rpm" disabled>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
         <div id="InfosSettings" class="page-settings"></div>
       </div>
       <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Ok</a>
