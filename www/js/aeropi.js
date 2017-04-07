@@ -231,7 +231,10 @@ $(document).ready(function() {
         //data.spd = 60;
         efis.setClock(data.time);
         efis.setPosition({"lat":data.lat, "lng":data.lng});
-        efis.setSpeed(data.spd);
+        if(Settings.efis.asi.source == "gps") {
+          efis.setSpeed(data.spd);
+        }
+
         if(Settings.efis.compass.source == "gps"){
           if(data.spd > 2)
             efis.setCompass(data.compass);
@@ -272,6 +275,10 @@ $(document).ready(function() {
         $("input#MaP").val(data.MaP+" \"");
         $("input#voltage").val(data.voltage+" V");
         $("input#load").val(data.load+" A");
+
+        if(Settings.efis.asi.source != "gps") {
+          efis.setSpeed(data.ASI);
+        }
       }
     };
 

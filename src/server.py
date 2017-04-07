@@ -200,10 +200,10 @@ class EMSWorker (threading.Thread):
       #self.data['MaP'] = self.mcp.read_adc(4)
       #self.data['fuelPress'] = self.mcp.read_adc(5)
       #self.data['voltage'] = self.mcp.read_adc(6)
-      #self.data['load'] = self.mcp.read_adc(7)
+      self.data['ASI'] = self.getAirspeed(self.mcp.read_adc(7))
       
       self.newData = '%s' % json.dumps(self.data);
-      time.sleep(0.5);
+      time.sleep(0.25);
 
   def getResistance(self, value):
     Vout = (value*self.V_Ref)/1024
@@ -235,6 +235,18 @@ class EMSWorker (threading.Thread):
         serie.append(value)
     serie.append(self.basicResistorSerie[-1])
     return serie
+
+  def getAirspeed(self, value):
+    airspeed = value
+    Vout = (value*self.V_Ref)/1024
+    kPa = ((Vout / self.V_Ref)-0.5)/0.057
+    Pa = abs(kPa*1000)
+    if kPa < 0:
+      Pa = 0
+    mps = math.sqrt(2*Pa/1.225)
+    kph = int(mps*3.6)
+    #print("kph: %d" % kph)
+    return kph
 
   def get(self):
     if self.oldData is not self.newData:
