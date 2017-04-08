@@ -274,7 +274,7 @@ $(document).ready(function() {
 
         $("input#fuelFlow").val(toDecimal(data.fuelFlow, 2)+" L/h");
         $("input#MaP").val(data.MaP+" \"");
-        $("input#voltage").val(data.voltage+" V");
+        $("input#voltage").val(toDecimal(data.voltage, 1)+" V");
         $("input#load").val(data.load+" A");
         $("input#rpm").val(data.RPM+" tr/m");
 

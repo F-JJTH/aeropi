@@ -136,10 +136,10 @@ class IMUWorker (threading.Thread):
 		    gyro: (double, double, double)
 		    fusionPoseValid: bool
 		    Pressure data are:
-			pressureValid: bool
-			pressure: double
-			temperatureValid: bool
-			temperature: double
+		    pressureValid: bool
+		    pressure: double
+		    temperatureValid: bool
+		    temperature: double
         '''
         self.data = self.imu.getIMUData()
         print(self.data)
@@ -198,8 +198,8 @@ class EMSWorker (threading.Thread):
     self.precision = 5
     self.completeResistorSerie = self.getCompleteResistorSerie()
     self.pi = pigpio.pi()
-    self.rpmSensor = read_RPM.reader(self.pi, 5)
-    self.fuelflowSensor = read_RPM.reader(self.pi, 6)
+    self.rpmSensor = read_RPM.reader(self.pi, 25)
+    self.fuelflowSensor = read_RPM.reader(self.pi, 24)
     self.i = 0
 
   def run(self):
@@ -210,7 +210,7 @@ class EMSWorker (threading.Thread):
       #self.data['cht1'] = self.getTemperature(self.mcp.read_adc(3))
       #self.data['MaP'] = self.mcp.read_adc(4)
       #self.data['fuelPress'] = self.mcp.read_adc(5)
-      #self.data['voltage'] = self.mcp.read_adc(6)
+      self.data['voltage'] = self.getVoltage(self.mcp.read_adc(6))
       self.data['ASI'] = self.getAirspeed(self.mcp.read_adc(7))
 
       if self.i > 3:
@@ -229,6 +229,10 @@ class EMSWorker (threading.Thread):
   def getResistance(self, value):
     Vout = (value*self.V_Ref)/1024
     return int((Vout*self.R_Ref)/(self.V_Ref-Vout))
+
+  def getVoltage(self, value):
+    Vout = (value*self.V_Ref)/1024
+    return Vout*5
 
   def getTemperature(self, value):
     T = 0
