@@ -17,7 +17,10 @@ import read_RPM
 
 SPI_PORT   = 0
 SPI_DEVICE = 0
-stopFlag = False
+stopFlag   = False
+imuWorker  = False
+gpsWorker  = False
+emsWorker  = False
 
 def clamp(minimum, value, maximum):
   return min(maximum, max(minimum, value))
@@ -131,18 +134,19 @@ class IMUWorker (threading.Thread):
 		    temperatureValid: bool
 		    gyro: (double, double, double)
 		    fusionPoseValid: bool
-		Pressure data are:
+		    Pressure data are:
 			pressureValid: bool
 			pressure: double
 			temperatureValid: bool
 			temperature: double
         '''
         self.data = self.imu.getIMUData()
-        (self.data["pressureValid"], self.data["pressure"], self.data["temperatureValid"], self.data["temperature"]) = self.pressureSensor.pressureRead()
-        self.data['temperature'] = self.data['temperature'] if self.data['temperatureValid'] else 0.0
-        self.data['temperature'] = clamp(-30, self.data['temperature'], 90)
-        self.data['pressure'] = self.data['pressure'] if self.data['pressureValid'] else 0.0
-        self.data['pressure'] = clamp(850, self.data['pressure'], 1250)
+        print(self.data)
+        #(self.data["pressureValid"], self.data["pressure"], self.data["temperatureValid"], self.data["temperature"]) = self.pressureSensor.pressureRead()
+        #self.data['temperature'] = self.data['temperature'] if self.data['temperatureValid'] else 0.0
+        #self.data['temperature'] = clamp(-30, self.data['temperature'], 90)
+        #self.data['pressure'] = self.data['pressure'] if self.data['pressureValid'] else 0.0
+        #self.data['pressure'] = clamp(850, self.data['pressure'], 1250)
         self.data['pitch'] = clamp(-180, math.degrees(self.data['fusionPose'][0]), 180)
         self.data['roll'] = clamp(-180, math.degrees(self.data['fusionPose'][1]), 180)
         self.data['yaw'] = math.degrees(self.data['fusionPose'][2])
@@ -179,7 +183,8 @@ class IMUWorker (threading.Thread):
 class EMSWorker (threading.Thread):
   def __init__(self):
     threading.Thread.__init__(self)
-    self.mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+    self.mcp = Adafruit_MCP3008.MCP3008(clk=11, cs=8, miso=9, mosi=10)
+    #self.mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
     self.oldData = {}
     self.newData = {}
     self.data = {'MaP':0, 'cht0':0, 'cht1':0, 'oilTemp':0, 'oilPress':0, 'fuelPress':0, 'voltage':0, 'load':0}
@@ -280,17 +285,20 @@ class MSGWorker (threading.Thread):
 
   def run(self):
     while not stopFlag:
-      gps = gpsWorker.get()
-      if gps:
-        self.sendData('{"GPS": %s}' % json.dumps(gps))
+      if gpsWorker:
+        gps = gpsWorker.get()
+        if gps:
+          self.sendData('{"GPS": %s}' % json.dumps(gps))
 
-      imu = imuWorker.get()
-      if imu:
-        self.sendData('{"IMU": %s}' % json.dumps(imu))
+      if imuWorker:
+        imu = imuWorker.get()
+        if imu:
+          self.sendData('{"IMU": %s}' % json.dumps(imu))
 
-      ems = emsWorker.get()
-      if ems:
-        self.sendData('{"EMS": %s}' % json.dumps(ems))
+      if emsWorker:
+        ems = emsWorker.get()
+        if ems:
+          self.sendData('{"EMS": %s}' % json.dumps(ems))
 
       time.sleep(1.0/100.0)
 
@@ -314,13 +322,13 @@ if __name__ == "__main__":
   print('aeroPi server')
   gpsWorker = GPSWorker()
   imuWorker = IMUWorker()
-  emsWorker = EMSWorker()
+  #emsWorker = EMSWorker()
   msgWorker = MSGWorker()
 
   try:
     gpsWorker.start()
     imuWorker.start()
-    emsWorker.start()
+    #emsWorker.start()
     msgWorker.start()
 
     ws_server = websockets.serve(msgWorker.handler, '0.0.0.0', 7700)
