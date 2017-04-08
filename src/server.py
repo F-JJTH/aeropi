@@ -37,7 +37,7 @@ class GPSWorker (threading.Thread):
       for new_data in self.session:
         if stopFlag:
           break
-      
+
         if new_data:
           self.fix.refresh(new_data)
           '''
@@ -156,7 +156,7 @@ class IMUWorker (threading.Thread):
         del self.data['temperatureValid']
         del self.data['pressureValid']
         del self.data['humidity']
-        
+
         self.newData = '%s' % json.dumps(self.data)
 
         '''
@@ -201,21 +201,21 @@ class EMSWorker (threading.Thread):
       #self.data['fuelPress'] = self.mcp.read_adc(5)
       #self.data['voltage'] = self.mcp.read_adc(6)
       self.data['ASI'] = self.getAirspeed(self.mcp.read_adc(7))
-      
+
       self.newData = '%s' % json.dumps(self.data);
       time.sleep(0.25);
 
   def getResistance(self, value):
     Vout = (value*self.V_Ref)/1024
     return int((Vout*self.R_Ref)/(self.V_Ref-Vout))
-    
+
   def getTemperature(self, value):
     T = 0
     R = self.getResistance(value)
     if R < 3200 and R is not 0: # above this resistance we are negative
       T = 1/(self.A + self.B*math.log(R) + self.C*math.pow(math.log(R),3) )-273.15;
     return int(T)
-  
+
   def getPressure(self, value):
     P = 0.0
     R = self.getResistance(value)
@@ -239,7 +239,7 @@ class EMSWorker (threading.Thread):
   def getAirspeed(self, value):
     airspeed = value
     Vout = (value*self.V_Ref)/1024
-    kPa = ((Vout / self.V_Ref)-0.5)/0.057
+    kPa = ((Vout / self.V_Ref)-0.2)/0.2
     Pa = abs(kPa*1000)
     if kPa < 0:
       Pa = 0

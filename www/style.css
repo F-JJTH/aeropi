@@ -9,6 +9,19 @@ height: 440px;
 padding: 2px;
 }
 
+#nav {
+position: absolute;
+bottom: 0;
+right: 0;
+background: blue;
+z-index: 99;
+}
+
+#nav a {
+background: red;
+
+}
+
 #map{
 position: absolute;
 width: 100%;
@@ -96,8 +109,6 @@ float: left;
 text-align: center;
 }
 
-
-	
 .custom-corners .ui-bar {
   -webkit-border-top-left-radius: inherit;
   border-top-left-radius: inherit;

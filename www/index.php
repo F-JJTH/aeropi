@@ -337,6 +337,12 @@
     </div>
   </div>
 
+  <div id="nav">
+    <a>EFIS</a>
+    <a>MAPS</a>
+    <a>EMS</a>
+  </div>
+
   <div id="map"></div>
   <div id="efis"></div>
   <div id="groundElevation"></div>
