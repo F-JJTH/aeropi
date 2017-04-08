@@ -255,6 +255,7 @@ $(document).ready(function() {
       }
       if(data.EMS){
         data = data.EMS;
+        console.log(data);
         $("input#cht0").val(data.cht0+" °C");
         var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht0), 1, 1)+")";
         $("input#cht0").css({backgroundColor: col});
@@ -271,10 +272,11 @@ $(document).ready(function() {
         var col = "rgb("+hsv2rgb(getHueFromPress(data.oilPress), 1, 1)+")";
         $("input#oilPress").css({backgroundColor: col});
 
-        $("input#fuelPress").val(data.fuelPress+" Bar");
+        $("input#fuelFlow").val(toDecimal(data.fuelFlow, 2)+" L/h");
         $("input#MaP").val(data.MaP+" \"");
         $("input#voltage").val(data.voltage+" V");
         $("input#load").val(data.load+" A");
+        $("input#rpm").val(data.RPM+" tr/m");
 
         if(Settings.efis.asi.source != "gps") {
           efis.setSpeed(data.ASI);

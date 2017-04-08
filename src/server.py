@@ -13,6 +13,7 @@ import json
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import read_RPM
+import pigpio
 
 
 SPI_PORT   = 0
@@ -322,13 +323,13 @@ if __name__ == "__main__":
   print('aeroPi server')
   gpsWorker = GPSWorker()
   imuWorker = IMUWorker()
-  #emsWorker = EMSWorker()
+  emsWorker = EMSWorker()
   msgWorker = MSGWorker()
 
   try:
     gpsWorker.start()
     imuWorker.start()
-    #emsWorker.start()
+    emsWorker.start()
     msgWorker.start()
 
     ws_server = websockets.serve(msgWorker.handler, '0.0.0.0', 7700)

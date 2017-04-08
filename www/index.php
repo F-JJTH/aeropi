@@ -297,7 +297,7 @@
             <div class="ui-grid-b">
               <div class="ui-block-a">
                 <div class="ui-field-contain">
-                  <label for="fuelPress">Fuel pressure</label><input type="text" name="fuelPress" id="fuelPress" disabled>
+                  <label for="fuelFlow">Fuel flow</label><input type="text" name="fuelFlow" id="fuelFlow" disabled>
                 </div>
               </div>
               <div class="ui-block-b">
