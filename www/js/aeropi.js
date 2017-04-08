@@ -244,7 +244,7 @@ $(document).ready(function() {
 
         data.altPress = altcalc(efis.getQnh()*100, 288.15, efis.getPressure()*100)*3.28084;
         geo_success(data);
-        
+
         var alt = data.altPress;
         if(Settings.efis.alt.source == 'gps')
           alt = data.alt;
@@ -258,11 +258,11 @@ $(document).ready(function() {
         $("input#cht0").val(data.cht0+" °C");
         var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht0), 1, 1)+")";
         $("input#cht0").css({backgroundColor: col});
-        
+
         $("input#cht1").val(data.cht1+" °C");
         var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht1), 1, 1)+")";
         $("input#cht1").css({backgroundColor: col});
-        
+
         $("input#oilTemp").val(data.oilTemp+" °C");
         var col = "rgb("+hsv2rgb(getHueFromTemp(data.oilTemp), 1, 1)+")";
         $("input#oilTemp").css({backgroundColor: col});
@@ -270,7 +270,7 @@ $(document).ready(function() {
         $("input#oilPress").val(data.oilPress+" Bar");
         var col = "rgb("+hsv2rgb(getHueFromPress(data.oilPress), 1, 1)+")";
         $("input#oilPress").css({backgroundColor: col});
-        
+
         $("input#fuelPress").val(data.fuelPress+" Bar");
         $("input#MaP").val(data.MaP+" \"");
         $("input#voltage").val(data.voltage+" V");
@@ -282,12 +282,32 @@ $(document).ready(function() {
       }
     };
 
-    $('#ai').on('click', function(){
+    /*$('#ai').on('click', function(){
       $("#ai").css("visibility", "hidden");
       $("#ts").css("visibility", "hidden");
       $("#map").css("visibility", "visible");
+    });*/
+
+    $('#nav a').on('click', function(e){
+        var elem = $(this).attr('data');
+        if(elem == 'map') {
+          $(this).addClass('ui-btn-active');
+          $('#nav a[data=efis]').removeClass('ui-btn-active');
+          $('#ts, #ai').css('visibility', 'hidden');
+          $('#map').css('visibility', 'visible');
+        }
+        if(elem == 'efis') {
+          $(this).addClass('ui-btn-active');
+          $('#nav a[data=map]').removeClass('ui-btn-active');
+          $('#map').css('visibility', 'hidden');
+          $('#ts, #ai').css('visibility', 'visible');
+        }
+        if(elem == 'ems') {
+          $('#ems').toggle();
+          $(this).toggleClass('ui-btn-active');
+        }
     });
-    
+
     $('#alt').on('click', function(){
       var v = $('#groundElevation').css('visibility') == 'hidden' ? 'visible' : 'hidden';
       $('#groundElevation').css('visibility', v);
@@ -353,13 +373,13 @@ $(document).ready(function() {
     geo_success(_lastCoord);
   });
 
-  map.on('click', function(e){
+  /*map.on('click', function(e){
     if( $(e.originalEvent.target).is("img") )
       return false;
     $("#ai").css("visibility", "visible");
     $("#ts").css("visibility", "visible");
     $("#map").css("visibility", "hidden");
-  });
+  });*/
 
   $("#qnhDecrease").on('click', function(e){
     var v = $("#qnhInput").val();
@@ -520,7 +540,7 @@ $(document).ready(function() {
     Settings = $.extend(true, {}, Settings, data);
     saveSettings(data);
   });
-  
+
   _plotTimer = new Date().getTime() - 1000*10; // soustract 10s for the first update
 });
 
@@ -684,7 +704,7 @@ function updatePlot(path, spd, alt, force) {
         elevationData.push([distance, elevation]);
         elevArr.push(elevation);
       });
-      
+
       if(Settings.general.unit.distance == 'nm')
         spd = Math.round(spd*0.539957);
 

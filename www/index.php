@@ -338,14 +338,26 @@
   </div>
 
   <div id="nav">
-    <a>EFIS</a>
-    <a>MAPS</a>
-    <a>EMS</a>
+    <a href="#" data='efis' class="ui-btn ui-corner-all ui-btn-b ui-shadow ui-btn-active">EFIS</a><a href="#" data='map' class="ui-btn ui-corner-all ui-btn-b ui-shadow">MAP</a><a href="#" data='ems' class="ui-btn ui-btn-b ui-btn-active ui-corner-all ui-shadow">EMS</a>
   </div>
 
   <div id="map"></div>
   <div id="efis"></div>
   <div id="groundElevation"></div>
+  <div id="ems">
+    <div class="ui-field-contain">
+      <label for="cht0">CHT0</label><input type="text" name="cht0" id="cht0" disabled>
+    </div>
+    <div class="ui-field-contain">
+      <label for="cht1">CHT1</label><input type="text" name="cht1" id="cht1" disabled>
+    </div>
+    <div class="ui-field-contain">
+      <label for="oilTemp">Oil temp</label><input type="text" name="oilTemp" id="oilTemp" disabled>
+    </div>
+    <div class="ui-field-contain">
+      <label for="oilPress">Oil press</label><input type="text" name="oilPress" id="oilPress" disabled>
+    </div>
+  </div>
 
 </body>
 </html>
