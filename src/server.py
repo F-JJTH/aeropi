@@ -94,11 +94,11 @@ class IMUWorker (threading.Thread):
 
     if not self.imu.IMUInit():
       print("IMU Init Failed")
-      sys.exit(1)
+#      sys.exit(1)
 
     if not self.pressureSensor.pressureInit():
       print("Pressure sensor Init Failed")
-      sys.exit(1)
+#      sys.exit(1)
 
     self.imu.setSlerpPower(0.02)
     self.imu.setGyroEnable(True)
