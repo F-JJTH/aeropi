@@ -1,0 +1,1005 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/clement/aeroPi/aeroPi.sch</source>
+    <date>Mon 06 Mar 2017 02:40:14 AM CET</date>
+    <tool>Eeschema 4.0.6-e0-6349~53~ubuntu16.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>aeroPi</title>
+        <company>Clément de l'Hamaide</company>
+        <rev>1.0.0</rev>
+        <date>2017-03-05</date>
+        <source>aeroPi.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/Back Power Protection/" tstamps="/54F145DC/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>Ideal_Diode.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="P3">
+      <value>Raspberry_Pi_+_Conn</value>
+      <footprint>w_conn_strip:vasch_strip_20x2</footprint>
+      <fields>
+        <field name="Mouser Part No.">517-30340-6002</field>
+      </fields>
+      <libsource lib="aeroPi-cache" part="Raspberry_Pi_+_Conn"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E92361</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>CAT24C32HU4I-GT3</value>
+      <footprint>w_smd_dil:tssop-8</footprint>
+      <fields>
+        <field name="Mouser Part No.">698-CAT24C32YI-GT3</field>
+      </fields>
+      <libsource lib="aeroPi-cache" part="CAT24C32HU4I-GT3"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E93419</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>1k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">754-RR0510P-102D</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E935B8</tstamp>
+    </comp>
+    <comp ref="P1">
+      <value>CONN_01X02</value>
+      <footprint>w_pin_strip:pin_strip_2</footprint>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E93748</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>3.9k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">71-CRCW04023K90FKED</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E93F03</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>3.9k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">71-CRCW04023K90FKED</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E93F5E</tstamp>
+    </comp>
+    <comp ref="JP1">
+      <value>JUMPER</value>
+      <footprint>Resistors_SMD:R_0603</footprint>
+      <libsource lib="aeroPi-cache" part="JUMPER"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E9499A</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>LM3489</value>
+      <footprint>w_smd_dil:msoic-8</footprint>
+      <fields>
+        <field name="Mouser Part No.">926-LM3489MM/NOPB</field>
+      </fields>
+      <libsource lib="aeroPi-cache" part="LM3489"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E983ED</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>24k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">71-CRCW0402-24K-E3</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E985D4</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>0.1uf</value>
+      <footprint>Capacitors_SMD:C_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">810-C1005X5R1H104K</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E98A38</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>50uf/50v</value>
+      <footprint>w_smd_cap:c_elec_6.3x7.7</footprint>
+      <fields>
+        <field name="Mouser Part No.">647-UUR1H470MCL6GS</field>
+      </fields>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E990D4</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>1nf</value>
+      <footprint>Capacitors_SMD:C_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">810-C1005C0G2A102J5C</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E992BB</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>270</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">667-ERJ-P6WJ271V</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E99E56</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>DIODESCH</value>
+      <footprint>w_smd_diode:do214aa</footprint>
+      <fields>
+        <field name="Mouser Part No.">512-MBRS140</field>
+      </fields>
+      <libsource lib="device" part="D_Schottky"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E9A29D</tstamp>
+    </comp>
+    <comp ref="L1">
+      <value>22uH</value>
+      <footprint>w_smd_inductors:inductor_smd_8x5mm</footprint>
+      <fields>
+        <field name="Mouser Part No.">652-SRN8040-220M</field>
+      </fields>
+      <libsource lib="pihat_template-rescue" part="INDUCTOR-RESCUE-pihat_template"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E9A542</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>30k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">594-MCT06030C3002FP5</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E9A686</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">71-CRCW0603-10K-E3</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E9A704</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>FDC5614P</value>
+      <footprint>w_smd_trans:sot23-6</footprint>
+      <fields>
+        <field name="Mouser Part No.">512-FDC5614P</field>
+      </fields>
+      <libsource lib="aeroPi-cache" part="FDC5614P"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54E9C27B</tstamp>
+    </comp>
+    <comp ref="U4">
+      <value>LM1117IMPX-ADJ</value>
+      <footprint>w_smd_trans:sot223</footprint>
+      <fields>
+        <field name="Mouser Part No.">926-M1117IMPXADJNOPB</field>
+      </fields>
+      <libsource lib="aeroPi-cache" part="LM1117IMPX-ADJ"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54F307E9</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>10uf/6.3V</value>
+      <footprint>Capacitors_SMD:CP_Elec_4x5.3</footprint>
+      <fields>
+        <field name="Mouser Part No.">5985-AVS16V100-F</field>
+      </fields>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54F356B7</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>390</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">594-MCT06030C3900FP5</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54F36302</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>240</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">754-RR0816P-241D</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54F36377</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>LED</value>
+      <footprint>Diodes_SMD:D_0603</footprint>
+      <fields>
+        <field name="Mouser Part No.">743-HT-191USD</field>
+      </fields>
+      <libsource lib="pihat_template-rescue" part="LED-RESCUE-pihat_template"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54F3E98A</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>360</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">71-CRCW0603316RFKEB</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54F40F53</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>0.1uf</value>
+      <footprint>Capacitors_SMD:C_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">810-C1005X5R1H104K</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54EE7CB1</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>0.1uf</value>
+      <footprint>Capacitors_SMD:C_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">810-C1005X5R1H104K</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54EE8291</tstamp>
+    </comp>
+    <comp ref="P2">
+      <value>CONN_01X02</value>
+      <footprint>w_conn_mkds:mkds_1,5-2</footprint>
+      <fields>
+        <field name="Mouser Part No.">651-1904383</field>
+      </fields>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>54F65B78</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>0.1uf</value>
+      <footprint>Capacitors_SMD:C_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">810-C1005X5R1H104K</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>551D5AC8</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>1uf</value>
+      <footprint>Capacitors_SMD:C_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">810-C1005X5R1H104K</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>567BDDCB</tstamp>
+    </comp>
+    <comp ref="U6">
+      <value>FGPMMOPA6H</value>
+      <footprint>footprint:PA6H</footprint>
+      <libsource lib="aeroPi-cache" part="FGPMMOPA6H"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58BCBCD2</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>LED 1</value>
+      <footprint>Diodes_SMD:D_0603</footprint>
+      <libsource lib="device" part="LED_Small"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58BCBCD8</tstamp>
+    </comp>
+    <comp ref="R13">
+      <value>470</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <libsource lib="device" part="R_Small"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58BCBCD9</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>CONN_COAXIAL</value>
+      <footprint>Connectors:BNC</footprint>
+      <libsource lib="conn" part="CONN_COAXIAL"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58BCBCDB</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>BSS138</value>
+      <footprint>w_smd_trans:sot23</footprint>
+      <fields>
+        <field name="Mouser Part No.">621-DMG2305UX-13</field>
+      </fields>
+      <libsource lib="transistors" part="BSS138"/>
+      <sheetpath names="/Back Power Protection/" tstamps="/54F145DC/"/>
+      <tstamp>54F14605</tstamp>
+    </comp>
+    <comp ref="U5">
+      <value>DMMT5401</value>
+      <footprint>w_smd_trans:sot23-6</footprint>
+      <fields>
+        <field name="Mouser Part No.">621-DMMT5401-7-F</field>
+      </fields>
+      <libsource lib="aeroPi-cache" part="DMMT5401"/>
+      <sheetpath names="/Back Power Protection/" tstamps="/54F145DC/"/>
+      <tstamp>54F1CFA3</tstamp>
+    </comp>
+    <comp ref="R12">
+      <value>47k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">667-ERJ-2RKF4702X</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/Back Power Protection/" tstamps="/54F145DC/"/>
+      <tstamp>54F1D101</tstamp>
+    </comp>
+    <comp ref="R11">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_0402</footprint>
+      <fields>
+        <field name="Mouser Part No.">71-CRCW0402-10K-E3</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/Back Power Protection/" tstamps="/54F145DC/"/>
+      <tstamp>54F1D193</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="transistors" part="BSS138">
+      <aliases>
+        <alias>2N7002</alias>
+      </aliases>
+      <description>50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23</description>
+      <docs>http://www.fairchildsemi.com/ds/BS/BSS138.pdf</docs>
+      <footprints>
+        <fp>SOT-23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">BSS138</field>
+        <field name="Footprint">TO_SOT_Packages_SMD:SOT-23</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="passive"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="CAT24C32HU4I-GT3">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">CAT24C32HU4I-GT3</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A0" type="input"/>
+        <pin num="2" name="A1" type="input"/>
+        <pin num="3" name="A2" type="input"/>
+        <pin num="4" name="VSS" type="input"/>
+        <pin num="5" name="SDA" type="input"/>
+        <pin num="6" name="SCL" type="input"/>
+        <pin num="7" name="WP" type="input"/>
+        <pin num="8" name="VCC" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X02">
+      <description>Connector, single row, 01x02, pin header</description>
+      <footprints>
+        <fp>Pin_Header_Straight_1X*</fp>
+        <fp>Pin_Header_Angled_1X*</fp>
+        <fp>Socket_Strip_Straight_1X*</fp>
+        <fp>Socket_Strip_Angled_1X*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">CONN_01X02</field>
+      </fields>
+      <pins>
+        <pin num="1" name="P1" type="passive"/>
+        <pin num="2" name="P2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_COAXIAL">
+      <description>coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, ...)</description>
+      <footprints>
+        <fp>*BNC*</fp>
+        <fp>*SMA*</fp>
+        <fp>*SMB*</fp>
+        <fp>*SMC*</fp>
+        <fp>*Cinch*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">CONN_COAXIAL</field>
+      </fields>
+      <pins>
+        <pin num="1" name="In" type="passive"/>
+        <pin num="2" name="Ext" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="CP">
+      <description>Polarised capacitor</description>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="DMMT5401">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">DMMT5401</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="input"/>
+        <pin num="2" name="~" type="input"/>
+        <pin num="3" name="~" type="input"/>
+        <pin num="4" name="~" type="input"/>
+        <pin num="5" name="~" type="input"/>
+        <pin num="6" name="~" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="D_Schottky">
+      <description>Schottky diode</description>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*SingleDiode</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Schottky</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="FDC5614P">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">FDC5614P</field>
+      </fields>
+      <pins>
+        <pin num="1" name="D" type="passive"/>
+        <pin num="2" name="D" type="passive"/>
+        <pin num="3" name="G" type="passive"/>
+        <pin num="4" name="S" type="passive"/>
+        <pin num="5" name="D" type="passive"/>
+        <pin num="6" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="FGPMMOPA6H">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">FGPMMOPA6H</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VCC" type="input"/>
+        <pin num="2" name="NRESET" type="input"/>
+        <pin num="3" name="GND" type="input"/>
+        <pin num="4" name="VBACKUP" type="input"/>
+        <pin num="5" name="3D-FIX" type="input"/>
+        <pin num="6" name="NC" type="input"/>
+        <pin num="7" name="NC" type="input"/>
+        <pin num="8" name="GND" type="input"/>
+        <pin num="9" name="TX" type="input"/>
+        <pin num="10" name="RX" type="input"/>
+        <pin num="11" name="EX_ANT" type="input"/>
+        <pin num="12" name="GND" type="input"/>
+        <pin num="13" name="1PPS" type="input"/>
+        <pin num="14" name="RTCM" type="input"/>
+        <pin num="15" name="NC" type="input"/>
+        <pin num="16" name="NC" type="input"/>
+        <pin num="17" name="NC" type="input"/>
+        <pin num="18" name="NC" type="input"/>
+        <pin num="19" name="GND" type="input"/>
+        <pin num="20" name="NC" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="pihat_template-rescue" part="INDUCTOR-RESCUE-pihat_template">
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">INDUCTOR-RESCUE-pihat_template</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="JUMPER">
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">JUMPER</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="pihat_template-rescue" part="LED-RESCUE-pihat_template">
+      <footprints>
+        <fp>LED-3MM</fp>
+        <fp>LED-5MM</fp>
+        <fp>LED-10MM</fp>
+        <fp>LED-0603</fp>
+        <fp>LED-0805</fp>
+        <fp>LED-1206</fp>
+        <fp>LEDV</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED-RESCUE-pihat_template</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="LED_Small">
+      <description>LED, small symbol</description>
+      <footprints>
+        <fp>LED-*</fp>
+        <fp>LED_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="LM1117IMPX-ADJ">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM1117IMPX-ADJ</field>
+      </fields>
+      <pins>
+        <pin num="1" name="ADJ/GND" type="input"/>
+        <pin num="2" name="VOUT" type="input"/>
+        <pin num="3" name="VIN" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="LM3489">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM3489</field>
+      </fields>
+      <pins>
+        <pin num="1" name="ISENSE" type="input"/>
+        <pin num="2" name="GND" type="input"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="FB" type="input"/>
+        <pin num="5" name="ADJ" type="input"/>
+        <pin num="6" name="PGND" type="input"/>
+        <pin num="7" name="PGATE" type="input"/>
+        <pin num="8" name="VIN" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="R_Small">
+      <description>Resistor, small symbol</description>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="aeroPi-cache" part="Raspberry_Pi_+_Conn">
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">Raspberry_Pi_+_Conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VDD_(3.3v)" type="input"/>
+        <pin num="2" name="VPP_(5v)" type="input"/>
+        <pin num="3" name="GPIO2/I2C1_SDA" type="input"/>
+        <pin num="4" name="VPP_(5v)" type="input"/>
+        <pin num="5" name="GPIO3/I2C1_SCL" type="input"/>
+        <pin num="6" name="GND" type="input"/>
+        <pin num="7" name="GPIO4/GPCLK0" type="input"/>
+        <pin num="8" name="GPIO14/UART_TXD" type="input"/>
+        <pin num="9" name="GND" type="input"/>
+        <pin num="10" name="GPIO15/UART_RXD" type="input"/>
+        <pin num="11" name="GPIO17" type="input"/>
+        <pin num="12" name="GPIO18" type="input"/>
+        <pin num="13" name="GPIO27" type="input"/>
+        <pin num="14" name="GND" type="input"/>
+        <pin num="15" name="GPIO22" type="input"/>
+        <pin num="16" name="GPIO23" type="input"/>
+        <pin num="17" name="VDD_(3.3V)" type="input"/>
+        <pin num="18" name="GPIO24" type="input"/>
+        <pin num="19" name="GPIO10/SPI_M0SI" type="input"/>
+        <pin num="20" name="GND" type="input"/>
+        <pin num="21" name="GPIO9/SPI_MISO" type="input"/>
+        <pin num="22" name="GPIO25" type="input"/>
+        <pin num="23" name="GPIO11/SPI_SCLK" type="input"/>
+        <pin num="24" name="GPIO8/SPI_CE0" type="input"/>
+        <pin num="25" name="GND" type="input"/>
+        <pin num="26" name="GPIO7/SPI_CE1" type="input"/>
+        <pin num="27" name="ID_SD" type="input"/>
+        <pin num="28" name="ID_SC" type="input"/>
+        <pin num="29" name="GPIO5" type="input"/>
+        <pin num="30" name="GND" type="input"/>
+        <pin num="31" name="GPIO6" type="input"/>
+        <pin num="32" name="GPIO12" type="input"/>
+        <pin num="33" name="GPIO13" type="input"/>
+        <pin num="34" name="GND" type="input"/>
+        <pin num="35" name="GPIO19" type="input"/>
+        <pin num="36" name="GPIO16" type="input"/>
+        <pin num="37" name="GPIO26" type="input"/>
+        <pin num="39" name="GND" type="input"/>
+        <pin num="40" name="GPIO21" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="device">
+      <uri>/usr/share/kicad/library/device.lib</uri>
+    </library>
+    <library logical="conn">
+      <uri>/usr/share/kicad/library/conn.lib</uri>
+    </library>
+    <library logical="transistors">
+      <uri>/usr/share/kicad/library/transistors.lib</uri>
+    </library>
+    <library logical="aeroPi-cache">
+      <uri>/home/clement/aeroPi/aeroPi-cache.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(C5-Pad2)">
+      <node ref="R6" pin="2"/>
+      <node ref="U1" pin="4"/>
+      <node ref="C5" pin="2"/>
+      <node ref="R7" pin="1"/>
+    </net>
+    <net code="2" name="Net-(U1-Pad7)">
+      <node ref="U1" pin="7"/>
+      <node ref="U3" pin="3"/>
+    </net>
+    <net code="3" name="Net-(R4-Pad2)">
+      <node ref="U1" pin="1"/>
+      <node ref="R4" pin="2"/>
+    </net>
+    <net code="4" name="Net-(D1-Pad2)">
+      <node ref="U3" pin="1"/>
+      <node ref="L1" pin="1"/>
+      <node ref="D1" pin="2"/>
+      <node ref="R4" pin="1"/>
+      <node ref="U3" pin="2"/>
+      <node ref="U3" pin="5"/>
+      <node ref="U3" pin="6"/>
+    </net>
+    <net code="5" name="+5V">
+      <node ref="U5" pin="6"/>
+      <node ref="C6" pin="1"/>
+      <node ref="U4" pin="3"/>
+      <node ref="L1" pin="2"/>
+      <node ref="R6" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="Q1" pin="3"/>
+    </net>
+    <net code="6" name="Net-(R8-Pad1)">
+      <node ref="U4" pin="1"/>
+      <node ref="R9" pin="2"/>
+      <node ref="R8" pin="1"/>
+    </net>
+    <net code="7" name="Net-(C3-Pad2)">
+      <node ref="R2" pin="2"/>
+      <node ref="C3" pin="2"/>
+      <node ref="U1" pin="5"/>
+    </net>
+    <net code="8" name="/Back Power Protection/5V_MCU">
+      <node ref="P3" pin="4"/>
+      <node ref="Q1" pin="2"/>
+      <node ref="U5" pin="5"/>
+      <node ref="P3" pin="2"/>
+    </net>
+    <net code="9" name="GND">
+      <node ref="U2" pin="1"/>
+      <node ref="P3" pin="39"/>
+      <node ref="P3" pin="25"/>
+      <node ref="P3" pin="34"/>
+      <node ref="C4" pin="2"/>
+      <node ref="P2" pin="2"/>
+      <node ref="C7" pin="2"/>
+      <node ref="P1" pin="1"/>
+      <node ref="C1" pin="2"/>
+      <node ref="U2" pin="2"/>
+      <node ref="C2" pin="2"/>
+      <node ref="U1" pin="6"/>
+      <node ref="U1" pin="2"/>
+      <node ref="P3" pin="30"/>
+      <node ref="P3" pin="14"/>
+      <node ref="P3" pin="20"/>
+      <node ref="P3" pin="9"/>
+      <node ref="P3" pin="6"/>
+      <node ref="U2" pin="4"/>
+      <node ref="U2" pin="3"/>
+      <node ref="C6" pin="2"/>
+      <node ref="R8" pin="2"/>
+      <node ref="R12" pin="2"/>
+      <node ref="R11" pin="2"/>
+      <node ref="D1" pin="1"/>
+      <node ref="R7" pin="2"/>
+      <node ref="R10" pin="2"/>
+      <node ref="J1" pin="2"/>
+      <node ref="C8" pin="2"/>
+      <node ref="U6" pin="8"/>
+      <node ref="U6" pin="3"/>
+      <node ref="U6" pin="19"/>
+      <node ref="U6" pin="12"/>
+      <node ref="JP1" pin="2"/>
+    </net>
+    <net code="10" name="Net-(D2-Pad2)">
+      <node ref="D2" pin="2"/>
+      <node ref="U6" pin="5"/>
+    </net>
+    <net code="11" name="Net-(D2-Pad1)">
+      <node ref="R13" pin="1"/>
+      <node ref="D2" pin="1"/>
+    </net>
+    <net code="12" name="Net-(U6-Pad14)">
+      <node ref="U6" pin="14"/>
+    </net>
+    <net code="13" name="Net-(U6-Pad2)">
+      <node ref="U6" pin="2"/>
+    </net>
+    <net code="14" name="Net-(U6-Pad7)">
+      <node ref="U6" pin="7"/>
+    </net>
+    <net code="15" name="Net-(U1-Pad3)">
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="16" name="+24V">
+      <node ref="C1" pin="1"/>
+      <node ref="C3" pin="1"/>
+      <node ref="U3" pin="4"/>
+      <node ref="U1" pin="8"/>
+      <node ref="R2" pin="1"/>
+      <node ref="P2" pin="1"/>
+      <node ref="C2" pin="1"/>
+    </net>
+    <net code="17" name="Net-(U6-Pad13)">
+      <node ref="U6" pin="13"/>
+    </net>
+    <net code="18" name="Net-(J1-Pad1)">
+      <node ref="U6" pin="11"/>
+      <node ref="J1" pin="1"/>
+    </net>
+    <net code="19" name="Net-(U6-Pad6)">
+      <node ref="U6" pin="6"/>
+    </net>
+    <net code="20" name="+3V3">
+      <node ref="R1" pin="1"/>
+      <node ref="R3" pin="1"/>
+      <node ref="R13" pin="2"/>
+      <node ref="U2" pin="8"/>
+      <node ref="R5" pin="1"/>
+      <node ref="R9" pin="1"/>
+      <node ref="U4" pin="2"/>
+      <node ref="D3" pin="1"/>
+      <node ref="C8" pin="1"/>
+      <node ref="U6" pin="1"/>
+      <node ref="C4" pin="1"/>
+      <node ref="C7" pin="1"/>
+    </net>
+    <net code="21" name="Net-(D3-Pad2)">
+      <node ref="D3" pin="2"/>
+      <node ref="R10" pin="1"/>
+    </net>
+    <net code="22" name="Net-(U6-Pad15)">
+      <node ref="U6" pin="15"/>
+    </net>
+    <net code="23" name="Net-(U6-Pad16)">
+      <node ref="U6" pin="16"/>
+    </net>
+    <net code="24" name="Net-(U6-Pad17)">
+      <node ref="U6" pin="17"/>
+    </net>
+    <net code="25" name="Net-(U6-Pad18)">
+      <node ref="U6" pin="18"/>
+    </net>
+    <net code="26" name="Net-(U6-Pad20)">
+      <node ref="U6" pin="20"/>
+    </net>
+    <net code="27" name="/VBACKUP">
+      <node ref="U6" pin="4"/>
+    </net>
+    <net code="28" name="Net-(JP1-Pad1)">
+      <node ref="JP1" pin="1"/>
+      <node ref="P1" pin="2"/>
+      <node ref="U2" pin="7"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="29" name="Net-(P3-Pad28)">
+      <node ref="P3" pin="28"/>
+      <node ref="R3" pin="2"/>
+      <node ref="U2" pin="6"/>
+    </net>
+    <net code="30" name="Net-(P3-Pad33)">
+      <node ref="P3" pin="33"/>
+    </net>
+    <net code="31" name="Net-(P3-Pad23)">
+      <node ref="P3" pin="23"/>
+    </net>
+    <net code="32" name="Net-(P3-Pad13)">
+      <node ref="P3" pin="13"/>
+    </net>
+    <net code="33" name="Net-(P3-Pad32)">
+      <node ref="P3" pin="32"/>
+    </net>
+    <net code="34" name="Net-(P3-Pad22)">
+      <node ref="P3" pin="22"/>
+    </net>
+    <net code="35" name="Net-(P3-Pad12)">
+      <node ref="P3" pin="12"/>
+    </net>
+    <net code="36" name="Net-(P3-Pad31)">
+      <node ref="P3" pin="31"/>
+    </net>
+    <net code="37" name="Net-(P3-Pad21)">
+      <node ref="P3" pin="21"/>
+    </net>
+    <net code="38" name="Net-(P3-Pad11)">
+      <node ref="P3" pin="11"/>
+    </net>
+    <net code="39" name="Net-(P3-Pad40)">
+      <node ref="P3" pin="40"/>
+    </net>
+    <net code="40" name="Net-(P3-Pad24)">
+      <node ref="P3" pin="24"/>
+    </net>
+    <net code="41" name="/RXD">
+      <node ref="P3" pin="10"/>
+      <node ref="U6" pin="9"/>
+    </net>
+    <net code="42" name="/TXD">
+      <node ref="U6" pin="10"/>
+      <node ref="P3" pin="8"/>
+    </net>
+    <net code="43" name="Net-(P3-Pad7)">
+      <node ref="P3" pin="7"/>
+    </net>
+    <net code="44" name="Net-(P3-Pad5)">
+      <node ref="P3" pin="5"/>
+    </net>
+    <net code="45" name="Net-(P3-Pad3)">
+      <node ref="P3" pin="3"/>
+    </net>
+    <net code="46" name="Net-(P3-Pad1)">
+      <node ref="P3" pin="1"/>
+    </net>
+    <net code="48" name="Net-(P3-Pad29)">
+      <node ref="P3" pin="29"/>
+    </net>
+    <net code="49" name="Net-(P3-Pad19)">
+      <node ref="P3" pin="19"/>
+    </net>
+    <net code="50" name="Net-(P3-Pad18)">
+      <node ref="P3" pin="18"/>
+    </net>
+    <net code="51" name="Net-(P3-Pad37)">
+      <node ref="P3" pin="37"/>
+    </net>
+    <net code="52" name="Net-(P3-Pad27)">
+      <node ref="U2" pin="5"/>
+      <node ref="R5" pin="2"/>
+      <node ref="P3" pin="27"/>
+    </net>
+    <net code="53" name="Net-(P3-Pad17)">
+      <node ref="P3" pin="17"/>
+    </net>
+    <net code="54" name="Net-(P3-Pad36)">
+      <node ref="P3" pin="36"/>
+    </net>
+    <net code="55" name="Net-(P3-Pad26)">
+      <node ref="P3" pin="26"/>
+    </net>
+    <net code="56" name="Net-(P3-Pad16)">
+      <node ref="P3" pin="16"/>
+    </net>
+    <net code="57" name="Net-(P3-Pad35)">
+      <node ref="P3" pin="35"/>
+    </net>
+    <net code="58" name="Net-(P3-Pad15)">
+      <node ref="P3" pin="15"/>
+    </net>
+    <net code="59" name="Net-(R11-Pad1)">
+      <node ref="U5" pin="3"/>
+      <node ref="U5" pin="2"/>
+      <node ref="U5" pin="1"/>
+      <node ref="R11" pin="1"/>
+    </net>
+    <net code="60" name="Net-(Q1-Pad1)">
+      <node ref="U5" pin="4"/>
+      <node ref="R12" pin="1"/>
+      <node ref="Q1" pin="1"/>
+    </net>
+  </nets>
+</export>
