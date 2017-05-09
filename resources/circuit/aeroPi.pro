@@ -1,4 +1,4 @@
-update=Sat 18 Mar 2017 11:06:55 PM CET
+update=Tue 09 May 2017 07:04:10 PM CEST
 version=1
 last_client=kicad
 [pcbnew]
@@ -59,3 +59,4 @@ LibName27=atmel
 LibName28=contrib
 LibName29=valves
 LibName30=mcp3008BIS
+LibName31=aeroPi
