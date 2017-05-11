@@ -1,11 +1,40 @@
 EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
 LIBS:aeroPi
 LIBS:aeroPi-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 2
+Sheet 2 3
 Title ""
 Date ""
 Rev ""
@@ -90,8 +119,8 @@ L GND #PWR034
 U 1 1 54F1D1B9
 P 6200 5200
 AR Path="/54F1D1B9" Ref="#PWR034"  Part="1" 
-AR Path="/54F145DC/54F1D1B9" Ref="#PWR036"  Part="1" 
-F 0 "#PWR036" H 6200 4950 60  0001 C CNN
+AR Path="/54F145DC/54F1D1B9" Ref="#PWR031"  Part="1" 
+F 0 "#PWR031" H 6200 4950 60  0001 C CNN
 F 1 "GND" H 6200 5050 60  0000 C CNN
 F 2 "" H 6200 5200 60  0000 C CNN
 F 3 "" H 6200 5200 60  0000 C CNN
@@ -103,8 +132,8 @@ L GND #PWR035
 U 1 1 54F1D1D3
 P 5800 5200
 AR Path="/54F1D1D3" Ref="#PWR035"  Part="1" 
-AR Path="/54F145DC/54F1D1D3" Ref="#PWR037"  Part="1" 
-F 0 "#PWR037" H 5800 4950 60  0001 C CNN
+AR Path="/54F145DC/54F1D1D3" Ref="#PWR032"  Part="1" 
+F 0 "#PWR032" H 5800 4950 60  0001 C CNN
 F 1 "GND" H 5800 5050 60  0000 C CNN
 F 2 "" H 5800 5200 60  0000 C CNN
 F 3 "" H 5800 5200 60  0000 C CNN

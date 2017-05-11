@@ -1,0 +1,1055 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:aeroPi
+LIBS:aeroPi-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 3
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L BSS138 Q7
+U 1 1 5914D351
+P 9500 1240
+F 0 "Q7" H 9700 1315 50  0000 L CNN
+F 1 "BSS138" H 9700 1240 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 9700 1165 50  0001 L CIN
+F 3 "" H 9500 1240 50  0001 L CNN
+	1    9500 1240
+	0    -1   1    0   
+$EndComp
+Text Label 9260 830  1    60   ~ 0
++5V
+Text Label 9740 820  1    60   ~ 0
++3.3V
+$Comp
+L R R50
+U 1 1 5914D35A
+P 9260 1140
+F 0 "R50" V 9340 1140 50  0000 C CNN
+F 1 "10k" V 9260 1140 50  0000 C CNN
+F 2 "" V 9190 1140 50  0001 C CNN
+F 3 "" H 9260 1140 50  0001 C CNN
+	1    9260 1140
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R55
+U 1 1 5914D361
+P 9740 1140
+F 0 "R55" V 9820 1140 50  0000 C CNN
+F 1 "10k" V 9740 1140 50  0000 C CNN
+F 2 "" V 9670 1140 50  0001 C CNN
+F 3 "" H 9740 1140 50  0001 C CNN
+	1    9740 1140
+	1    0    0    -1  
+$EndComp
+Text Label 9100 1340 2    60   ~ 0
+SCLKH
+Wire Wire Line
+	9700 1340 9930 1340
+Wire Wire Line
+	9740 1290 9740 1340
+Connection ~ 9740 1340
+Wire Wire Line
+	9260 1290 9260 1340
+Wire Wire Line
+	9100 1340 9300 1340
+Connection ~ 9260 1340
+Wire Wire Line
+	9260 990  9260 830 
+Wire Wire Line
+	9740 820  9740 990 
+Text Label 6500 3860 0    60   ~ 0
+MOSIH
+Text Label 6500 3760 0    60   ~ 0
+MISOH
+Text Label 6500 3660 0    60   ~ 0
+SCLKH
+Text Label 6500 1710 0    60   ~ 0
+MOSIH
+Text Label 6500 1610 0    60   ~ 0
+MISOH
+Text Label 6500 1510 0    60   ~ 0
+SCLKH
+Text Label 5800 2960 1    60   ~ 0
++5V
+Text Label 5800 810  1    60   ~ 0
++5V
+$Comp
+L GND #PWR033
+U 1 1 5914E423
+P 5800 4610
+F 0 "#PWR033" H 5800 4610 30  0001 C CNN
+F 1 "GND" H 5800 4540 30  0001 C CNN
+F 2 "" H 5800 4610 60  0000 C CNN
+F 3 "" H 5800 4610 60  0000 C CNN
+	1    5800 4610
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR034
+U 1 1 5914E429
+P 5800 2460
+F 0 "#PWR034" H 5800 2460 30  0001 C CNN
+F 1 "GND" H 5800 2390 30  0001 C CNN
+F 2 "" H 5800 2460 60  0000 C CNN
+F 3 "" H 5800 2460 60  0000 C CNN
+	1    5800 2460
+	1    0    0    -1  
+$EndComp
+Text Label 6500 1810 0    60   ~ 0
+MCP0H
+Text Label 6500 3960 0    60   ~ 0
+MCP1H
+NoConn ~ 5100 3460
+NoConn ~ 5100 3560
+NoConn ~ 5100 3660
+NoConn ~ 5100 3760
+NoConn ~ 5100 3860
+NoConn ~ 5100 3960
+NoConn ~ 5100 4060
+NoConn ~ 5100 4160
+Text Label 5100 1310 2    60   ~ 0
+ASI
+Text Label 5100 1410 2    60   ~ 0
+BARO
+Text Label 5100 1510 2    60   ~ 0
+MAP
+Text Label 4000 1810 2    60   ~ 0
++5V
+$Comp
+L R_Small R47
+U 1 1 5914E43F
+P 4200 1610
+F 0 "R47" H 4230 1630 50  0000 L CNN
+F 1 "220" H 4230 1570 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 4200 1610 50  0001 C CNN
+F 3 "" H 4200 1610 50  0001 C CNN
+	1    4200 1610
+	0    1    1    0   
+$EndComp
+$Comp
+L R_Small R48
+U 1 1 5914E446
+P 4400 1710
+F 0 "R48" H 4510 1730 50  0000 L CNN
+F 1 "220" H 4510 1670 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 4400 1710 50  0001 C CNN
+F 3 "" H 4400 1710 50  0001 C CNN
+	1    4400 1710
+	0    1    1    0   
+$EndComp
+$Comp
+L R_Small R49
+U 1 1 5914E44D
+P 4600 1810
+F 0 "R49" H 4630 1830 50  0000 L CNN
+F 1 "220" H 4630 1770 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 4600 1810 50  0001 C CNN
+F 3 "" H 4600 1810 50  0001 C CNN
+	1    4600 1810
+	0    1    1    0   
+$EndComp
+Text Label 4350 1460 2    60   ~ 0
+OilPressure
+Text Label 4550 1360 2    60   ~ 0
+OilTemp
+Text Label 4750 1260 2    60   ~ 0
+CHT
+$Comp
+L MCP3008 U16
+U 1 1 5914E457
+P 5800 1610
+F 0 "U16" H 5350 2060 50  0000 C CNN
+F 1 "MCP3008" H 6150 2060 50  0000 C CNN
+F 2 "SMD_Packages:SO-16-L" H 5700 1510 50  0001 C CNN
+F 3 "" H 5800 1610 50  0001 C CNN
+	1    5800 1610
+	1    0    0    -1  
+$EndComp
+Text Notes 4970 5070 0    157  Italic 31
+A/D Module
+Wire Wire Line
+	5700 4460 5700 4510
+Wire Wire Line
+	5700 4510 5900 4510
+Wire Wire Line
+	5900 4510 5900 4460
+Wire Wire Line
+	5800 4510 5800 4610
+Connection ~ 5800 4510
+Wire Wire Line
+	5700 2310 5700 2360
+Wire Wire Line
+	5700 2360 5900 2360
+Wire Wire Line
+	5900 2360 5900 2310
+Wire Wire Line
+	5800 2360 5800 2460
+Connection ~ 5800 2360
+Wire Wire Line
+	4100 1610 4100 1810
+Wire Wire Line
+	4000 1810 4500 1810
+Wire Wire Line
+	4300 1810 4300 1710
+Connection ~ 4100 1810
+Connection ~ 4300 1810
+Wire Wire Line
+	4700 1810 5100 1810
+Wire Wire Line
+	4500 1710 5100 1710
+Wire Wire Line
+	4750 1810 4750 1260
+Connection ~ 4750 1810
+Wire Wire Line
+	4550 1710 4550 1360
+Connection ~ 4550 1710
+Wire Wire Line
+	4350 1610 4350 1460
+Connection ~ 4350 1610
+Wire Wire Line
+	5700 1010 5700 910 
+Wire Wire Line
+	5700 910  5900 910 
+Wire Wire Line
+	5900 910  5900 1010
+Wire Wire Line
+	5700 3160 5700 3060
+Wire Wire Line
+	5700 3060 5900 3060
+Wire Wire Line
+	5900 3060 5900 3160
+Wire Wire Line
+	5800 910  5800 810 
+Connection ~ 5800 910 
+Wire Wire Line
+	5800 3060 5800 2960
+Connection ~ 5800 3060
+Wire Wire Line
+	4300 1610 5100 1610
+Wire Wire Line
+	9550 1040 9550 900 
+Wire Wire Line
+	9550 900  9740 900 
+Connection ~ 9740 900 
+$Comp
+L BSS138 Q8
+U 1 1 5914F1CC
+P 9520 2330
+F 0 "Q8" H 9720 2405 50  0000 L CNN
+F 1 "BSS138" H 9720 2330 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 9720 2255 50  0001 L CIN
+F 3 "" H 9520 2330 50  0001 L CNN
+	1    9520 2330
+	0    -1   1    0   
+$EndComp
+Text Label 9280 1920 1    60   ~ 0
++5V
+Text Label 9760 1910 1    60   ~ 0
++3.3V
+$Comp
+L R R51
+U 1 1 5914F1D4
+P 9280 2230
+F 0 "R51" V 9360 2230 50  0000 C CNN
+F 1 "10k" V 9280 2230 50  0000 C CNN
+F 2 "" V 9210 2230 50  0001 C CNN
+F 3 "" H 9280 2230 50  0001 C CNN
+	1    9280 2230
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R56
+U 1 1 5914F1DA
+P 9760 2230
+F 0 "R56" V 9840 2230 50  0000 C CNN
+F 1 "10k" V 9760 2230 50  0000 C CNN
+F 2 "" V 9690 2230 50  0001 C CNN
+F 3 "" H 9760 2230 50  0001 C CNN
+	1    9760 2230
+	1    0    0    -1  
+$EndComp
+Text Label 9120 2430 2    60   ~ 0
+MISOH
+Wire Wire Line
+	9720 2430 9950 2430
+Wire Wire Line
+	9760 2380 9760 2430
+Connection ~ 9760 2430
+Wire Wire Line
+	9280 2380 9280 2430
+Wire Wire Line
+	9120 2430 9320 2430
+Connection ~ 9280 2430
+Wire Wire Line
+	9280 2080 9280 1920
+Wire Wire Line
+	9760 1910 9760 2080
+Wire Wire Line
+	9570 2130 9570 1990
+Wire Wire Line
+	9570 1990 9760 1990
+Connection ~ 9760 1990
+$Comp
+L BSS138 Q9
+U 1 1 5914F6F1
+P 9530 3400
+F 0 "Q9" H 9730 3475 50  0000 L CNN
+F 1 "BSS138" H 9730 3400 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 9730 3325 50  0001 L CIN
+F 3 "" H 9530 3400 50  0001 L CNN
+	1    9530 3400
+	0    -1   1    0   
+$EndComp
+Text Label 9290 2990 1    60   ~ 0
++5V
+Text Label 9770 2980 1    60   ~ 0
++3.3V
+$Comp
+L R R52
+U 1 1 5914F6F9
+P 9290 3300
+F 0 "R52" V 9370 3300 50  0000 C CNN
+F 1 "10k" V 9290 3300 50  0000 C CNN
+F 2 "" V 9220 3300 50  0001 C CNN
+F 3 "" H 9290 3300 50  0001 C CNN
+	1    9290 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R57
+U 1 1 5914F6FF
+P 9770 3300
+F 0 "R57" V 9850 3300 50  0000 C CNN
+F 1 "10k" V 9770 3300 50  0000 C CNN
+F 2 "" V 9700 3300 50  0001 C CNN
+F 3 "" H 9770 3300 50  0001 C CNN
+	1    9770 3300
+	1    0    0    -1  
+$EndComp
+Text Label 9130 3500 2    60   ~ 0
+MOSIH
+Wire Wire Line
+	9730 3500 9960 3500
+Wire Wire Line
+	9770 3450 9770 3500
+Connection ~ 9770 3500
+Wire Wire Line
+	9290 3450 9290 3500
+Wire Wire Line
+	9130 3500 9330 3500
+Connection ~ 9290 3500
+Wire Wire Line
+	9290 3150 9290 2990
+Wire Wire Line
+	9770 2980 9770 3150
+Wire Wire Line
+	9580 3200 9580 3060
+Wire Wire Line
+	9580 3060 9770 3060
+Connection ~ 9770 3060
+$Comp
+L BSS138 Q11
+U 1 1 59150156
+P 9560 4460
+F 0 "Q11" H 9760 4535 50  0000 L CNN
+F 1 "BSS138" H 9760 4460 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 9760 4385 50  0001 L CIN
+F 3 "" H 9560 4460 50  0001 L CNN
+	1    9560 4460
+	0    -1   1    0   
+$EndComp
+Text Label 9320 4050 1    60   ~ 0
++5V
+Text Label 9800 4040 1    60   ~ 0
++3.3V
+$Comp
+L R R54
+U 1 1 5915015E
+P 9320 4360
+F 0 "R54" V 9400 4360 50  0000 C CNN
+F 1 "10k" V 9320 4360 50  0000 C CNN
+F 2 "" V 9250 4360 50  0001 C CNN
+F 3 "" H 9320 4360 50  0001 C CNN
+	1    9320 4360
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R59
+U 1 1 59150164
+P 9800 4360
+F 0 "R59" V 9880 4360 50  0000 C CNN
+F 1 "10k" V 9800 4360 50  0000 C CNN
+F 2 "" V 9730 4360 50  0001 C CNN
+F 3 "" H 9800 4360 50  0001 C CNN
+	1    9800 4360
+	1    0    0    -1  
+$EndComp
+Text Label 9160 4560 2    60   ~ 0
+MCP0H
+Wire Wire Line
+	9760 4560 9990 4560
+Wire Wire Line
+	9800 4510 9800 4560
+Connection ~ 9800 4560
+Wire Wire Line
+	9320 4510 9320 4560
+Wire Wire Line
+	9160 4560 9360 4560
+Connection ~ 9320 4560
+Wire Wire Line
+	9320 4210 9320 4050
+Wire Wire Line
+	9800 4040 9800 4210
+Wire Wire Line
+	9610 4260 9610 4120
+Wire Wire Line
+	9610 4120 9800 4120
+Connection ~ 9800 4120
+$Comp
+L BSS138 Q10
+U 1 1 59150311
+P 9550 5530
+F 0 "Q10" H 9750 5605 50  0000 L CNN
+F 1 "BSS138" H 9750 5530 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 9750 5455 50  0001 L CIN
+F 3 "" H 9550 5530 50  0001 L CNN
+	1    9550 5530
+	0    -1   1    0   
+$EndComp
+Text Label 9310 5120 1    60   ~ 0
++5V
+Text Label 9790 5110 1    60   ~ 0
++3.3V
+$Comp
+L R R53
+U 1 1 59150319
+P 9310 5430
+F 0 "R53" V 9390 5430 50  0000 C CNN
+F 1 "10k" V 9310 5430 50  0000 C CNN
+F 2 "" V 9240 5430 50  0001 C CNN
+F 3 "" H 9310 5430 50  0001 C CNN
+	1    9310 5430
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R58
+U 1 1 5915031F
+P 9790 5430
+F 0 "R58" V 9870 5430 50  0000 C CNN
+F 1 "10k" V 9790 5430 50  0000 C CNN
+F 2 "" V 9720 5430 50  0001 C CNN
+F 3 "" H 9790 5430 50  0001 C CNN
+	1    9790 5430
+	1    0    0    -1  
+$EndComp
+Text Label 9150 5630 2    60   ~ 0
+MCP1H
+Wire Wire Line
+	9750 5630 9980 5630
+Wire Wire Line
+	9790 5580 9790 5630
+Connection ~ 9790 5630
+Wire Wire Line
+	9310 5580 9310 5630
+Wire Wire Line
+	9150 5630 9350 5630
+Connection ~ 9310 5630
+Wire Wire Line
+	9310 5280 9310 5120
+Wire Wire Line
+	9790 5110 9790 5280
+Wire Wire Line
+	9600 5330 9600 5190
+Wire Wire Line
+	9600 5190 9790 5190
+Connection ~ 9790 5190
+$Comp
+L MPXV5004DP U13
+U 1 1 59151DAE
+P 1580 1000
+F 0 "U13" H 1180 1250 50  0000 L CNN
+F 1 "Airspeed" H 1630 1250 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-8-N" H 1080 650 50  0001 C CNN
+F 3 "" H 1580 1600 50  0001 C CNN
+	1    1580 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C20
+U 1 1 59151DB5
+P 930 1000
+F 0 "C20" H 940 1070 50  0000 L CNN
+F 1 "0.1u" H 940 920 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 930 1000 50  0001 C CNN
+F 3 "" H 930 1000 50  0001 C CNN
+	1    930  1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C23
+U 1 1 59151DBC
+P 2080 1200
+F 0 "C23" H 2090 1270 50  0000 L CNN
+F 1 "47p" H 2090 1120 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2080 1200 50  0001 C CNN
+F 3 "" H 2080 1200 50  0001 C CNN
+	1    2080 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R38
+U 1 1 59151DC3
+P 2280 1200
+F 0 "R38" H 2310 1220 50  0000 L CNN
+F 1 "51k" H 2310 1160 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2280 1200 50  0001 C CNN
+F 3 "" H 2280 1200 50  0001 C CNN
+	1    2280 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR035
+U 1 1 59151DCA
+P 1580 1450
+F 0 "#PWR035" H 1580 1450 30  0001 C CNN
+F 1 "GND" H 1580 1380 30  0001 C CNN
+F 2 "" H 1580 1450 60  0001 C CNN
+F 3 "" H 1580 1450 60  0001 C CNN
+	1    1580 1450
+	1    0    0    -1  
+$EndComp
+Text Label 830  650  2    60   ~ 0
++5V
+$Comp
+L R_Small R41
+U 1 1 59151DD1
+P 2580 810
+F 0 "R41" H 2610 830 50  0000 L CNN
+F 1 "1k" H 2610 770 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2580 810 50  0001 C CNN
+F 3 "" H 2580 810 50  0001 C CNN
+	1    2580 810 
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R42
+U 1 1 59151DD8
+P 2580 1200
+F 0 "R42" H 2610 1220 50  0000 L CNN
+F 1 "2k" H 2610 1160 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2580 1200 50  0001 C CNN
+F 3 "" H 2580 1200 50  0001 C CNN
+	1    2580 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L MPXA6115A U14
+U 1 1 59151DDF
+P 1580 2000
+F 0 "U14" H 1180 2250 50  0000 L CNN
+F 1 "Static Pressure" H 1630 2250 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-8-N" H 1080 1650 50  0001 C CNN
+F 3 "" H 1580 2600 50  0001 C CNN
+	1    1580 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C21
+U 1 1 59151DE6
+P 930 2000
+F 0 "C21" H 940 2070 50  0000 L CNN
+F 1 "0.1u" H 940 1920 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 930 2000 50  0001 C CNN
+F 3 "" H 930 2000 50  0001 C CNN
+	1    930  2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C24
+U 1 1 59151DED
+P 2080 2200
+F 0 "C24" H 2090 2265 50  0000 L CNN
+F 1 "47p" H 2085 2135 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2080 2200 50  0001 C CNN
+F 3 "" H 2080 2200 50  0001 C CNN
+	1    2080 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R39
+U 1 1 59151DF4
+P 2280 2200
+F 0 "R39" H 2310 2220 50  0000 L CNN
+F 1 "51k" H 2310 2160 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2280 2200 50  0001 C CNN
+F 3 "" H 2280 2200 50  0001 C CNN
+	1    2280 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR036
+U 1 1 59151DFB
+P 1580 2450
+F 0 "#PWR036" H 1580 2450 30  0001 C CNN
+F 1 "GND" H 1580 2380 30  0001 C CNN
+F 2 "" H 1580 2450 60  0001 C CNN
+F 3 "" H 1580 2450 60  0001 C CNN
+	1    1580 2450
+	1    0    0    -1  
+$EndComp
+Text Label 830  1650 2    60   ~ 0
++5V
+$Comp
+L R_Small R43
+U 1 1 59151E02
+P 2580 1810
+F 0 "R43" H 2610 1830 50  0000 L CNN
+F 1 "1k" H 2610 1770 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2580 1810 50  0001 C CNN
+F 3 "" H 2580 1810 50  0001 C CNN
+	1    2580 1810
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R44
+U 1 1 59151E09
+P 2580 2200
+F 0 "R44" H 2610 2220 50  0000 L CNN
+F 1 "2k" H 2610 2160 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2580 2200 50  0001 C CNN
+F 3 "" H 2580 2200 50  0001 C CNN
+	1    2580 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L MPXA6115A U15
+U 1 1 59151E10
+P 1580 3000
+F 0 "U15" H 1180 3250 50  0000 L CNN
+F 1 "MAP Pressure" H 1630 3250 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-8-N" H 1080 2650 50  0001 C CNN
+F 3 "" H 1580 3600 50  0001 C CNN
+	1    1580 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L C_Small C22
+U 1 1 59151E17
+P 930 3000
+F 0 "C22" H 940 3070 50  0000 L CNN
+F 1 "0.1u" H 940 2920 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 930 3000 50  0001 C CNN
+F 3 "" H 930 3000 50  0001 C CNN
+	1    930  3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R40
+U 1 1 59151E1E
+P 2280 3200
+F 0 "R40" H 2310 3220 50  0000 L CNN
+F 1 "51k" H 2310 3160 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2280 3200 50  0001 C CNN
+F 3 "" H 2280 3200 50  0001 C CNN
+	1    2280 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR037
+U 1 1 59151E25
+P 1580 3450
+F 0 "#PWR037" H 1580 3450 30  0001 C CNN
+F 1 "GND" H 1580 3380 30  0001 C CNN
+F 2 "" H 1580 3450 60  0001 C CNN
+F 3 "" H 1580 3450 60  0001 C CNN
+	1    1580 3450
+	1    0    0    -1  
+$EndComp
+Text Label 830  2650 2    60   ~ 0
++5V
+$Comp
+L R_Small R45
+U 1 1 59151E2C
+P 2580 2810
+F 0 "R45" H 2610 2830 50  0000 L CNN
+F 1 "1k" H 2610 2770 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2580 2810 50  0001 C CNN
+F 3 "" H 2580 2810 50  0001 C CNN
+	1    2580 2810
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R46
+U 1 1 59151E33
+P 2580 3200
+F 0 "R46" H 2610 3220 50  0000 L CNN
+F 1 "2k" H 2610 3160 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2580 3200 50  0001 C CNN
+F 3 "" H 2580 3200 50  0001 C CNN
+	1    2580 3200
+	1    0    0    -1  
+$EndComp
+Text Label 2830 1000 0    60   ~ 0
+ASI
+Text Label 2830 2000 0    60   ~ 0
+BARO
+Text Label 2830 3000 0    60   ~ 0
+MAP
+Text Notes 730  3750 0    157  Italic 31
+Pressure Module
+$Comp
+L C_Small C25
+U 1 1 59151E3E
+P 2080 3200
+F 0 "C25" H 2090 3270 50  0000 L CNN
+F 1 "47p" H 2090 3135 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 2080 3200 50  0001 C CNN
+F 3 "" H 2080 3200 50  0001 C CNN
+	1    2080 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2580 3400 2580 3300
+Wire Wire Line
+	2580 2400 2580 2300
+Wire Wire Line
+	2580 1400 2580 1300
+Wire Wire Line
+	2280 1400 2280 1300
+Wire Wire Line
+	2280 1000 2280 1100
+Wire Wire Line
+	2080 1100 2080 1000
+Wire Wire Line
+	2080 1400 2080 1300
+Wire Wire Line
+	2280 2400 2280 2300
+Wire Wire Line
+	2280 2000 2280 2100
+Wire Wire Line
+	2080 2100 2080 2000
+Wire Wire Line
+	2080 2400 2080 2300
+Wire Wire Line
+	2280 3000 2280 3100
+Wire Wire Line
+	2080 3000 2080 3100
+Wire Wire Line
+	930  1400 2580 1400
+Wire Wire Line
+	930  1100 930  1400
+Wire Wire Line
+	1980 1000 2830 1000
+Connection ~ 2080 1400
+Wire Wire Line
+	830  650  2580 650 
+Wire Wire Line
+	930  650  930  900 
+Connection ~ 930  650 
+Connection ~ 2080 1000
+Connection ~ 2280 1000
+Wire Wire Line
+	2580 910  2580 1100
+Wire Wire Line
+	2580 650  2580 710 
+Connection ~ 2280 1400
+Wire Wire Line
+	1580 1300 1580 1450
+Connection ~ 1580 1400
+Connection ~ 2580 1000
+Wire Wire Line
+	930  2400 2580 2400
+Wire Wire Line
+	930  2100 930  2400
+Wire Wire Line
+	1980 2000 2830 2000
+Connection ~ 2080 2400
+Wire Wire Line
+	930  1900 930  1650
+Connection ~ 930  1650
+Connection ~ 2080 2000
+Connection ~ 2280 2000
+Wire Wire Line
+	2580 1910 2580 2100
+Wire Wire Line
+	2580 1650 2580 1710
+Connection ~ 2280 2400
+Wire Wire Line
+	1580 2300 1580 2450
+Connection ~ 1580 2400
+Connection ~ 2580 2000
+Wire Wire Line
+	2080 3400 2080 3300
+Wire Wire Line
+	930  3400 2580 3400
+Wire Wire Line
+	930  3100 930  3400
+Wire Wire Line
+	1980 3000 2830 3000
+Wire Wire Line
+	2280 3400 2280 3300
+Connection ~ 2080 3400
+Wire Wire Line
+	930  2650 930  2900
+Connection ~ 2080 3000
+Connection ~ 2280 3000
+Wire Wire Line
+	2580 2910 2580 3100
+Wire Wire Line
+	2580 2650 2580 2710
+Connection ~ 2280 3400
+Wire Wire Line
+	1580 3300 1580 3450
+Connection ~ 1580 3400
+Connection ~ 2580 3000
+Wire Notes Line
+	580  550  3180 550 
+Wire Notes Line
+	3180 550  3180 3800
+Wire Notes Line
+	3180 3800 580  3800
+Wire Notes Line
+	580  3800 580  550 
+Wire Wire Line
+	830  1650 2580 1650
+Wire Wire Line
+	1580 650  1580 700 
+Connection ~ 1580 650 
+Wire Wire Line
+	1580 1650 1580 1700
+Connection ~ 1580 1650
+Wire Wire Line
+	830  2650 2580 2650
+Wire Wire Line
+	1580 2650 1580 2700
+Connection ~ 930  2650
+Connection ~ 1580 2650
+Wire Notes Line
+	3740 570  7220 570 
+Wire Notes Line
+	7220 570  7220 5370
+Wire Notes Line
+	7220 5370 3730 5370
+Wire Notes Line
+	3730 5370 3730 570 
+Text Notes 8470 6300 0    157  Italic 31
+Level Shifting Module
+Wire Notes Line
+	11160 6380 11160 500 
+Wire Notes Line
+	11160 500  8300 500 
+Wire Notes Line
+	8300 500  8300 6380
+Wire Notes Line
+	8300 6380 11160 6380
+Text HLabel 9930 1340 2    60   Input ~ 0
+CLK
+Text HLabel 9950 2430 2    60   Input ~ 0
+MISO
+Text HLabel 9960 3500 2    60   Input ~ 0
+MOSI
+Text HLabel 9990 4560 2    60   Input ~ 0
+MCP0_ADDR
+Text HLabel 9980 5630 2    60   Input ~ 0
+MCP1_ADDR
+$Comp
+L Screw_Terminal_1x08 J3
+U 1 1 5914AC79
+P 1630 5220
+F 0 "J3" H 1630 6070 50  0000 C TNN
+F 1 "Screw_Terminal_1x08" V 1480 5220 50  0000 C TNN
+F 2 "" H 1630 4395 50  0001 C CNN
+F 3 "" H 1605 5820 50  0001 C CNN
+	1    1630 5220
+	1    0    0    -1  
+$EndComp
+Text Label 1830 4520 0    60   ~ 0
+OilPressure
+Text Label 1830 4720 0    60   ~ 0
+OilTemp
+Text Label 1830 4920 0    60   ~ 0
+CHT
+NoConn ~ 1830 5720
+NoConn ~ 1830 5920
+$Comp
+L MCP3008 U8
+U 1 1 59151B46
+P 5800 3760
+F 0 "U8" H 5350 4210 50  0000 C CNN
+F 1 "MCP3008" H 6150 4210 50  0000 C CNN
+F 2 "" H 5700 3660 50  0001 C CNN
+F 3 "" H 5800 3760 50  0001 C CNN
+	1    5800 3760
+	1    0    0    -1  
+$EndComp
+Text HLabel 1800 6650 2    60   Input ~ 0
++5V
+Text HLabel 1800 6900 2    60   Input ~ 0
++3.3V
+Text Label 1610 6900 2    60   ~ 0
++3.3V
+Text Label 1600 6650 2    60   ~ 0
++5V
+Wire Wire Line
+	1600 6650 1800 6650
+Wire Wire Line
+	1610 6900 1800 6900
+Wire Notes Line
+	2400 6400 2400 7460
+Wire Notes Line
+	1060 7460 1060 6400
+Text Notes 1360 7300 0    157  Italic 31
+Power
+Wire Notes Line
+	1060 6400 2400 6400
+Wire Notes Line
+	2400 7460 1060 7460
+$Comp
+L D_Small D6
+U 1 1 5915DC0F
+P 5340 5850
+F 0 "D6" H 5290 5930 50  0000 L CNN
+F 1 "Diode" H 5190 5770 50  0000 L CNN
+F 2 "Diodes_SMD:D_0603" V 5340 5850 50  0001 C CNN
+F 3 "" V 5340 5850 50  0001 C CNN
+	1    5340 5850
+	0    1    1    0   
+$EndComp
+$Comp
+L D_Zener_Small D7
+U 1 1 5915DC16
+P 5840 5850
+F 0 "D7" H 5840 5940 50  0000 C CNN
+F 1 "3.3V" H 5840 5760 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-323" V 5840 5850 50  0001 C CNN
+F 3 "" V 5840 5850 50  0001 C CNN
+	1    5840 5850
+	0    1    1    0   
+$EndComp
+$Comp
+L R_Small R17
+U 1 1 5915DC1D
+P 5590 5670
+F 0 "R17" H 5620 5690 50  0000 L CNN
+F 1 "100k" H 5620 5630 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 5590 5670 50  0001 C CNN
+F 3 "" H 5590 5670 50  0001 C CNN
+	1    5590 5670
+	0    1    1    0   
+$EndComp
+$Comp
+L R_Small R16
+U 1 1 5915DC24
+P 5090 5670
+F 0 "R16" H 5120 5690 50  0000 L CNN
+F 1 "10k" H 5120 5630 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" H 5090 5670 50  0001 C CNN
+F 3 "" H 5090 5670 50  0001 C CNN
+	1    5090 5670
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR038
+U 1 1 5915DC2B
+P 5590 6120
+F 0 "#PWR038" H 5590 6120 30  0001 C CNN
+F 1 "GND" H 5590 6050 30  0001 C CNN
+F 2 "" H 5590 6120 60  0001 C CNN
+F 3 "" H 5590 6120 60  0001 C CNN
+	1    5590 6120
+	1    0    0    -1  
+$EndComp
+Text Label 4840 5670 2    60   ~ 0
+Tachometer
+Text Notes 4290 6420 0    157  Italic 31
+Tachymeter Module
+Wire Wire Line
+	5840 6020 5840 5950
+Wire Wire Line
+	5340 5950 5340 6020
+Wire Wire Line
+	5340 6020 5840 6020
+Wire Wire Line
+	5590 6020 5590 6120
+Connection ~ 5590 6020
+Wire Wire Line
+	5190 5670 5490 5670
+Wire Wire Line
+	5340 5750 5340 5670
+Connection ~ 5340 5670
+Wire Wire Line
+	5690 5670 5990 5670
+Wire Wire Line
+	5840 5750 5840 5670
+Connection ~ 5840 5670
+Wire Wire Line
+	4990 5670 4840 5670
+Wire Notes Line
+	4140 5520 6740 5520
+Wire Notes Line
+	6740 5520 6740 6520
+Wire Notes Line
+	6740 6520 4140 6520
+Wire Notes Line
+	4140 6520 4140 5520
+Text Label 1830 5120 0    60   ~ 0
+Tachometer
+Text HLabel 5990 5670 2    60   Input ~ 0
+TACH
+Text Label 1830 5320 0    60   ~ 0
+CurrentMeter
+Text Label 1830 5520 0    60   ~ 0
+VoltageMeter
+Text Label 4820 2100 2    60   ~ 0
+CurrentMeter
+Wire Wire Line
+	5100 1910 4820 1910
+Wire Wire Line
+	4820 1910 4820 2100
+Text Label 4930 2250 2    60   ~ 0
+VoltageMeter
+Wire Wire Line
+	5100 2010 4930 2010
+Wire Wire Line
+	4930 2010 4930 2250
+$EndSCHEMATC
