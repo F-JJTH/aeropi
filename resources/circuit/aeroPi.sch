@@ -54,7 +54,7 @@ F 2 "w_conn_strip:vasch_strip_20x2" H 5750 3900 60  0001 C CNN
 F 3 "" H 5750 3900 60  0000 C CNN
 F 4 "517-30340-6002" H 5750 3900 60  0001 C CNN "Mouser Part No."
 	1    5750 3900
-	-1   0    0    -1  
+	-1   0    0    -1
 $EndComp
 $Comp
 L CAT24C32HU4I-GT3 U2
@@ -66,7 +66,7 @@ F 2 "w_smd_dil:tssop-8" H 3000 4200 60  0001 C CNN
 F 3 "" H 3000 4200 60  0000 C CNN
 F 4 "698-CAT24C32YI-GT3" H 3000 4200 60  0001 C CNN "Mouser Part No."
 	1    3000 4200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR11
@@ -77,7 +77,7 @@ F 1 "GND" H 3900 5030 30  0001 C CNN
 F 2 "" H 3900 5100 60  0000 C CNN
 F 3 "" H 3900 5100 60  0000 C CNN
 	1    3900 5100
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR8
@@ -88,7 +88,7 @@ F 1 "GND" H 2400 5030 30  0001 C CNN
 F 2 "" H 2400 5100 60  0000 C CNN
 F 3 "" H 2400 5100 60  0000 C CNN
 	1    2400 5100
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R1
@@ -100,7 +100,7 @@ F 2 "Resistors_SMD:R_0603" V 1930 4450 30  0001 C CNN
 F 3 "" H 2000 4450 30  0000 C CNN
 F 4 "754-RR0510P-102D" V 2000 4450 60  0001 C CNN "Mouser Part No."
 	1    2000 4450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L CONN_01X02 P1
@@ -111,7 +111,7 @@ F 1 "CONN_01X02" V 1050 4800 50  0000 C CNN
 F 2 "w_pin_strip:pin_strip_2" H 950 4800 60  0001 C CNN
 F 3 "" H 950 4800 60  0000 C CNN
 	1    950  4800
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 $Comp
 L R R3
@@ -123,7 +123,7 @@ F 2 "Resistors_SMD:R_0603" V 3780 3800 30  0001 C CNN
 F 3 "" H 3850 3800 30  0000 C CNN
 F 4 "71-CRCW04023K90FKED" V 3850 3800 60  0001 C CNN "Mouser Part No."
 	1    3850 3800
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R5
@@ -135,7 +135,7 @@ F 2 "Resistors_SMD:R_0603" V 4030 3800 30  0001 C CNN
 F 3 "" H 4100 3800 30  0000 C CNN
 F 4 "71-CRCW04023K90FKED" V 4100 3800 60  0001 C CNN "Mouser Part No."
 	1    4100 3800
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L JUMPER-RESCUE-pihat_template JP1
@@ -146,7 +146,7 @@ F 1 "JUMPER" H 1600 4920 40  0000 C CNN
 F 2 "Resistors_SMD:R_0603" H 1600 5000 60  0001 C CNN
 F 3 "" H 1600 5000 60  0000 C CNN
 	1    1600 5000
-	1    0    0    1   
+	1    0    0    1
 $EndComp
 $Comp
 L GND #PWR13
@@ -157,7 +157,7 @@ F 1 "GND" H 4500 3530 30  0001 C CNN
 F 2 "" H 4500 3600 60  0000 C CNN
 F 3 "" H 4500 3600 60  0000 C CNN
 	1    4500 3600
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L LM3489 U1
@@ -169,7 +169,7 @@ F 2 "w_smd_dil:msoic-8" H 2550 9650 60  0001 C CNN
 F 3 "" H 2550 9650 60  0000 C CNN
 F 4 "926-LM3489MM/NOPB" H 2550 9650 60  0001 C CNN "Mouser Part No."
 	1    2550 9650
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R2
@@ -181,7 +181,7 @@ F 2 "Resistors_SMD:R_0603" V 1630 9350 30  0001 C CNN
 F 3 "" H 1700 9350 30  0000 C CNN
 F 4 "71-CRCW0402-24K-E3" V 1700 9350 60  0001 C CNN "Mouser Part No."
 	1    1700 9350
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C C2
@@ -193,7 +193,7 @@ F 2 "Capacitors_SMD:C_0603" H 1288 10050 30  0001 C CNN
 F 3 "" H 1250 10200 60  0000 C CNN
 F 4 "810-C1005X5R1H104K" H 1250 10200 60  0001 C CNN "Mouser Part No."
 	1    1250 10200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR6
@@ -204,7 +204,7 @@ F 1 "GND" H 1250 10680 30  0001 C CNN
 F 2 "" H 1250 10750 60  0000 C CNN
 F 3 "" H 1250 10750 60  0000 C CNN
 	1    1250 10750
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR9
@@ -215,7 +215,7 @@ F 1 "GND" H 2750 10680 30  0001 C CNN
 F 2 "" H 2750 10750 60  0000 C CNN
 F 3 "" H 2750 10750 60  0000 C CNN
 	1    2750 10750
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L CP C1
@@ -227,7 +227,7 @@ F 2 "w_smd_cap:c_elec_6.3x7.7" H 900 9150 30  0001 C CNN
 F 3 "" H 800 9300 300 0000 C CNN
 F 4 "647-UUR1H470MCL6GS" H 800 9300 60  0001 C CNN "Mouser Part No."
 	1    800  9300
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C C3
@@ -239,7 +239,7 @@ F 2 "Capacitors_SMD:C_0603" H 1488 9200 30  0001 C CNN
 F 3 "" H 1450 9350 60  0000 C CNN
 F 4 "810-C1005C0G2A102J5C" H 1450 9350 60  0001 C CNN "Mouser Part No."
 	1    1450 9350
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR2
@@ -250,7 +250,7 @@ F 1 "GND" H 800 9530 30  0001 C CNN
 F 2 "" H 800 9600 60  0000 C CNN
 F 3 "" H 800 9600 60  0000 C CNN
 	1    800  9600
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R4
@@ -262,7 +262,7 @@ F 2 "Resistors_SMD:R_0603" V 3530 9350 30  0001 C CNN
 F 3 "" H 3600 9350 30  0000 C CNN
 F 4 "667-ERJ-P6WJ271V" V 3600 9350 60  0001 C CNN "Mouser Part No."
 	1    3600 9350
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L D_Schottky D1
@@ -274,7 +274,7 @@ F 2 "w_smd_diode:do214aa" H 3900 9350 60  0001 C CNN
 F 3 "" H 3900 9350 60  0000 C CNN
 F 4 "512-MBRS140" H 3900 9350 60  0001 C CNN "Mouser Part No."
 	1    3900 9350
-	0    -1   -1   0   
+	0    -1   -1   0
 $EndComp
 $Comp
 L INDUCTOR-RESCUE-pihat_template L1
@@ -286,7 +286,7 @@ F 2 "w_smd_inductors:inductor_smd_8x5mm" H 4300 8850 60  0001 C CNN
 F 3 "" H 4300 8850 60  0000 C CNN
 F 4 "652-SRN8040-220M" V 4300 8850 60  0001 C CNN "Mouser Part No."
 	1    4300 8850
-	0    -1   -1   0   
+	0    -1   -1   0
 $EndComp
 $Comp
 L R R6
@@ -298,7 +298,7 @@ F 2 "Resistors_SMD:R_0603" V 4680 9350 30  0001 C CNN
 F 3 "" H 4750 9350 30  0000 C CNN
 F 4 "594-MCT06030C3002FP5" V 4750 9350 60  0001 C CNN "Mouser Part No."
 	1    4750 9350
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R7
@@ -310,7 +310,7 @@ F 2 "Resistors_SMD:R_0603" V 4680 10300 30  0001 C CNN
 F 3 "" H 4750 10300 30  0000 C CNN
 F 4 "71-CRCW0603-10K-E3" V 4750 10300 60  0001 C CNN "Mouser Part No."
 	1    4750 10300
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR15
@@ -321,7 +321,7 @@ F 1 "GND" H 4750 10680 30  0001 C CNN
 F 2 "" H 4750 10750 60  0000 C CNN
 F 3 "" H 4750 10750 60  0000 C CNN
 	1    4750 10750
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L FDC5614P U3
@@ -333,7 +333,7 @@ F 2 "w_smd_trans:sot23-6" H 2800 9150 60  0001 C CNN
 F 3 "" H 2800 9150 60  0000 C CNN
 F 4 "512-FDC5614P" H 2950 9000 60  0001 C CNN "Mouser Part No."
 	1    2950 9000
-	-1   0    0    -1  
+	-1   0    0    -1
 $EndComp
 $Comp
 L +24V #PWR1
@@ -344,15 +344,15 @@ F 1 "+24V" H 800 8850 30  0000 C CNN
 F 2 "" H 800 8700 60  0000 C CNN
 F 3 "" H 800 8700 60  0000 C CNN
 	1    800  8700
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Sheet
-S 3100 2000 1250 200 
+S 3100 2000 1250 200
 U 54F145DC
 F0 "Back Power Protection" 47
 F1 "Ideal_Diode.sch" 47
-F2 "5V_SUPPLY" I L 3100 2100 60 
-F3 "5V_MCU" I R 4350 2100 60 
+F2 "5V_SUPPLY" I L 3100 2100 60
+F3 "5V_MCU" I R 4350 2100 60
 $EndSheet
 Text Notes 3000 1450 0    157  Italic 31
 Raspberry Pi Connection
@@ -368,7 +368,7 @@ F 2 "w_smd_trans:sot223" H 1600 7150 60  0001 C CNN
 F 3 "" H 1600 7150 60  0000 C CNN
 F 4 "926-M1117IMPXADJNOPB" H 1600 7200 60  0001 C CNN "Mouser Part No."
 	1    1600 7200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L CP C6
@@ -380,7 +380,7 @@ F 2 "Capacitors_SMD:CP_Elec_4x5.3" H 950 7400 30  0001 C CNN
 F 3 "" H 850 7550 300 0000 C CNN
 F 4 "5985-AVS16V100-F" H 850 7550 60  0001 C CNN "Mouser Part No."
 	1    850  7550
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R8
@@ -392,7 +392,7 @@ F 2 "Resistors_SMD:R_0603" V 1530 8200 30  0001 C CNN
 F 3 "" H 1600 8200 30  0000 C CNN
 F 4 "594-MCT06030C3900FP5" V 1600 8200 60  0001 C CNN "Mouser Part No."
 	1    1600 8200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R9
@@ -404,7 +404,7 @@ F 2 "Resistors_SMD:R_0603" V 2580 7500 30  0001 C CNN
 F 3 "" H 2650 7500 30  0000 C CNN
 F 4 "754-RR0816P-241D" V 2650 7500 60  0001 C CNN "Mouser Part No."
 	1    2650 7500
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR7
@@ -415,7 +415,7 @@ F 1 "GND" H 1600 8480 30  0001 C CNN
 F 2 "" H 1600 8550 60  0000 C CNN
 F 3 "" H 1600 8550 60  0000 C CNN
 	1    1600 8550
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR3
@@ -426,7 +426,7 @@ F 1 "GND" H 850 7880 30  0001 C CNN
 F 2 "" H 850 7950 60  0000 C CNN
 F 3 "" H 850 7950 60  0000 C CNN
 	1    850  7950
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR10
@@ -437,7 +437,7 @@ F 1 "GND" H 3400 7930 30  0001 C CNN
 F 2 "" H 3400 8000 60  0000 C CNN
 F 3 "" H 3400 8000 60  0000 C CNN
 	1    3400 8000
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L LED-RESCUE-pihat_template D3
@@ -449,7 +449,7 @@ F 2 "Diodes_SMD:D_0603" H 4050 7450 60  0001 C CNN
 F 3 "" H 4050 7450 60  0000 C CNN
 F 4 "743-HT-191USD" H 4050 7450 60  0001 C CNN "Mouser Part No."
 	1    4050 7450
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L R R10
@@ -461,7 +461,7 @@ F 2 "Resistors_SMD:R_0603" V 3980 8100 30  0001 C CNN
 F 3 "" H 4050 8100 30  0000 C CNN
 F 4 "71-CRCW0603316RFKEB" V 4050 8100 60  0001 C CNN "Mouser Part No."
 	1    4050 8100
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR12
@@ -472,7 +472,7 @@ F 1 "GND" H 4050 8430 30  0001 C CNN
 F 2 "" H 4050 8500 60  0000 C CNN
 F 3 "" H 4050 8500 60  0000 C CNN
 	1    4050 8500
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Notes 2500 8650 0    60   ~ 0
 5v @ 2.1A DC/DC supply
@@ -488,7 +488,7 @@ F 2 "Capacitors_SMD:C_0603" H 4538 9200 30  0001 C CNN
 F 3 "" H 4500 9350 60  0000 C CNN
 F 4 "810-C1005X5R1H104K" H 4500 9350 60  0001 C CNN "Mouser Part No."
 	1    4500 9350
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C C7
@@ -500,7 +500,7 @@ F 2 "Capacitors_SMD:C_0603" H 3038 7300 30  0001 C CNN
 F 3 "" H 3000 7450 60  0000 C CNN
 F 4 "810-C1005X5R1H104K" H 3000 7450 60  0001 C CNN "Mouser Part No."
 	1    3000 7450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L CONN_01X02 P2
@@ -512,7 +512,7 @@ F 2 "w_conn_mkds:mkds_1,5-2" H 1350 6350 60  0001 C CNN
 F 3 "" H 1350 6350 60  0000 C CNN
 F 4 "651-1904383" H 1350 6350 60  0001 C CNN "Mouser Part No."
 	1    1350 6350
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L +24V #PWR4
@@ -523,7 +523,7 @@ F 1 "+24V" H 1050 6300 30  0000 C CNN
 F 2 "" H 1050 6150 60  0000 C CNN
 F 3 "" H 1050 6150 60  0000 C CNN
 	1    1050 6150
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR5
@@ -534,7 +534,7 @@ F 1 "GND" H 1050 6480 30  0001 C CNN
 F 2 "" H 1050 6550 60  0000 C CNN
 F 3 "" H 1050 6550 60  0000 C CNN
 	1    1050 6550
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C C4
@@ -546,7 +546,7 @@ F 2 "Capacitors_SMD:C_0603" H 2388 4350 30  0001 C CNN
 F 3 "" H 2350 4500 60  0000 C CNN
 F 4 "810-C1005X5R1H104K" H 2350 4500 60  0001 C CNN "Mouser Part No."
 	1    2350 4500
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C C8
@@ -558,7 +558,7 @@ F 2 "Capacitors_SMD:C_0603" H 3438 7300 30  0001 C CNN
 F 3 "" H 3400 7450 60  0000 C CNN
 F 4 "810-C1005X5R1H104K" H 3400 7450 60  0001 C CNN "Mouser Part No."
 	1    3400 7450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L FGPMMOPA6H U6
@@ -569,7 +569,7 @@ F 1 "FGPMMOPA6H" H 7200 7400 60  0000 C CNN
 F 2 "aeroPi:PA6H" H 7150 7050 60  0001 C CNN
 F 3 "" H 7150 7050 60  0001 C CNN
 	1    7150 6850
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 NoConn ~ 7850 6400
 NoConn ~ 7850 6600
@@ -588,7 +588,7 @@ F 1 "GND" H 6000 7000 50  0000 C CNN
 F 2 "" H 6000 7150 50  0001 C CNN
 F 3 "" H 6000 7150 50  0001 C CNN
 	1    6000 7150
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR18
@@ -599,7 +599,7 @@ F 1 "GND" H 5950 6450 50  0000 C CNN
 F 2 "" H 5950 6600 50  0001 C CNN
 F 3 "" H 5950 6600 50  0001 C CNN
 	1    5950 6600
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR24
@@ -610,7 +610,7 @@ F 1 "GND" H 8400 6350 50  0000 C CNN
 F 2 "" H 8400 6500 50  0001 C CNN
 F 3 "" H 8400 6500 50  0001 C CNN
 	1    8400 6500
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR25
@@ -621,7 +621,7 @@ F 1 "GND" H 8400 7050 50  0000 C CNN
 F 2 "" H 8400 7200 50  0001 C CNN
 F 3 "" H 8400 7200 50  0001 C CNN
 	1    8400 7200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 NoConn ~ 7850 7000
 $Comp
@@ -633,7 +633,7 @@ F 1 "3D FIX" H 6050 6800 35  0000 C CNN
 F 2 "Diodes_SMD:D_0603" V 6050 6900 50  0001 C CNN
 F 3 "" V 6050 6900 50  0001 C CNN
 	1    6050 6900
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R13
@@ -644,7 +644,7 @@ F 1 "470" V 5839 6900 35  0000 C TNN
 F 2 "Resistors_SMD:R_0603" H 5800 6900 50  0001 C CNN
 F 3 "" H 5800 6900 50  0001 C CNN
 	1    5800 6900
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 Text Label 6450 6700 2    35   ~ 0
 VBACKUP
@@ -657,7 +657,7 @@ F 1 "CONN_COAXIAL" H 8100 7450 50  0000 C CNN
 F 2 "Connectors_Molex:Molex_Microcoaxial_RF" H 8100 7300 50  0001 C CNN
 F 3 "" H 8100 7300 50  0001 C CNN
 	1    8100 7300
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR23
@@ -668,7 +668,7 @@ F 1 "GND" H 8100 7400 50  0000 C CNN
 F 2 "" H 8100 7550 50  0001 C CNN
 F 3 "" H 8100 7550 50  0001 C CNN
 	1    8100 7550
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 NoConn ~ 7850 7100
 $Comp
@@ -680,7 +680,7 @@ F 1 "PWR_FLAG" H 4550 6850 50  0000 C CNN
 F 2 "" H 4550 6700 50  0001 C CNN
 F 3 "" H 4550 6700 50  0001 C CNN
 	1    4550 6700
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L PWR_FLAG #FLG3
@@ -691,7 +691,7 @@ F 1 "PWR_FLAG" H 5100 6850 50  0000 C CNN
 F 2 "" H 5100 6700 50  0001 C CNN
 F 3 "" H 5100 6700 50  0001 C CNN
 	1    5100 6700
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR16
@@ -702,7 +702,7 @@ F 1 "GND" H 5100 6630 30  0001 C CNN
 F 2 "" H 5100 6700 60  0000 C CNN
 F 3 "" H 5100 6700 60  0000 C CNN
 	1    5100 6700
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L +24V #PWR14
@@ -713,7 +713,7 @@ F 1 "+24V" H 4550 6850 30  0000 C CNN
 F 2 "" H 4550 6700 60  0000 C CNN
 F 3 "" H 4550 6700 60  0000 C CNN
 	1    4550 6700
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 NoConn ~ 1800 10050
 NoConn ~ 4650 2450
@@ -730,7 +730,6 @@ NoConn ~ 7200 4300
 NoConn ~ 7200 4200
 NoConn ~ 7200 4100
 NoConn ~ 7200 4000
-NoConn ~ 7200 3900
 NoConn ~ 7200 2100
 NoConn ~ 7200 2200
 Text Label 7200 2450 0    60   ~ 0
@@ -750,7 +749,7 @@ F 1 "GND" H 5750 7600 50  0000 C CNN
 F 2 "" H 5750 7750 50  0001 C CNN
 F 3 "" H 5750 7750 50  0001 C CNN
 	1    5750 7750
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L Battery_Cell BT1
@@ -761,7 +760,7 @@ F 1 "Battery_Cell" H 5850 7650 50  0000 L CNN
 F 2 "Connectors:CR1220" V 5750 7710 50  0001 C CNN
 F 3 "" V 5750 7710 50  0001 C CNN
 	1    5750 7650
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 5750 7450 1    60   ~ 0
 VBACKUP
@@ -788,7 +787,7 @@ F 1 "MPU-9250" H 7300 8750 50  0000 C CNN
 F 2 "Housings_DFN_QFN:QFN-24_3x3mm_Pitch0.4mm" H 7000 8500 50  0001 C CNN
 F 3 "" H 7000 9350 50  0001 C CNN
 	1    7000 9500
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Notes 6450 7850 0    157  Italic 31
 GPS Module
@@ -807,7 +806,7 @@ F 1 "GND" H 7000 10530 30  0001 C CNN
 F 2 "" H 7000 10600 60  0000 C CNN
 F 3 "" H 7000 10600 60  0000 C CNN
 	1    7000 10600
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 6900 8300 2    60   ~ 0
 +3.3V
@@ -825,7 +824,7 @@ F 1 "0.1u" H 8075 10050 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 8088 10000 50  0001 C CNN
 F 3 "" H 8050 10150 50  0001 C CNN
 	1    8050 10150
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 Text Label 7700 9800 0    60   ~ 0
 +3.3V
@@ -840,7 +839,7 @@ F 1 "0.1u" H 7775 8500 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 7788 8450 50  0001 C CNN
 F 3 "" H 7750 8600 50  0001 C CNN
 	1    7750 8600
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C C10
@@ -851,7 +850,7 @@ F 1 "10n" H 6225 8500 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 6238 8450 50  0001 C CNN
 F 3 "" H 6200 8600 50  0001 C CNN
 	1    6200 8600
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR20
@@ -862,7 +861,7 @@ F 1 "GND" H 6200 8730 30  0001 C CNN
 F 2 "" H 6200 8800 60  0000 C CNN
 F 3 "" H 6200 8800 60  0000 C CNN
 	1    6200 8800
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR22
@@ -873,7 +872,7 @@ F 1 "GND" H 7750 8730 30  0001 C CNN
 F 2 "" H 7750 8800 60  0000 C CNN
 F 3 "" H 7750 8800 60  0000 C CNN
 	1    7750 8800
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 7700 9200 0    60   ~ 0
 MPU0_INT
@@ -890,7 +889,7 @@ F 1 "10u" H 6125 6350 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 6138 6300 50  0001 C CNN
 F 3 "" H 6100 6450 50  0001 C CNN
 	1    6100 6450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C C11
@@ -901,7 +900,7 @@ F 1 "0.1u" H 6325 6350 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 6338 6300 50  0001 C CNN
 F 3 "" H 6300 6450 50  0001 C CNN
 	1    6300 6450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L Ferrite_Bead_Small L2
@@ -912,7 +911,7 @@ F 1 "Ferrite" V 6000 6150 50  0000 L CNN
 F 2 "Resistors_SMD:R_0805" V 5830 6300 50  0001 C CNN
 F 3 "" H 5900 6300 50  0001 C CNN
 	1    5900 6300
-	0    -1   -1   0   
+	0    -1   -1   0
 $EndComp
 Text Label 7100 8300 0    60   ~ 0
 +3.3V
@@ -929,7 +928,7 @@ F 1 "PWR_FLAG" H 4550 7300 50  0000 C CNN
 F 2 "" H 4550 7150 50  0001 C CNN
 F 3 "" H 4550 7150 50  0001 C CNN
 	1    4550 7150
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L PWR_FLAG #FLG4
@@ -940,7 +939,7 @@ F 1 "PWR_FLAG" H 5100 7300 50  0000 C CNN
 F 2 "" H 5100 7150 50  0001 C CNN
 F 3 "" H 5100 7150 50  0001 C CNN
 	1    5100 7150
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	6000 7100 6000 7150
@@ -954,7 +953,9 @@ Wire Wire Line
 Wire Wire Line
 	4100 3500 3850 3500
 Wire Wire Line
-	4100 3450 4100 3650
+	4100 3450 4100 3500
+Wire Wire Line
+	4100 3500 4100 3650
 Connection ~ 4100 4300
 Wire Wire Line
 	4100 3950 4100 4300
@@ -962,9 +963,13 @@ Connection ~ 3850 4200
 Wire Wire Line
 	3850 3950 3850 4200
 Wire Wire Line
-	3750 4300 4650 4300
+	3750 4300 4100 4300
 Wire Wire Line
-	3750 4200 4650 4200
+	4100 4300 4650 4300
+Wire Wire Line
+	3750 4200 3850 4200
+Wire Wire Line
+	3850 4200 4650 4200
 Connection ~ 1250 4750
 Wire Wire Line
 	1250 5000 1250 4750
@@ -979,23 +984,37 @@ Connection ~ 2000 4750
 Wire Wire Line
 	2000 4750 2000 4600
 Wire Wire Line
-	1150 4750 2550 4750
+	1150 4750 1250 4750
+Wire Wire Line
+	1250 4750 2000 4750
+Wire Wire Line
+	2000 4750 2550 4750
 Connection ~ 2000 4050
 Wire Wire Line
 	2350 4050 2000 4050
 Wire Wire Line
-	2350 4050 2350 4350
+	2350 4050 2350 4200
+Wire Wire Line
+	2350 4200 2350 4350
 Wire Wire Line
 	2550 4200 2350 4200
 Wire Wire Line
-	2000 3950 2000 4300
+	2000 3950 2000 4050
+Wire Wire Line
+	2000 4050 2000 4300
 Connection ~ 2400 5000
 Wire Wire Line
-	1900 5000 2400 5000
+	1900 5000 2000 5000
 Wire Wire Line
-	2400 4850 2400 5100
+	2000 5000 2400 5000
 Wire Wire Line
-	2350 4850 2550 4850
+	2400 4850 2400 5000
+Wire Wire Line
+	2400 5000 2400 5100
+Wire Wire Line
+	2350 4850 2400 4850
+Wire Wire Line
+	2400 4850 2550 4850
 Connection ~ 3900 4750
 Wire Wire Line
 	3750 4650 3900 4650
@@ -1003,13 +1022,31 @@ Connection ~ 3900 4850
 Wire Wire Line
 	3750 4750 3900 4750
 Wire Wire Line
-	3900 4650 3900 5100
+	3900 4650 3900 4750
+Wire Wire Line
+	3900 4750 3900 4850
+Wire Wire Line
+	3900 4850 3900 5100
 Wire Wire Line
 	3900 4850 3750 4850
 Wire Wire Line
 	4500 3500 4650 3500
 Wire Wire Line
-	4500 2800 4500 3600
+	4500 2800 4500 2900
+Wire Wire Line
+	4500 2900 4500 3000
+Wire Wire Line
+	4500 3000 4500 3100
+Wire Wire Line
+	4500 3100 4500 3200
+Wire Wire Line
+	4500 3200 4500 3300
+Wire Wire Line
+	4500 3300 4500 3400
+Wire Wire Line
+	4500 3400 4500 3500
+Wire Wire Line
+	4500 3500 4500 3600
 Wire Wire Line
 	4650 2800 4500 2800
 Connection ~ 4500 3500
@@ -1032,7 +1069,9 @@ Wire Wire Line
 	4650 2900 4500 2900
 Connection ~ 4500 2900
 Wire Wire Line
-	4350 2100 4650 2100
+	4350 2100 4550 2100
+Wire Wire Line
+	4550 2100 4650 2100
 Wire Wire Line
 	4650 2200 4550 2200
 Wire Wire Line
@@ -1043,28 +1082,42 @@ Wire Wire Line
 	2350 4650 2350 4850
 Connection ~ 2400 4850
 Wire Wire Line
-	1450 9750 1800 9750
+	1450 9750 1700 9750
+Wire Wire Line
+	1700 9750 1800 9750
 Wire Wire Line
 	1700 9500 1700 9750
 Wire Wire Line
 	1700 8850 1700 9200
 Wire Wire Line
-	800  8850 2650 8850
+	800  8850 1250 8850
 Wire Wire Line
-	1250 8850 1250 10050
+	1250 8850 1450 8850
+Wire Wire Line
+	1450 8850 1700 8850
+Wire Wire Line
+	1700 8850 2650 8850
+Wire Wire Line
+	1250 8850 1250 9900
+Wire Wire Line
+	1250 9900 1250 10050
 Wire Wire Line
 	1250 9900 1800 9900
 Connection ~ 1250 9900
 Wire Wire Line
 	1250 10350 1250 10750
 Wire Wire Line
-	2750 10500 2750 10750
+	2750 10500 2750 10600
+Wire Wire Line
+	2750 10600 2750 10750
 Wire Wire Line
 	3500 10050 3600 10050
 Wire Wire Line
 	3600 10050 3600 10600
 Wire Wire Line
-	2750 10600 3900 10600
+	2750 10600 3600 10600
+Wire Wire Line
+	3600 10600 3900 10600
 Connection ~ 2750 10600
 Wire Wire Line
 	1450 8850 1450 9200
@@ -1073,7 +1126,9 @@ Wire Wire Line
 	1450 9500 1450 9750
 Connection ~ 1700 9750
 Wire Wire Line
-	800  8700 800  9150
+	800  8700 800  8850
+Wire Wire Line
+	800  8850 800  9150
 Connection ~ 1250 8850
 Wire Wire Line
 	800  9450 800  9600
@@ -1084,21 +1139,35 @@ Wire Wire Line
 Wire Wire Line
 	3600 9500 3600 9750
 Wire Wire Line
-	3500 9900 4750 9900
+	3500 9900 4500 9900
 Wire Wire Line
-	3250 8850 4000 8850
+	4500 9900 4750 9900
+Wire Wire Line
+	3250 8850 3350 8850
+Wire Wire Line
+	3350 8850 3600 8850
+Wire Wire Line
+	3600 8850 3900 8850
+Wire Wire Line
+	3900 8850 4000 8850
 Wire Wire Line
 	3900 8850 3900 9200
 Connection ~ 3900 8850
 Wire Wire Line
 	4750 10450 4750 10750
 Wire Wire Line
-	4750 9500 4750 10150
+	4750 9500 4750 9900
+Wire Wire Line
+	4750 9900 4750 10150
 Connection ~ 4750 9900
 Wire Wire Line
-	4750 8850 4750 9200
+	4750 8850 4750 9050
 Wire Wire Line
-	4600 8850 5300 8850
+	4750 9050 4750 9200
+Wire Wire Line
+	4600 8850 4750 8850
+Wire Wire Line
+	4750 8850 5300 8850
 Wire Wire Line
 	4500 9050 4500 9200
 Wire Wire Line
@@ -1119,7 +1188,11 @@ Connection ~ 3600 8850
 Wire Wire Line
 	3250 8950 3350 8950
 Wire Wire Line
-	3350 8850 3350 9150
+	3350 8850 3350 8950
+Wire Wire Line
+	3350 8950 3350 9050
+Wire Wire Line
+	3350 9050 3350 9150
 Connection ~ 3350 8850
 Wire Wire Line
 	3350 9050 3250 9050
@@ -1134,14 +1207,24 @@ Wire Wire Line
 	5300 8850 5300 8600
 Connection ~ 800  8850
 Wire Wire Line
-	850  6850 850  7400
+	850  6850 850  7050
+Wire Wire Line
+	850  7050 850  7400
 Connection ~ 850  7050
 Wire Wire Line
-	2250 7050 4050 7050
+	2250 7050 2650 7050
+Wire Wire Line
+	2650 7050 3000 7050
+Wire Wire Line
+	3000 7050 3400 7050
+Wire Wire Line
+	3400 7050 4050 7050
 Wire Wire Line
 	2650 7050 2650 7350
 Wire Wire Line
-	1600 7750 1600 8050
+	1600 7750 1600 7850
+Wire Wire Line
+	1600 7850 1600 8050
 Wire Wire Line
 	2650 7650 2650 7850
 Connection ~ 1600 7850
@@ -1160,12 +1243,16 @@ Connection ~ 3000 7050
 Wire Wire Line
 	2650 7850 1600 7850
 Wire Wire Line
-	3400 7600 3400 8000
+	3400 7600 3400 7850
+Wire Wire Line
+	3400 7850 3400 8000
 Wire Wire Line
 	3000 7850 3400 7850
 Connection ~ 3400 7850
 Wire Wire Line
-	4050 6850 4050 7250
+	4050 6850 4050 7050
+Wire Wire Line
+	4050 7050 4050 7250
 Connection ~ 3400 7050
 Wire Wire Line
 	4050 7650 4050 7950
@@ -1183,9 +1270,9 @@ Wire Wire Line
 Wire Notes Line
 	600  5550 8150 5550
 Wire Notes Line
-	8150 5550 8150 850 
+	8150 5550 8150 850
 Wire Notes Line
-	8150 850  600  850 
+	8150 850  600  850
 Wire Notes Line
 	600  850  600  5550
 Wire Notes Line
@@ -1209,7 +1296,9 @@ Wire Wire Line
 Wire Wire Line
 	5950 6900 5900 6900
 Wire Wire Line
-	5700 6200 5700 6900
+	5700 6200 5700 6300
+Wire Wire Line
+	5700 6300 5700 6900
 Wire Wire Line
 	8100 7500 8100 7550
 Wire Wire Line
@@ -1233,7 +1322,9 @@ Wire Wire Line
 Wire Wire Line
 	7750 9900 7750 10400
 Wire Wire Line
-	7000 10400 8050 10400
+	7000 10400 7750 10400
+Wire Wire Line
+	7750 10400 8050 10400
 Wire Wire Line
 	7700 9700 8050 9700
 Wire Wire Line
@@ -1255,24 +1346,36 @@ Wire Notes Line
 Wire Notes Line
 	5550 10950 5550 8100
 Wire Wire Line
-	6000 6300 6450 6300
+	6000 6300 6100 6300
+Wire Wire Line
+	6100 6300 6300 6300
+Wire Wire Line
+	6300 6300 6450 6300
 Connection ~ 6300 6300
 Connection ~ 5700 6300
 Connection ~ 6100 6300
 Wire Wire Line
 	6450 6300 6450 6400
 Wire Wire Line
-	5950 6600 6450 6600
+	5950 6600 6100 6600
+Wire Wire Line
+	6100 6600 6300 6600
+Wire Wire Line
+	6300 6600 6450 6600
 Connection ~ 6300 6600
 Connection ~ 6100 6600
 Wire Wire Line
 	5700 6300 5800 6300
 Wire Wire Line
-	6900 8300 6900 8600
+	6900 8300 6900 8450
+Wire Wire Line
+	6900 8450 6900 8600
 Wire Wire Line
 	6900 8450 6200 8450
 Wire Wire Line
-	7100 8300 7100 8600
+	7100 8300 7100 8450
+Wire Wire Line
+	7100 8450 7100 8600
 Wire Wire Line
 	7750 8450 7100 8450
 Connection ~ 7100 8450
@@ -1303,18 +1406,18 @@ Text Label 10160 2900 0    60   ~ 0
 Text Label 10160 2800 0    60   ~ 0
 +5V
 $Sheet
-S 9280 2580 750  810 
+S 9280 2580 750  810
 U 5914C09B
 F0 "Analog Sensors" 60
 F1 "Analog_Sensors.sch" 60
-F2 "CLK" I L 9280 3000 60 
-F3 "MISO" I L 9280 2800 60 
-F4 "MOSI" I L 9280 2900 60 
-F5 "MCP0_ADDR" I L 9280 3100 60 
-F6 "MCP1_ADDR" I L 9280 3200 60 
-F7 "+5V" I R 10030 2800 60 
-F8 "+3.3V" I R 10030 2900 60 
-F9 "TACH" I L 9280 3300 60 
+F2 "CLK" I L 9280 3000 60
+F3 "MISO" I L 9280 2800 60
+F4 "MOSI" I L 9280 2900 60
+F5 "MCP0_ADDR" I L 9280 3100 60
+F6 "MCP1_ADDR" I L 9280 3200 60
+F7 "+5V" I R 10030 2800 60
+F8 "+3.3V" I R 10030 2900 60
+F9 "TACH" I L 9280 3300 60
 $EndSheet
 Wire Wire Line
 	10030 2800 10160 2800
@@ -1325,5 +1428,95 @@ Wire Wire Line
 Wire Wire Line
 	7770 3300 7770 5000
 Wire Wire Line
-	7770 5000 7200 5000
+	7770 3800 7200 3800
+$Comp
+L BSS138 Q?
+U 1 1 591B7EED
+P 12710 4990
+F 0 "Q?" H 12910 5065 50  0000 L CNN
+F 1 "BSS138" H 12910 4990 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 12910 4915 50  0001 L CIN
+F 3 "" H 12710 4990 50  0001 L CNN
+	1    12710 4990
+	0    -1   1    0
+$EndComp
+Text Label 12470 4580 1    60   ~ 0
++5V
+Text Label 12950 4570 1    60   ~ 0
++3.3V
+$Comp
+L R R?
+U 1 1 591B7EF6
+P 12470 4890
+F 0 "R?" V 12550 4890 50  0000 C CNN
+F 1 "10k" V 12470 4890 50  0000 C CNN
+F 2 "" V 12400 4890 50  0001 C CNN
+F 3 "" H 12470 4890 50  0001 C CNN
+	1    12470 4890
+	1    0    0    -1
+$EndComp
+$Comp
+L R R?
+U 1 1 591B7EFD
+P 12950 4890
+F 0 "R?" V 13030 4890 50  0000 C CNN
+F 1 "10k" V 12950 4890 50  0000 C CNN
+F 2 "" V 12880 4890 50  0001 C CNN
+F 3 "" H 12950 4890 50  0001 C CNN
+	1    12950 4890
+	1    0    0    -1
+$EndComp
+Wire Wire Line
+	12910 5090 12950 5090
+Wire Wire Line
+	12950 5090 13140 5090
+Wire Wire Line
+	12950 5040 12950 5090
+Connection ~ 12950 5090
+Wire Wire Line
+	12470 5040 12470 5090
+Wire Wire Line
+	11980 5090 12470 5090
+Wire Wire Line
+	12470 5090 12510 5090
+Connection ~ 12470 5090
+Wire Wire Line
+	12470 4740 12470 4580
+Wire Wire Line
+	12950 4570 12950 4650
+Wire Wire Line
+	12950 4650 12950 4740
+Wire Wire Line
+	12760 4790 12760 4650
+Wire Wire Line
+	12760 4650 12950 4650
+Connection ~ 12950 4650
+Text Label 7200 3900 0    60   ~ 0
+Fuel_Flow
+Text Label 13140 5090 0    60   ~ 0
+Fuel_Flow
+$Comp
+L CONN_01X03 J?
+U 1 1 591B9AF4
+P 11780 5090
+F 0 "J?" H 11780 5290 50  0000 C CNN
+F 1 "CONN_01X03" V 11880 5090 50  0000 C CNN
+F 2 "" H 11780 5090 50  0001 C CNN
+F 3 "" H 11780 5090 50  0001 C CNN
+	1    11780 5090
+	-1   0    0    1
+$EndComp
+Text Label 11980 4990 0    60   ~ 0
++5V
+$Comp
+L GND #PWR?
+U 1 1 591BA414
+P 11980 5190
+F 0 "#PWR?" H 11980 4940 50  0001 C CNN
+F 1 "GND" H 11980 5040 50  0000 C CNN
+F 2 "" H 11980 5190 50  0001 C CNN
+F 3 "" H 11980 5190 50  0001 C CNN
+	1    11980 5190
+	1    0    0    -1
+$EndComp
 $EndSCHEMATC

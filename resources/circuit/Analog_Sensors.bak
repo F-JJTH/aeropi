@@ -53,7 +53,7 @@ F 1 "BSS138" H 9700 1240 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-23" H 9700 1165 50  0001 L CIN
 F 3 "" H 9500 1240 50  0001 L CNN
 	1    9500 1240
-	0    -1   1    0   
+	0    -1   1    0
 $EndComp
 Text Label 9260 830  1    60   ~ 0
 +5V
@@ -68,7 +68,7 @@ F 1 "10k" V 9260 1140 50  0000 C CNN
 F 2 "" V 9190 1140 50  0001 C CNN
 F 3 "" H 9260 1140 50  0001 C CNN
 	1    9260 1140
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R55
@@ -79,7 +79,7 @@ F 1 "10k" V 9740 1140 50  0000 C CNN
 F 2 "" V 9670 1140 50  0001 C CNN
 F 3 "" H 9740 1140 50  0001 C CNN
 	1    9740 1140
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 9100 1340 2    60   ~ 0
 SCLKH
@@ -98,11 +98,11 @@ Wire Wire Line
 	9260 1340 9300 1340
 Connection ~ 9260 1340
 Wire Wire Line
-	9260 990  9260 830 
+	9260 990  9260 830
 Wire Wire Line
-	9740 820  9740 900 
+	9740 820  9740 900
 Wire Wire Line
-	9740 900  9740 990 
+	9740 900  9740 990
 Text Label 7920 3820 0    60   ~ 0
 MOSIH
 Text Label 7920 3720 0    60   ~ 0
@@ -128,7 +128,7 @@ F 1 "GND" H 7220 4500 30  0001 C CNN
 F 2 "" H 7220 4570 60  0000 C CNN
 F 3 "" H 7220 4570 60  0000 C CNN
 	1    7220 4570
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR38
@@ -139,7 +139,7 @@ F 1 "GND" H 7220 2350 30  0001 C CNN
 F 2 "" H 7220 2420 60  0000 C CNN
 F 3 "" H 7220 2420 60  0000 C CNN
 	1    7220 2420
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 7920 1770 0    60   ~ 0
 MCP0H
@@ -170,7 +170,7 @@ F 1 "220" H 5650 1530 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 5620 1570 50  0001 C CNN
 F 3 "" H 5620 1570 50  0001 C CNN
 	1    5620 1570
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L R_Small R48
@@ -181,7 +181,7 @@ F 1 "220" H 5930 1630 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 5820 1670 50  0001 C CNN
 F 3 "" H 5820 1670 50  0001 C CNN
 	1    5820 1670
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L R_Small R49
@@ -192,7 +192,7 @@ F 1 "220" H 6050 1730 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 6020 1770 50  0001 C CNN
 F 3 "" H 6020 1770 50  0001 C CNN
 	1    6020 1770
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 Text Label 5770 1420 2    60   ~ 0
 OilPressure
@@ -254,13 +254,13 @@ Wire Wire Line
 	5770 1570 5770 1420
 Connection ~ 5770 1570
 Wire Wire Line
-	7120 970  7120 870 
+	7120 970  7120 870
 Wire Wire Line
-	7120 870  7220 870 
+	7120 870  7220 870
 Wire Wire Line
-	7220 870  7320 870 
+	7220 870  7320 870
 Wire Wire Line
-	7320 870  7320 970 
+	7320 870  7320 970
 Wire Wire Line
 	7120 3120 7120 3020
 Wire Wire Line
@@ -270,8 +270,8 @@ Wire Wire Line
 Wire Wire Line
 	7320 3020 7320 3120
 Wire Wire Line
-	7220 870  7220 770 
-Connection ~ 7220 870 
+	7220 870  7220 770
+Connection ~ 7220 870
 Wire Wire Line
 	7220 3020 7220 2920
 Connection ~ 7220 3020
@@ -280,10 +280,10 @@ Wire Wire Line
 Wire Wire Line
 	5770 1570 6520 1570
 Wire Wire Line
-	9550 1040 9550 900 
+	9550 1040 9550 900
 Wire Wire Line
-	9550 900  9740 900 
-Connection ~ 9740 900 
+	9550 900  9740 900
+Connection ~ 9740 900
 $Comp
 L BSS138 Q8
 U 1 1 5914F1CC
@@ -293,7 +293,7 @@ F 1 "BSS138" H 9720 2330 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-23" H 9720 2255 50  0001 L CIN
 F 3 "" H 9520 2330 50  0001 L CNN
 	1    9520 2330
-	0    -1   1    0   
+	0    -1   1    0
 $EndComp
 Text Label 9280 1920 1    60   ~ 0
 +5V
@@ -308,7 +308,7 @@ F 1 "10k" V 9280 2230 50  0000 C CNN
 F 2 "" V 9210 2230 50  0001 C CNN
 F 3 "" H 9280 2230 50  0001 C CNN
 	1    9280 2230
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R56
@@ -319,7 +319,7 @@ F 1 "10k" V 9760 2230 50  0000 C CNN
 F 2 "" V 9690 2230 50  0001 C CNN
 F 3 "" H 9760 2230 50  0001 C CNN
 	1    9760 2230
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 9120 2430 2    60   ~ 0
 MISOH
@@ -357,7 +357,7 @@ F 1 "BSS138" H 9730 3400 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-23" H 9730 3325 50  0001 L CIN
 F 3 "" H 9530 3400 50  0001 L CNN
 	1    9530 3400
-	0    -1   1    0   
+	0    -1   1    0
 $EndComp
 Text Label 9290 2990 1    60   ~ 0
 +5V
@@ -372,7 +372,7 @@ F 1 "10k" V 9290 3300 50  0000 C CNN
 F 2 "" V 9220 3300 50  0001 C CNN
 F 3 "" H 9290 3300 50  0001 C CNN
 	1    9290 3300
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R57
@@ -383,7 +383,7 @@ F 1 "10k" V 9770 3300 50  0000 C CNN
 F 2 "" V 9700 3300 50  0001 C CNN
 F 3 "" H 9770 3300 50  0001 C CNN
 	1    9770 3300
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 9130 3500 2    60   ~ 0
 MOSIH
@@ -421,7 +421,7 @@ F 1 "BSS138" H 9760 4460 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-23" H 9760 4385 50  0001 L CIN
 F 3 "" H 9560 4460 50  0001 L CNN
 	1    9560 4460
-	0    -1   1    0   
+	0    -1   1    0
 $EndComp
 Text Label 9320 4050 1    60   ~ 0
 +5V
@@ -436,7 +436,7 @@ F 1 "10k" V 9320 4360 50  0000 C CNN
 F 2 "" V 9250 4360 50  0001 C CNN
 F 3 "" H 9320 4360 50  0001 C CNN
 	1    9320 4360
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R59
@@ -447,7 +447,7 @@ F 1 "10k" V 9800 4360 50  0000 C CNN
 F 2 "" V 9730 4360 50  0001 C CNN
 F 3 "" H 9800 4360 50  0001 C CNN
 	1    9800 4360
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 9160 4560 2    60   ~ 0
 MCP0H
@@ -485,7 +485,7 @@ F 1 "BSS138" H 9750 5530 50  0000 L CNN
 F 2 "TO_SOT_Packages_SMD:SOT-23" H 9750 5455 50  0001 L CIN
 F 3 "" H 9550 5530 50  0001 L CNN
 	1    9550 5530
-	0    -1   1    0   
+	0    -1   1    0
 $EndComp
 Text Label 9310 5120 1    60   ~ 0
 +5V
@@ -500,7 +500,7 @@ F 1 "10k" V 9310 5430 50  0000 C CNN
 F 2 "" V 9240 5430 50  0001 C CNN
 F 3 "" H 9310 5430 50  0001 C CNN
 	1    9310 5430
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R R58
@@ -511,7 +511,7 @@ F 1 "10k" V 9790 5430 50  0000 C CNN
 F 2 "" V 9720 5430 50  0001 C CNN
 F 3 "" H 9790 5430 50  0001 C CNN
 	1    9790 5430
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 9150 5630 2    60   ~ 0
 MCP1H
@@ -549,7 +549,7 @@ F 1 "Airspeed" H 1630 1250 50  0000 L CNN
 F 2 "SMD_Packages:SOIC-8-N" H 1080 650 50  0001 C CNN
 F 3 "" H 1580 1600 50  0001 C CNN
 	1    1580 1000
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C_Small C20
@@ -560,7 +560,7 @@ F 1 "0.1u" H 940 920 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 930 1000 50  0001 C CNN
 F 3 "" H 930 1000 50  0001 C CNN
 	1    930  1000
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C_Small C23
@@ -571,7 +571,7 @@ F 1 "47p" H 2090 1120 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2080 1200 50  0001 C CNN
 F 3 "" H 2080 1200 50  0001 C CNN
 	1    2080 1200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R38
@@ -582,7 +582,7 @@ F 1 "51k" H 2310 1160 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2280 1200 50  0001 C CNN
 F 3 "" H 2280 1200 50  0001 C CNN
 	1    2280 1200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR28
@@ -593,7 +593,7 @@ F 1 "GND" H 1580 1380 30  0001 C CNN
 F 2 "" H 1580 1450 60  0001 C CNN
 F 3 "" H 1580 1450 60  0001 C CNN
 	1    1580 1450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 830  650  2    60   ~ 0
 +5V
@@ -605,8 +605,8 @@ F 0 "R41" H 2610 830 50  0000 L CNN
 F 1 "1k" H 2610 770 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2580 810 50  0001 C CNN
 F 3 "" H 2580 810 50  0001 C CNN
-	1    2580 810 
-	1    0    0    -1  
+	1    2580 810
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R42
@@ -617,7 +617,7 @@ F 1 "2k" H 2610 1160 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2580 1200 50  0001 C CNN
 F 3 "" H 2580 1200 50  0001 C CNN
 	1    2580 1200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L MPXA6115A U14
@@ -628,7 +628,7 @@ F 1 "Static Pressure" H 1630 2250 50  0000 L CNN
 F 2 "SMD_Packages:SOIC-8-N" H 1080 1650 50  0001 C CNN
 F 3 "" H 1580 2600 50  0001 C CNN
 	1    1580 2000
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C_Small C21
@@ -639,7 +639,7 @@ F 1 "0.1u" H 940 1920 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 930 2000 50  0001 C CNN
 F 3 "" H 930 2000 50  0001 C CNN
 	1    930  2000
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C_Small C24
@@ -650,7 +650,7 @@ F 1 "47p" H 2085 2135 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2080 2200 50  0001 C CNN
 F 3 "" H 2080 2200 50  0001 C CNN
 	1    2080 2200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R39
@@ -661,7 +661,7 @@ F 1 "51k" H 2310 2160 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2280 2200 50  0001 C CNN
 F 3 "" H 2280 2200 50  0001 C CNN
 	1    2280 2200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR29
@@ -672,7 +672,7 @@ F 1 "GND" H 1580 2380 30  0001 C CNN
 F 2 "" H 1580 2450 60  0001 C CNN
 F 3 "" H 1580 2450 60  0001 C CNN
 	1    1580 2450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 830  1650 2    60   ~ 0
 +5V
@@ -685,7 +685,7 @@ F 1 "1k" H 2610 1770 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2580 1810 50  0001 C CNN
 F 3 "" H 2580 1810 50  0001 C CNN
 	1    2580 1810
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R44
@@ -696,7 +696,7 @@ F 1 "2k" H 2610 2160 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2580 2200 50  0001 C CNN
 F 3 "" H 2580 2200 50  0001 C CNN
 	1    2580 2200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L MPXA6115A U15
@@ -707,7 +707,7 @@ F 1 "MAP Pressure" H 1630 3250 50  0000 L CNN
 F 2 "SMD_Packages:SOIC-8-N" H 1080 2650 50  0001 C CNN
 F 3 "" H 1580 3600 50  0001 C CNN
 	1    1580 3000
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L C_Small C22
@@ -718,7 +718,7 @@ F 1 "0.1u" H 940 2920 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 930 3000 50  0001 C CNN
 F 3 "" H 930 3000 50  0001 C CNN
 	1    930  3000
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R40
@@ -729,7 +729,7 @@ F 1 "51k" H 2310 3160 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2280 3200 50  0001 C CNN
 F 3 "" H 2280 3200 50  0001 C CNN
 	1    2280 3200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR30
@@ -740,7 +740,7 @@ F 1 "GND" H 1580 3380 30  0001 C CNN
 F 2 "" H 1580 3450 60  0001 C CNN
 F 3 "" H 1580 3450 60  0001 C CNN
 	1    1580 3450
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 830  2650 2    60   ~ 0
 +5V
@@ -753,7 +753,7 @@ F 1 "1k" H 2610 2770 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2580 2810 50  0001 C CNN
 F 3 "" H 2580 2810 50  0001 C CNN
 	1    2580 2810
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R46
@@ -764,7 +764,7 @@ F 1 "2k" H 2610 3160 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2580 3200 50  0001 C CNN
 F 3 "" H 2580 3200 50  0001 C CNN
 	1    2580 3200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 2830 1000 0    60   ~ 0
 ASI
@@ -783,7 +783,7 @@ F 1 "47p" H 2090 3135 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 2080 3200 50  0001 C CNN
 F 3 "" H 2080 3200 50  0001 C CNN
 	1    2080 3200
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	2580 3400 2580 3300
@@ -831,14 +831,14 @@ Wire Wire Line
 	2580 1000 2830 1000
 Connection ~ 2080 1400
 Wire Wire Line
-	830  650  930  650 
+	830  650  930  650
 Wire Wire Line
-	930  650  1580 650 
+	930  650  1580 650
 Wire Wire Line
-	1580 650  2580 650 
+	1580 650  2580 650
 Wire Wire Line
-	930  650  930  900 
-Connection ~ 930  650 
+	930  650  930  900
+Connection ~ 930  650
 Connection ~ 2080 1000
 Connection ~ 2280 1000
 Wire Wire Line
@@ -846,7 +846,7 @@ Wire Wire Line
 Wire Wire Line
 	2580 1000 2580 1100
 Wire Wire Line
-	2580 650  2580 710 
+	2580 650  2580 710
 Connection ~ 2280 1400
 Wire Wire Line
 	1580 1300 1580 1400
@@ -932,13 +932,13 @@ Wire Wire Line
 Connection ~ 1580 3400
 Connection ~ 2580 3000
 Wire Notes Line
-	580  550  3180 550 
+	580  550  3180 550
 Wire Notes Line
 	3180 550  3180 3800
 Wire Notes Line
 	3180 3800 580  3800
 Wire Notes Line
-	580  3800 580  550 
+	580  3800 580  550
 Wire Wire Line
 	830  1650 930  1650
 Wire Wire Line
@@ -946,8 +946,8 @@ Wire Wire Line
 Wire Wire Line
 	1580 1650 2580 1650
 Wire Wire Line
-	1580 650  1580 700 
-Connection ~ 1580 650 
+	1580 650  1580 700
+Connection ~ 1580 650
 Wire Wire Line
 	1580 1650 1580 1700
 Connection ~ 1580 1650
@@ -962,19 +962,19 @@ Wire Wire Line
 Connection ~ 930  2650
 Connection ~ 1580 2650
 Wire Notes Line
-	5240 510  8250 510 
+	5240 510  8250 510
 Wire Notes Line
 	8270 510  8270 5310
 Wire Notes Line
 	8270 5310 5240 5310
 Wire Notes Line
-	5240 5310 5240 510 
+	5240 5310 5240 510
 Text Notes 8470 6300 0    157  Italic 31
 Level Shifting Module
 Wire Notes Line
-	11160 6380 11160 500 
+	11160 6380 11160 500
 Wire Notes Line
-	11160 500  8300 500 
+	11160 500  8300 500
 Wire Notes Line
 	8300 500  8300 6380
 Wire Notes Line
@@ -998,7 +998,7 @@ F 1 "Screw_Terminal_1x08" V 3420 2630 50  0000 C TNN
 F 2 "" H 3570 1805 50  0001 C CNN
 F 3 "" H 3545 3230 50  0001 C CNN
 	1    3570 2630
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 3770 1930 0    60   ~ 0
 OilPressure
@@ -1017,17 +1017,17 @@ Text Label 4080 1060 2    60   ~ 0
 Text Label 4070 810  2    60   ~ 0
 +5V
 Wire Wire Line
-	4070 810  4270 810 
+	4070 810  4270 810
 Wire Wire Line
 	4080 1060 4270 1060
 Wire Notes Line
 	4870 560  4870 1620
 Wire Notes Line
-	3530 1620 3530 560 
+	3530 1620 3530 560
 Text Notes 3830 1460 0    157  Italic 31
 Power
 Wire Notes Line
-	3530 560  4870 560 
+	3530 560  4870 560
 Wire Notes Line
 	4870 1620 3530 1620
 $Comp
@@ -1039,7 +1039,7 @@ F 1 "Diode" H 1400 7010 50  0000 L CNN
 F 2 "Diodes_SMD:D_0603" V 1550 7090 50  0001 C CNN
 F 3 "" V 1550 7090 50  0001 C CNN
 	1    1550 7090
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L D_Zener_Small D7
@@ -1050,7 +1050,7 @@ F 1 "5.6V" H 2050 7000 50  0000 C CNN
 F 2 "Diodes_SMD:D_SOD-323" V 2050 7090 50  0001 C CNN
 F 3 "" V 2050 7090 50  0001 C CNN
 	1    2050 7090
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L R_Small R17
@@ -1061,7 +1061,7 @@ F 1 "100k" H 1830 6870 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 1800 6910 50  0001 C CNN
 F 3 "" H 1800 6910 50  0001 C CNN
 	1    1800 6910
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L R_Small R16
@@ -1072,7 +1072,7 @@ F 1 "10k" H 1330 6870 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 1300 6910 50  0001 C CNN
 F 3 "" H 1300 6910 50  0001 C CNN
 	1    1300 6910
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L GND #PWR31
@@ -1083,7 +1083,7 @@ F 1 "GND" H 1550 7270 30  0001 C CNN
 F 2 "" H 1550 7340 60  0001 C CNN
 F 3 "" H 1550 7340 60  0001 C CNN
 	1    1550 7340
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 1050 6910 2    60   ~ 0
 Tachometer
@@ -1140,24 +1140,24 @@ Wire Wire Line
 $Comp
 L MCP3008 U8
 U 1 1 59157E17
-P 7220 1570
-F 0 "U8" H 6770 2020 50  0000 C CNN
-F 1 "MCP3008" H 7570 2020 50  0000 C CNN
-F 2 "" H 7120 1470 50  0001 C CNN
-F 3 "" H 7220 1570 50  0001 C CNN
-	1    7220 1570
-	1    0    0    -1  
+P 5800 1610
+F 0 "U8" H 5350 2060 50  0000 C CNN
+F 1 "MCP3008" H 6150 2060 50  0000 C CNN
+F 2 "" H 5700 1510 50  0001 C CNN
+F 3 "" H 5800 1610 50  0001 C CNN
+	1    5800 1610
+	1    0    0    -1
 $EndComp
 $Comp
 L MCP3008 U9
 U 1 1 591584A5
-P 7220 3720
-F 0 "U9" H 6770 4170 50  0000 C CNN
-F 1 "MCP3008" H 7570 4170 50  0000 C CNN
-F 2 "" H 7120 3620 50  0001 C CNN
-F 3 "" H 7220 3720 50  0001 C CNN
-	1    7220 3720
-	1    0    0    -1  
+P 5800 3760
+F 0 "U9" H 5350 4210 50  0000 C CNN
+F 1 "MCP3008" H 6150 4210 50  0000 C CNN
+F 2 "" H 5700 3660 50  0001 C CNN
+F 3 "" H 5800 3760 50  0001 C CNN
+	1    5800 3760
+	1    0    0    -1
 $EndComp
 $Comp
 L R_Small R14
@@ -1168,7 +1168,7 @@ F 1 "47k" H 2330 6870 50  0000 L CNN
 F 2 "" H 2300 6910 50  0001 C CNN
 F 3 "" H 2300 6910 50  0001 C CNN
 	1    2300 6910
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L C_Small C14
@@ -1179,7 +1179,7 @@ F 1 "22n" H 2490 7010 50  0000 L CNN
 F 2 "" H 2480 7090 50  0001 C CNN
 F 3 "" H 2480 7090 50  0001 C CNN
 	1    2480 7090
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	2400 6910 2480 6910
@@ -1198,7 +1198,7 @@ F 1 "100" H 5340 6840 50  0000 L CNN
 F 2 "" H 5310 6880 50  0001 C CNN
 F 3 "" H 5310 6880 50  0001 C CNN
 	1    5310 6880
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 $Comp
 L GND #PWR37
@@ -1209,7 +1209,7 @@ F 1 "GND" H 5190 7470 30  0001 C CNN
 F 2 "" H 5190 7540 60  0001 C CNN
 F 3 "" H 5190 7540 60  0001 C CNN
 	1    5190 7540
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	5110 7310 5190 7340
@@ -1225,7 +1225,7 @@ F 1 "LTV-817" H 4810 7410 50  0000 L CNN
 F 2 "Housings_DIP:DIP-4_W7.62mm" H 4610 7010 50  0001 L CIN
 F 3 "" H 4810 7110 50  0001 L CNN
 	1    4810 7210
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 5310 6650 1    60   ~ 0
 +3.3V
@@ -1247,7 +1247,7 @@ F 1 "LM358" H 3040 6810 50  0000 L CNN
 F 2 "" H 3040 7010 50  0001 C CNN
 F 3 "" H 3040 7010 50  0001 C CNN
 	1    3040 7010
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L LM358 U11
@@ -1258,7 +1258,7 @@ F 1 "LM358" H 3830 6910 50  0000 L CNN
 F 2 "" H 3830 7110 50  0001 C CNN
 F 3 "" H 3830 7110 50  0001 C CNN
 	2    3830 7110
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	2740 7110 2650 7110
@@ -1277,7 +1277,7 @@ F 1 "GND" H 2940 7270 30  0001 C CNN
 F 2 "" H 2940 7340 60  0001 C CNN
 F 3 "" H 2940 7340 60  0001 C CNN
 	1    2940 7340
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	3340 7010 3530 7010
@@ -1290,7 +1290,7 @@ F 1 "100k" H 3500 6830 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 3470 6870 50  0001 C CNN
 F 3 "" H 3470 6870 50  0001 C CNN
 	1    3470 6870
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 $Comp
 L R_Small R19
@@ -1301,7 +1301,7 @@ F 1 "10k" H 3500 7360 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 3470 7400 50  0001 C CNN
 F 3 "" H 3470 7400 50  0001 C CNN
 	1    3470 7400
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 $Comp
 L GND #PWR32
@@ -1312,7 +1312,7 @@ F 1 "GND" H 2050 7270 30  0001 C CNN
 F 2 "" H 2050 7340 60  0001 C CNN
 F 3 "" H 2050 7340 60  0001 C CNN
 	1    2050 7340
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L GND #PWR33
@@ -1323,7 +1323,7 @@ F 1 "GND" H 2480 7270 30  0001 C CNN
 F 2 "" H 2480 7340 60  0001 C CNN
 F 3 "" H 2480 7340 60  0001 C CNN
 	1    2480 7340
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	2940 7310 2940 7340
@@ -1336,7 +1336,7 @@ F 1 "GND" H 3730 7470 30  0001 C CNN
 F 2 "" H 3730 7540 60  0001 C CNN
 F 3 "" H 3730 7540 60  0001 C CNN
 	1    3730 7540
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	3730 7410 3730 7500
@@ -1358,7 +1358,7 @@ F 1 "220" H 4360 7070 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 4330 7110 50  0001 C CNN
 F 3 "" H 4330 7110 50  0001 C CNN
 	1    4330 7110
-	0    -1   -1   0   
+	0    -1   -1   0
 $EndComp
 Wire Wire Line
 	4130 7110 4230 7110
@@ -1373,7 +1373,7 @@ F 1 "GND" H 4510 7470 30  0001 C CNN
 F 2 "" H 4510 7540 60  0001 C CNN
 F 3 "" H 4510 7540 60  0001 C CNN
 	1    4510 7540
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	4510 7310 4510 7540
@@ -1405,7 +1405,7 @@ F 1 "100" H 5190 5370 50  0000 L CNN
 F 2 "" H 5160 5410 50  0001 C CNN
 F 3 "" H 5160 5410 50  0001 C CNN
 	1    5160 5410
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 $Comp
 L GND #PWR?
@@ -1416,7 +1416,7 @@ F 1 "GND" H 5040 6000 30  0001 C CNN
 F 2 "" H 5040 6070 60  0001 C CNN
 F 3 "" H 5040 6070 60  0001 C CNN
 	1    5040 6070
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	4960 5840 5040 5870
@@ -1431,7 +1431,7 @@ F 1 "LTV-817" H 4660 5940 50  0000 L CNN
 F 2 "Housings_DIP:DIP-4_W7.62mm" H 4460 5540 50  0001 L CIN
 F 3 "" H 4660 5640 50  0001 L CNN
 	1    4660 5740
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Text Label 5160 5180 1    60   ~ 0
 +3.3V
@@ -1453,7 +1453,7 @@ F 1 "LM358" H 2890 5340 50  0000 L CNN
 F 2 "" H 2890 5540 50  0001 C CNN
 F 3 "" H 2890 5540 50  0001 C CNN
 	1    2890 5540
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 $Comp
 L LM358 U?
@@ -1464,7 +1464,7 @@ F 1 "LM358" H 3680 5440 50  0000 L CNN
 F 2 "" H 3680 5640 50  0001 C CNN
 F 3 "" H 3680 5640 50  0001 C CNN
 	1    3680 5640
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	2590 5640 2500 5640
@@ -1481,7 +1481,7 @@ F 1 "GND" H 2790 5800 30  0001 C CNN
 F 2 "" H 2790 5870 60  0001 C CNN
 F 3 "" H 2790 5870 60  0001 C CNN
 	1    2790 5870
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	3190 5540 3380 5540
@@ -1494,7 +1494,7 @@ F 1 "100k" H 3350 5360 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 3320 5400 50  0001 C CNN
 F 3 "" H 3320 5400 50  0001 C CNN
 	1    3320 5400
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 $Comp
 L R_Small R?
@@ -1505,7 +1505,7 @@ F 1 "10k" H 3350 5890 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 3320 5930 50  0001 C CNN
 F 3 "" H 3320 5930 50  0001 C CNN
 	1    3320 5930
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 Wire Wire Line
 	2790 5840 2790 5870
@@ -1518,7 +1518,7 @@ F 1 "GND" H 3580 6000 30  0001 C CNN
 F 2 "" H 3580 6070 60  0001 C CNN
 F 3 "" H 3580 6070 60  0001 C CNN
 	1    3580 6070
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	3580 5940 3580 6030
@@ -1540,7 +1540,7 @@ F 1 "220" H 4210 5600 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 4180 5640 50  0001 C CNN
 F 3 "" H 4180 5640 50  0001 C CNN
 	1    4180 5640
-	0    -1   -1   0   
+	0    -1   -1   0
 $EndComp
 Wire Wire Line
 	3980 5640 4080 5640
@@ -1555,7 +1555,7 @@ F 1 "GND" H 4360 6000 30  0001 C CNN
 F 2 "" H 4360 6070 60  0001 C CNN
 F 3 "" H 4360 6070 60  0001 C CNN
 	1    4360 6070
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	4360 5840 4360 6070
@@ -1585,7 +1585,7 @@ F 1 "Diode" H 1340 5540 50  0000 L CNN
 F 2 "Diodes_SMD:D_0603" V 1490 5620 50  0001 C CNN
 F 3 "" V 1490 5620 50  0001 C CNN
 	1    1490 5620
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L R_Small R?
@@ -1596,7 +1596,7 @@ F 1 "10k" H 1270 5400 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 1240 5440 50  0001 C CNN
 F 3 "" H 1240 5440 50  0001 C CNN
 	1    1240 5440
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L GND #PWR?
@@ -1607,7 +1607,7 @@ F 1 "GND" H 1490 5800 30  0001 C CNN
 F 2 "" H 1490 5870 60  0001 C CNN
 F 3 "" H 1490 5870 60  0001 C CNN
 	1    1490 5870
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	1490 5720 1490 5870
@@ -1629,7 +1629,7 @@ F 1 "100k" H 1770 5400 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 1740 5440 50  0001 C CNN
 F 3 "" H 1740 5440 50  0001 C CNN
 	1    1740 5440
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L R_Small R?
@@ -1640,7 +1640,7 @@ F 1 "10k" H 1980 5590 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 1950 5630 50  0001 C CNN
 F 3 "" H 1950 5630 50  0001 C CNN
 	1    1950 5630
-	-1   0    0    1   
+	-1   0    0    1
 $EndComp
 $Comp
 L GND #PWR?
@@ -1651,7 +1651,7 @@ F 1 "GND" H 1950 5800 30  0001 C CNN
 F 2 "" H 1950 5870 60  0001 C CNN
 F 3 "" H 1950 5870 60  0001 C CNN
 	1    1950 5870
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	1950 5730 1950 5870
@@ -1664,7 +1664,7 @@ F 1 "47k" H 2180 5400 50  0000 L CNN
 F 2 "" H 2150 5440 50  0001 C CNN
 F 3 "" H 2150 5440 50  0001 C CNN
 	1    2150 5440
-	0    1    1    0   
+	0    1    1    0
 $EndComp
 $Comp
 L C_Small C?
@@ -1675,7 +1675,7 @@ F 1 "22n" H 2340 5540 50  0000 L CNN
 F 2 "" H 2330 5620 50  0001 C CNN
 F 3 "" H 2330 5620 50  0001 C CNN
 	1    2330 5620
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	2250 5440 2330 5440
@@ -1695,7 +1695,7 @@ F 1 "GND" H 2330 5800 30  0001 C CNN
 F 2 "" H 2330 5870 60  0001 C CNN
 F 3 "" H 2330 5870 60  0001 C CNN
 	1    2330 5870
-	1    0    0    -1  
+	1    0    0    -1
 $EndComp
 Wire Wire Line
 	1840 5440 1950 5440
