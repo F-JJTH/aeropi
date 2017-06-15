@@ -12,6 +12,7 @@ import gps3
 import json
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
+import read_RPM
 
 
 SPI_PORT   = 0
@@ -190,6 +191,10 @@ class EMSWorker (threading.Thread):
     self.basicResistorSerie = [10, 31, 52, 71, 88, 106, 124, 140, 155, 170, 184]
     self.precision = 5
     self.completeResistorSerie = self.getCompleteResistorSerie()
+    self.pi = pigpio.pi()
+    self.rpmSensor = read_RPM.reader(self.pi, 5)
+    self.fuelflowSensor = read_RPM.reader(self.pi, 6)
+    self.i = 0
 
   def run(self):
     while not stopFlag:
@@ -202,8 +207,18 @@ class EMSWorker (threading.Thread):
       #self.data['voltage'] = self.mcp.read_adc(6)
       self.data['ASI'] = self.getAirspeed(self.mcp.read_adc(7))
 
+      if self.i > 3:
+        self.data['RPM'] = int(self.rpmSensor.RPM()+0.5)
+        self.data['fuelFlow'] = self.getFuelFlow(self.fuelflowSensor.RPM())
+        self.i = 0
+
       self.newData = '%s' % json.dumps(self.data);
+      self.i += 1
       time.sleep(0.25);
+
+    self.rpmSensor.cancel()
+    self.fuelflowSensor.cancel()
+    self.pi.stop()
 
   def getResistance(self, value):
     Vout = (value*self.V_Ref)/1024
@@ -220,6 +235,9 @@ class EMSWorker (threading.Thread):
     P = 0.0
     R = self.getResistance(value)
     return self.find_nearest(self.completeResistorSerie, R) / self.precision
+
+  def getFuelFlow(self, value):
+    return (value*60)/10500
 
   def find_nearest(self, array, value):
     n = [abs(i-value) for i in array]
