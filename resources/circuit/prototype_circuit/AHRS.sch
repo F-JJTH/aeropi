@@ -1,0 +1,234 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:bme280
+LIBS:proto-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 4 6
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MPU-9250 U10
+U 1 1 59837087
+P 5670 3000
+F 0 "U10" H 5220 3750 50  0000 C CNN
+F 1 "MPU-9250" H 5970 2250 50  0000 C CNN
+F 2 "Housings_DFN_QFN:QFN-24_3x3mm_Pitch0.4mm" H 5670 2000 50  0001 C CNN
+F 3 "" H 5670 2850 50  0001 C CNN
+	1    5670 3000
+	1    0    0    -1  
+$EndComp
+Text Label 4970 2700 2    60   ~ 0
+I2C_SDA
+Text Label 4970 2900 2    60   ~ 0
+I2C_SCLK
+$Comp
+L GND #PWR024
+U 1 1 59837090
+P 5670 4100
+F 0 "#PWR024" H 5670 4100 30  0001 C CNN
+F 1 "GND" H 5670 4030 30  0001 C CNN
+F 2 "" H 5670 4100 60  0000 C CNN
+F 3 "" H 5670 4100 60  0000 C CNN
+	1    5670 4100
+	1    0    0    -1  
+$EndComp
+Text Label 5570 1800 2    60   ~ 0
++3.3V
+NoConn ~ 4970 3200
+$Comp
+L C C24
+U 1 1 59837098
+P 6720 3650
+F 0 "C24" H 6745 3750 50  0000 L CNN
+F 1 "0.1u" H 6745 3550 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 6758 3500 50  0001 C CNN
+F 3 "" H 6720 3650 50  0001 C CNN
+	1    6720 3650
+	-1   0    0    1   
+$EndComp
+Text Label 6370 3300 0    60   ~ 0
++3.3V
+NoConn ~ 6370 2900
+NoConn ~ 6370 3000
+$Comp
+L C C19
+U 1 1 598370A2
+P 6420 2100
+F 0 "C19" H 6445 2200 50  0000 L CNN
+F 1 "0.1u" H 6445 2000 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 6458 1950 50  0001 C CNN
+F 3 "" H 6420 2100 50  0001 C CNN
+	1    6420 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C17
+U 1 1 598370A9
+P 4870 2100
+F 0 "C17" H 4895 2200 50  0000 L CNN
+F 1 "10n" H 4895 2000 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 4908 1950 50  0001 C CNN
+F 3 "" H 4870 2100 50  0001 C CNN
+	1    4870 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR025
+U 1 1 598370B0
+P 4870 2300
+F 0 "#PWR025" H 4870 2300 30  0001 C CNN
+F 1 "GND" H 4870 2230 30  0001 C CNN
+F 2 "" H 4870 2300 60  0000 C CNN
+F 3 "" H 4870 2300 60  0000 C CNN
+	1    4870 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR026
+U 1 1 598370B6
+P 6420 2300
+F 0 "#PWR026" H 6420 2300 30  0001 C CNN
+F 1 "GND" H 6420 2230 30  0001 C CNN
+F 2 "" H 6420 2300 60  0000 C CNN
+F 3 "" H 6420 2300 60  0000 C CNN
+	1    6420 2300
+	1    0    0    -1  
+$EndComp
+Text Notes 4320 4400 0    157  Italic 31
+AHRS Module
+Text Label 5770 1800 0    60   ~ 0
++3.3V
+NoConn ~ 6370 2700
+Text Label 4970 3000 2    60   ~ 0
++3.3V
+$Comp
+L GND #PWR027
+U 1 1 598370C0
+P 4430 2820
+F 0 "#PWR027" H 4430 2820 30  0001 C CNN
+F 1 "GND" H 4430 2750 30  0001 C CNN
+F 2 "" H 4430 2820 60  0000 C CNN
+F 3 "" H 4430 2820 60  0000 C CNN
+	1    4430 2820
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5670 3900 5670 4100
+Wire Wire Line
+	6370 3400 6420 3400
+Wire Wire Line
+	6420 3400 6420 3900
+Wire Wire Line
+	5670 3900 6720 3900
+Wire Wire Line
+	6370 3200 6720 3200
+Wire Wire Line
+	6720 3900 6720 3800
+Connection ~ 6420 3900
+Wire Wire Line
+	6720 3200 6720 3500
+Wire Wire Line
+	6420 2250 6420 2300
+Wire Wire Line
+	4870 2300 4870 2250
+Connection ~ 5570 1950
+Wire Wire Line
+	5570 1800 5570 2100
+Wire Wire Line
+	5570 1950 4870 1950
+Wire Wire Line
+	5770 1800 5770 2100
+Wire Wire Line
+	6420 1950 5770 1950
+Connection ~ 5770 1950
+Wire Wire Line
+	4970 2800 4430 2800
+Wire Wire Line
+	4430 2800 4430 2820
+Text HLabel 2060 2080 0    60   Input ~ 0
+3v3
+Text HLabel 2060 2540 0    60   Input ~ 0
+GND
+Text HLabel 2060 2770 0    60   Input ~ 0
+SDA
+Text HLabel 2050 3030 0    60   Input ~ 0
+SCL
+Text Label 2430 2080 0    60   ~ 0
++3.3V
+$Comp
+L GND #PWR028
+U 1 1 5983721A
+P 2440 2540
+F 0 "#PWR028" H 2440 2540 30  0001 C CNN
+F 1 "GND" H 2440 2470 30  0001 C CNN
+F 2 "" H 2440 2540 60  0000 C CNN
+F 3 "" H 2440 2540 60  0000 C CNN
+	1    2440 2540
+	1    0    0    -1  
+$EndComp
+Text Label 2440 2770 0    60   ~ 0
+I2C_SDA
+Text Label 2440 3030 0    60   ~ 0
+I2C_SCLK
+Wire Wire Line
+	2050 3030 2440 3030
+Wire Wire Line
+	2060 2770 2440 2770
+Wire Wire Line
+	2060 2540 2440 2540
+Wire Wire Line
+	2060 2080 2430 2080
+$Comp
+L CONN_01X02 J8
+U 1 1 5984F66F
+P 2200 3830
+F 0 "J8" H 2200 3980 50  0000 C CNN
+F 1 "CONN_01X02" V 2300 3830 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2200 3830 50  0001 C CNN
+F 3 "" H 2200 3830 50  0001 C CNN
+	1    2200 3830
+	-1   0    0    1   
+$EndComp
+Text Label 2400 3780 0    60   ~ 0
+I2C_SDA
+Text Label 2400 3880 0    60   ~ 0
+I2C_SCLK
+$EndSCHEMATC

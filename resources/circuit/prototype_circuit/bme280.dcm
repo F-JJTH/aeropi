@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP BME280
+D Bosch Pressure/Humidity/Temperature sensor I2C
+K Pressure Temperature Humidity I2C Bosch
+$ENDCMP
+#
+#End Doc Library

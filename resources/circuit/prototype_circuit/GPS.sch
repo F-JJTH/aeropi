@@ -1,0 +1,319 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:bme280
+LIBS:proto-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 6
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L FGPMMOPA6H U11
+U 1 1 59831B58
+P 5790 3060
+F 0 "U11" H 5390 3710 60  0000 C CNN
+F 1 "FGPMMOPA6H" H 5840 3610 60  0000 C CNN
+F 2 "aeroPi:PA6H" H 5790 3260 60  0001 C CNN
+F 3 "" H 5790 3260 60  0001 C CNN
+	1    5790 3060
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6490 2610
+NoConn ~ 6490 2810
+NoConn ~ 6490 2910
+NoConn ~ 6490 3010
+NoConn ~ 6490 3110
+NoConn ~ 5090 3110
+NoConn ~ 5090 3210
+NoConn ~ 5090 2710
+$Comp
+L GND #PWR017
+U 1 1 59831B67
+P 4590 2810
+F 0 "#PWR017" H 4590 2560 50  0001 C CNN
+F 1 "GND" H 4590 2660 50  0000 C CNN
+F 2 "" H 4590 2810 50  0001 C CNN
+F 3 "" H 4590 2810 50  0001 C CNN
+	1    4590 2810
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6490 3210
+$Comp
+L LED_Small D5
+U 1 1 59831B6E
+P 4690 3110
+F 0 "D5" H 4740 3060 50  0000 L CNN
+F 1 "3D FIX" H 4690 3010 35  0000 C CNN
+F 2 "Diodes_SMD:D_0603" V 4690 3110 50  0001 C CNN
+F 3 "" V 4690 3110 50  0001 C CNN
+	1    4690 3110
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_Small R23
+U 1 1 59831B75
+P 4440 3110
+F 0 "R23" V 4371 3110 50  0000 C CNN
+F 1 "470" V 4479 3110 35  0000 C TNN
+F 2 "Resistors_SMD:R_0603" H 4440 3110 50  0001 C CNN
+F 3 "" H 4440 3110 50  0001 C CNN
+	1    4440 3110
+	0    1    1    0   
+$EndComp
+Text Label 5090 2910 2    35   ~ 0
+VBACKUP
+$Comp
+L CONN_COAXIAL J7
+U 1 1 59831B7D
+P 6740 3510
+F 0 "J7" H 6600 3460 50  0000 C CNN
+F 1 "CONN_COAXIAL" H 6390 3380 50  0000 C CNN
+F 2 "Connectors_Molex:Molex_Microcoaxial_RF" H 6740 3510 50  0001 C CNN
+F 3 "" H 6740 3510 50  0001 C CNN
+	1    6740 3510
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR018
+U 1 1 59831B84
+P 6740 3760
+F 0 "#PWR018" H 6740 3510 50  0001 C CNN
+F 1 "GND" H 6740 3610 50  0000 C CNN
+F 2 "" H 6740 3760 50  0001 C CNN
+F 3 "" H 6740 3760 50  0001 C CNN
+	1    6740 3760
+	1    0    0    -1  
+$EndComp
+Text Label 4990 3560 3    60   ~ 0
+TXD
+Text Label 4840 3460 3    60   ~ 0
+RXD
+$Comp
+L GND #PWR019
+U 1 1 59831B8C
+P 3680 1720
+F 0 "#PWR019" H 3680 1470 50  0001 C CNN
+F 1 "GND" H 3680 1570 50  0000 C CNN
+F 2 "" H 3680 1720 50  0001 C CNN
+F 3 "" H 3680 1720 50  0001 C CNN
+	1    3680 1720
+	1    0    0    -1  
+$EndComp
+$Comp
+L Battery_Cell BT2
+U 1 1 59831B92
+P 3680 1620
+F 0 "BT2" H 3780 1720 50  0000 L CNN
+F 1 "Battery_Cell" H 3780 1620 50  0000 L CNN
+F 2 "Battery_Holders:Keystone_3000_1x12mm-CoinCell" V 3680 1680 50  0001 C CNN
+F 3 "" V 3680 1680 50  0001 C CNN
+	1    3680 1620
+	1    0    0    -1  
+$EndComp
+Text Label 3680 1420 1    60   ~ 0
+VBACKUP
+Text Label 4340 2430 1    60   ~ 0
++3.3V
+Text Notes 5090 4060 0    157  Italic 31
+GPS Module
+$Comp
+L C C23
+U 1 1 59831B9C
+P 4940 2660
+F 0 "C23" H 4965 2760 50  0000 L CNN
+F 1 "0.1u" H 4965 2560 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 4978 2510 50  0001 C CNN
+F 3 "" H 4940 2660 50  0001 C CNN
+	1    4940 2660
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR020
+U 1 1 59831BA3
+P 7040 2710
+F 0 "#PWR020" H 7040 2460 50  0001 C CNN
+F 1 "GND" H 7040 2560 50  0000 C CNN
+F 2 "" H 7040 2710 50  0001 C CNN
+F 3 "" H 7040 2710 50  0001 C CNN
+	1    7040 2710
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR021
+U 1 1 59831BA9
+P 7040 3410
+F 0 "#PWR021" H 7040 3160 50  0001 C CNN
+F 1 "GND" H 7040 3260 50  0000 C CNN
+F 2 "" H 7040 3410 50  0001 C CNN
+F 3 "" H 7040 3410 50  0001 C CNN
+	1    7040 3410
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR022
+U 1 1 59831BAF
+P 4640 3360
+F 0 "#PWR022" H 4640 3110 50  0001 C CNN
+F 1 "GND" H 4640 3210 50  0000 C CNN
+F 2 "" H 4640 3360 50  0001 C CNN
+F 3 "" H 4640 3360 50  0001 C CNN
+	1    4640 3360
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C22
+U 1 1 59831BB5
+P 4740 2660
+F 0 "C22" H 4765 2760 50  0000 L CNN
+F 1 "10u" H 4765 2560 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603" H 4778 2510 50  0001 C CNN
+F 3 "" H 4740 2660 50  0001 C CNN
+	1    4740 2660
+	1    0    0    -1  
+$EndComp
+$Comp
+L Ferrite_Bead_Small L3
+U 1 1 59831BBC
+P 4540 2510
+F 0 "L3" V 4740 2460 50  0000 L CNN
+F 1 "Ferrite" V 4640 2360 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805" V 4470 2510 50  0001 C CNN
+F 3 "" H 4540 2510 50  0001 C CNN
+	1    4540 2510
+	0    -1   -1   0   
+$EndComp
+Text Label 6490 3310 0    60   ~ 0
+1PPS
+Wire Wire Line
+	4640 3310 4640 3360
+Wire Wire Line
+	4990 3510 5090 3510
+Wire Wire Line
+	6490 3410 7040 3410
+Wire Wire Line
+	6490 2710 7040 2710
+Wire Wire Line
+	5090 3310 4640 3310
+Wire Wire Line
+	4590 3110 4540 3110
+Wire Wire Line
+	6740 3710 6740 3760
+Wire Wire Line
+	6490 3510 6590 3510
+Wire Wire Line
+	4840 3410 5090 3410
+Wire Wire Line
+	4990 3560 4990 3510
+Wire Wire Line
+	4840 3410 4840 3460
+Wire Wire Line
+	4790 3010 4790 3110
+Wire Wire Line
+	4790 3010 5090 3010
+Connection ~ 4940 2810
+Wire Wire Line
+	4590 2810 5090 2810
+Wire Wire Line
+	5090 2510 5090 2610
+Wire Wire Line
+	4640 2510 5090 2510
+Connection ~ 4940 2510
+Wire Wire Line
+	4340 2430 4340 3110
+Connection ~ 4340 2510
+Wire Wire Line
+	4340 2510 4440 2510
+Connection ~ 4740 2810
+Connection ~ 4740 2510
+Text HLabel 2110 2420 0    60   Input ~ 0
+3v3
+Text HLabel 2110 2740 0    60   Input ~ 0
+GND
+Text Label 2630 2420 0    60   ~ 0
++3.3V
+$Comp
+L GND #PWR023
+U 1 1 59832365
+P 2630 2740
+F 0 "#PWR023" H 2630 2490 50  0001 C CNN
+F 1 "GND" H 2630 2590 50  0000 C CNN
+F 2 "" H 2630 2740 50  0001 C CNN
+F 3 "" H 2630 2740 50  0001 C CNN
+	1    2630 2740
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2110 2420 2630 2420
+Wire Wire Line
+	2110 2740 2630 2740
+Text HLabel 2110 3010 0    60   Input ~ 0
+TX
+Text HLabel 2110 3220 0    60   Input ~ 0
+RX
+Text HLabel 2110 3430 0    60   Input ~ 0
+1PPS
+Text Label 2240 3220 0    60   ~ 0
+RXD
+Text Label 2240 3010 0    60   ~ 0
+TXD
+Text Label 2240 3430 0    60   ~ 0
+1PPS
+Wire Wire Line
+	2110 3430 2240 3430
+Wire Wire Line
+	2110 3220 2240 3220
+Wire Wire Line
+	2110 3010 2240 3010
+$Comp
+L CONN_01X02 J6
+U 1 1 5984F02F
+P 2570 3980
+F 0 "J6" H 2570 4130 50  0000 C CNN
+F 1 "CONN_01X02" V 2670 3980 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2570 3980 50  0001 C CNN
+F 3 "" H 2570 3980 50  0001 C CNN
+	1    2570 3980
+	-1   0    0    1   
+$EndComp
+Text Label 2770 3930 0    60   ~ 0
+TXD
+Text Label 2770 4030 0    60   ~ 0
+RXD
+$EndSCHEMATC
