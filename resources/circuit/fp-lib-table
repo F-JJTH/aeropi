@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name aeroPi)(type KiCad)(uri "$(KIPRJMOD)/aeroPi.pretty")(options "")(descr ""))
-)
