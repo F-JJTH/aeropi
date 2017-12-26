@@ -38,6 +38,16 @@ let settingsMgr = new SettingsManager({
         $(':input[name=ndAutoZoom]').val(settings.ndAutoZoom);
         nd.setAircraftCenterOffset(settings.ndAircraftCenterOffset);
         $(':input[name=ndAverageGroundspeed]').val(settings.ndAverageGroundspeed);
+        $(':checkbox[name=ndLayer_cartabossy_2015]').prop('checked', settings.ndLayer_cartabossy_2015);
+        if(settings.ndLayer_cartabossy_2015) nd.showLayer('cartabossy_2015');
+        $(':checkbox[name=ndLayer_oaci_2017]').prop('checked', settings.ndLayer_oaci_2017);
+        if(settings.ndLayer_oaci_2017) nd.showLayer('oaci_2017');
+        $(':checkbox[name=ndLayer_land_2015]').prop('checked', settings.ndLayer_land_2015);
+        if(settings.ndLayer_land_2015) nd.showLayer('land_2015');
+        $(':checkbox[name=ndLayer_appr_2015]').prop('checked', settings.ndLayer_appr_2015);
+        if(settings.ndLayer_appr_2015) nd.showLayer('appr_2015');
+        $(':checkbox[name=ndLayer_delta_rhone]').prop('checked', settings.ndLayer_delta_rhone);
+        if(settings.ndLayer_delta_rhone) nd.showLayer('delta_rhone');
 
         $(':checkbox[name=efisVisible]').prop('checked', settings.efisVisible);
         $(':checkbox[name=efisSpeedUnit]').prop('checked', (settings.efisSpeedUnit == 'Km/h'));
@@ -54,7 +64,18 @@ let settingsMgr = new SettingsManager({
     }
 });
 
-let ems  = new EMS('', settingsMgr, {});
+let ems  = new EMS({
+    amp:       'ampGauge',
+    rpm:       'rpmGauge',
+    map:       'mapGauge',
+    volt:      'voltGauge',
+    cylTemp:   'cylTempGauge',
+    oilTemp:   'oilTempGauge',
+    fuelQty:   'fuelQtyGauge',
+    fuelFlow:  'fuelFlowGauge',
+    oilPress:  'oilPressGauge',
+    fuelPress: 'fuelPressGauge',
+}, settingsMgr, {});
 let nd   = new ND('map', settingsMgr, {});
 let rm   = new RouteManager(nd, settingsMgr, {});
 let efis = new Efis('', settingsMgr, {});
@@ -155,6 +176,31 @@ let setDirectTo = function() {
 }
 
 // Navigation display
+let toggleLayer = function(layer) {
+    if( !nd.layers.hasOwnProperty(layer) ) {
+        console.error('ND::toggleLayer - Unknown layer', layer);
+        return;
+    }
+
+
+    if( nd.layers[layer].getVisible() ) {
+        $(':checkbox[name=ndLayer_'+layer+']').prop('checked', settingsMgr.set('ndLayer_'+layer, false));
+        nd.hideLayer(layer);
+    } else {
+        if(layer == 'oaci_2017') {
+            $(':checkbox[name=ndLayer_cartabossy_2015]').prop('checked', settingsMgr.set('ndLayer_cartabossy_2015', false));
+            nd.hideLayer('cartabossy_2015');
+        }
+        if(layer == 'cartabossy_2015') {
+            $(':checkbox[name=ndLayer_oaci_2017]').prop('checked', settingsMgr.set('ndLayer_oaci_2017', false));
+            nd.hideLayer('oaci_2017');
+        }
+
+        $(':checkbox[name=ndLayer_'+layer+']').prop('checked', settingsMgr.set('ndLayer_'+layer, true));
+        nd.showLayer(layer);
+    }
+}
+
 let toggleNdAdsb = function() {
     nd.toggleAdsb();
     $(':checkbox[name=ndAdsb]').prop('checked', settingsMgr.toggle('ndAdsb'));
@@ -203,7 +249,7 @@ let setNdAverageGroundspeed = function() {
 
 // Terrain elevation
 let toggleTerrainElevation = function() {
-    $(':checkbox[name=terrainToggleCheckbox]').prop('checked', settingsMgr.toggle('terrainElevationVisible'));
+    $(':checkbox[name=terrainElevationVisible]').prop('checked', settingsMgr.toggle('terrainElevationVisible'));
     terrain.toggle();
 }
 
@@ -319,12 +365,12 @@ $(window).resize(function(){
 
     setTimeout(function(){
         nd.updateSize();
+        ems.updateSize();
         terrain.updateSize();
         if(terrainVisible)
             terrain.show();
     }, 1100);
 });
-
 
 let sendCurrentUser = function() {
     sendData({
@@ -354,7 +400,6 @@ function connect() {
             data = data.IMU;
             //console.log(data);
 
-            ems.setHdg(data.yaw);
             nd.setAircraftHeading(data.yaw);
             terrain.setAircraftHeading(data.yaw);
             /*data.roll = toDecimal(data.roll, 2);
@@ -412,7 +457,7 @@ function connect() {
 
         if(data.EMS){
             data = data.EMS;
-            //console.log(data);
+            console.log(data);
 
             ems.setRpm(data.RPM);
             ems.setCylTemp(data.cylTemp);

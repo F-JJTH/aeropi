@@ -84,6 +84,61 @@
                     <div class="tab-pane" id="mfdSettingsMap" role="tabpanel">
                         <div class="card">
                             <div class="card-header">
+                                Layers
+                            </div>
+                            <div class="card-block">
+                                <div class="row form-goup">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">OACI 2017:</div>
+                                            <div class="col-6" onclick="toggleLayer('oaci_2017')">
+                                                <input type="checkbox" name="ndLayer_oaci_2017" on-value="On" off-value="Off" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Cartabossy 2015:</div>
+                                            <div class="col-6" onclick="toggleLayer('cartabossy_2015')">
+                                                <input type="checkbox" name="ndLayer_cartabossy_2015" on-value="On" off-value="Off" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-goup">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Approach 2015:</div>
+                                            <div class="col-6" onclick="toggleLayer('appr_2015')">
+                                                <input type="checkbox" name="ndLayer_appr_2015" on-value="On" off-value="Off" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Landing 2015:</div>
+                                            <div class="col-6" onclick="toggleLayer('land_2015')">
+                                                <input type="checkbox" name="ndLayer_land_2015" on-value="On" off-value="Off" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-goup">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Delta Rhône:</div>
+                                            <div class="col-6" onclick="toggleLayer('delta_rhone')">
+                                                <input type="checkbox" name="ndLayer_delta_rhone" on-value="On" off-value="Off" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
                                 Unit
                             </div>
                             <div class="card-block">
@@ -138,6 +193,18 @@
                                                 <input type="checkbox" name="rmLoadLastRouteOnStartup" on-value="On" off-value="Off" class="custom-switch">
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Auto Zoom:</div>
+                                            <div class="col-6" onclick="toggleNdAutoZoom()">
+                                                <input type="checkbox" name="ndAutoZoom" on-value="On" off-value="Off" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                     </div>
                                 </div>
                             </div>

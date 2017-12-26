@@ -159,9 +159,11 @@ class Terrain {
     }
 
     updateSize() {
-        this.plot.resize();
-        this.plot.setupGrid();
-        this.plot.draw();
+        if(this.isVisible()) {
+            this.plot.resize();
+            this.plot.setupGrid();
+            this.plot.draw();
+        }
     }
 
     show() {

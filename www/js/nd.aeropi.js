@@ -16,7 +16,7 @@ class ND {
         this.mapToNorth = true;
         this.autoZoom   = true;
         this.rotation   = 0;
-        this.zoom  = 14;
+        this.zoom  = 11;
         this.coord = ol.proj.fromLonLat([5.1,44.02]);
         this.alt   = 0;
         this.hdg   = 0;
@@ -43,6 +43,11 @@ class ND {
             ndPredictiveTime: 5, // 5 Minutes
             ndAdsb: false,
             ndAverageGroundspeed: 140, //140kmh
+            ndLayer_cartabossy_2015: false,
+            ndLayer_oaci_2017: false,
+            ndLayer_appr_2015: false,
+            ndLayer_land_2015: false,
+            ndLayer_delta_rhone: false,
         };
         this.sMgr.addDefaultSettings(this.settings);
         //this.setMapViewCenter(this.coord);
@@ -52,13 +57,51 @@ class ND {
         //    source: new ol.source.OSM()
         //}));
 
-        this.map.addLayer(new ol.layer.Tile({
-            source: new ol.source.XYZ({
-                url: 'maps/cartabossy/{z}/{x}/{y}.png',
+        this.layers = {
+            osm: new ol.layer.Tile({
+                source: new ol.source.XYZ({url: 'maps/osm/{z}/{x}/{y}.png'}),
+                visible: true,
+                minZoom: 1,
+                maxZoom: 8,
+            }),
+            cartabossy_2015: new ol.layer.Tile({
+                source: new ol.source.XYZ({url: 'maps/cartabossy/{z}/{x}/{y}.png'}),
+                visible: this.sMgr.get('ndLayer_cartabossy_2015'),
                 minZoom: 4,
                 maxZoom: 10,
             }),
-        }));
+            oaci_2017: new ol.layer.Tile({
+                source: new ol.source.XYZ({url: 'maps/oaci_2017/{z}/{x}/{y}.jpg'}),
+                visible: this.sMgr.get('ndLayer_oaci_2017'),
+                minZoom: 6,
+                maxZoom: 11,
+            }),
+            delta_rhone: new ol.layer.Tile({
+                source: new ol.source.XYZ({url: 'maps/delta_rhone/{z}/{x}/{-y}.png'}),
+                visible: this.sMgr.get('ndLayer_delta_rhone'),
+                minZoom: 4,
+                maxZoom: 12,
+            }),
+            appr_2015: new ol.layer.Tile({
+                source: new ol.source.XYZ({url: 'maps/appr_2015/{z}/{x}/{-y}.png'}),
+                visible: this.sMgr.get('ndLayer_appr_2015'),
+                minZoom: 4,
+                maxZoom: 12,
+            }),
+            land_2015: new ol.layer.Tile({
+                source: new ol.source.XYZ({url: 'maps/land_2015/{z}/{x}/{-y}.png'}),
+                visible: this.sMgr.get('ndLayer_land_2015'),
+                minZoom: 4,
+                maxZoom: 14,
+            }),
+        };
+
+        this.map.addLayer(this.layers.osm);
+        this.map.addLayer(this.layers.cartabossy_2015);
+        this.map.addLayer(this.layers.oaci_2017);
+        this.map.addLayer(this.layers.delta_rhone);
+        this.map.addLayer(this.layers.appr_2015);
+        this.map.addLayer(this.layers.land_2015);
 
         this.aircraftFeature = this._createAircraftFeature()
         this.aircraftLayer = this._createAircraftLayer(this.aircraftFeature);
@@ -114,7 +157,7 @@ class ND {
         let addWaypointItem = {
             text: 'Add waypoint',
             classname: 'bold',
-            icon: 'img/center.png',
+            //icon: 'img/center.png',
             callback: function(obj){
                 let features = _this.routeSource.getFeatures();
                 if(features.length == 0) return;
@@ -127,7 +170,7 @@ class ND {
         let delWaypointItem = {
             text: 'Delete waypoint',
             classname: 'bold',
-            icon: 'img/center.png',
+            //icon: 'img/center.png',
             callback: function(obj){
                 _this.routeModifyInteraction.removePoint();
             }
@@ -136,7 +179,7 @@ class ND {
         let directToItem = {
             text: 'DirectTo here',
             classname: 'bold',
-            icon: 'img/directto.png',
+            //icon: 'img/directto.png',
             callback: function(obj){
                 _this.setDirectTo(obj.coordinate);
             }
@@ -146,16 +189,16 @@ class ND {
             directToItem,
             {
                 text: 'Some Actions',
-                icon: 'img/view_list.png',
+                //icon: 'img/view_list.png',
                 items: [
                 {
                     text: 'Center map here',
-                    icon: 'img/center.png',
+                    //icon: 'img/center.png',
                     callback: function(){console.log('test2');}
                 },
                 {
                     text: 'Add a Marker',
-                    icon: 'img/pin_drop.png',
+                    //icon: 'img/pin_drop.png',
                     callback: function(){console.log('test3');}
                 }
                 ]
@@ -224,10 +267,14 @@ class ND {
     }
 
     _createMapView() {
+        let extent = [-180,-90,180,90];
         return new ol.View({
             center: this.coord,
             zoom: this.zoom,
+            minZoom: 3,
+            maxZoom: 15,
             rotation: Math.radians(this.rotation),
+            extent: ol.proj.transformExtent(extent, 'EPSG:4326', 'EPSG:900913'),
         });
     }
 
@@ -269,6 +316,14 @@ class ND {
         });
     }
 
+    showLayer(layer) {
+        this.layers[layer].setVisible(true);
+    }
+
+    hideLayer(layer) {
+        this.layers[layer].setVisible(false);
+    }
+
     setChangeWaypointCallback(func) {
         this.changeWaypoint = func;
     }
@@ -289,7 +344,6 @@ class ND {
         let rValue = Math.round((legLength / gs) * 60);
 
         if(humanReadable) {
-
             return rValue+' min';
         }
         return rValue;

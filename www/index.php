@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="css/ol.css" type="text/css">
     <link rel="stylesheet" href="css/ol3-contextmenu.min.css" type="text/css">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <!--<link rel="stylesheet" href="css/bootstrap-toggle.min.css" type="text/css">-->
     <link rel="stylesheet" href="css/aeropi.css" type="text/css">
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/jquery.typeahead.min.css" type="text/css">
@@ -25,11 +24,9 @@
     <script src="js/popper.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <!--<script src="js/bootstrap-toggle.min.js"></script>-->
     <script src="js/jquery.flot.min.js"></script>
     <script src="js/jquery.flot.threshold.min.js"></script>
-    <script src="js/raphael.min.js"></script>
-    <script src="js/justgage.js"></script>
+    <script src="js/gauge.min.js"></script>
     <script src="js/jquery.typeahead.min.js"></script>
 </head>
 
@@ -38,34 +35,60 @@
     <header>
         <ul id="top-menu"></ul>
     </header>
-    <div id="main">
-        <div id="primary">
-            <div id="pfd">
-                <div id="map"></div>
-                <div id="terrainElevation"></div>
-            </div>
-            <div id="ems">
-                <a id="toggle-ems" href="#"><span>&raquo;</span></a>
-                <ul>
-                    <li><div class="justgage" id="cylTempGauge"></div></li>
-                    <li><div class="justgage" id="oilTempGauge"></div></li>
-                    <li><div class="justgage" id="oilPressGauge"></div></li>
-                    <li><div class="justgage" id="rpmGauge"></div></li>
-                    <li><div class="justgage" id="mapGauge"></div></li>
-                    <li><div class="justgage" id="ampGauge"></div></li>
-                    <li><div class="justgage" id="voltGauge"></div></li>
-                    <li><div class="justgage" id="asiGauge"></div></li>
-                    <li><div class="justgage" id="hdgGauge"></div></li>
-                    <li>Fuel data</li>
-                </ul>
+    <div class="row no-gutters">
+        <div class="col-lg-7 col-md-12" id="pfdx">
+            <div id="map"></div>
+            <div id="terrainElevation"></div>
+        </div>
+        <div class="col-lg-5 col-md-12" id="eng">
+            <div class="row no-gutters">
+                <div class="col-lg-12 col-md-4">
+                    <div class="row ems-row no-gutters">
+                        <div class="col-4 col-sm-5"><canvas id="rpmGauge"></canvas></div>
+                        <div class="col-8 col-sm-7">
+                            <div class="row ems-row no-gutters">
+                                <div class="col-4"><canvas id="cylTempGauge"></canvas></div>
+                                <div class="col-4"><canvas id="oilTempGauge"></canvas></div>
+                                <div class="col-4"><canvas id="oilPressGauge"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-4">
+                    <div class="row ems-row no-gutters">
+                        <div class="col-4 col-sm-5"><canvas id="mapGauge"></canvas></div>
+                        <div class="col-8 col-sm-7">
+                            <div class="row ems-row no-gutters">
+                                <div class="col-4"><canvas id="fuelQtyGauge"></canvas></div>
+                                <div class="col-4"><canvas id="fuelFlowGauge"></canvas></div>
+                                <div class="col-4"><canvas id="fuelPressGauge"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-4">
+                    <div class="row ems-row no-gutters">
+                        <div class="col-4 col-sm-5">INFO</div>
+                        <div class="col-8 col-sm-7">
+                            <div class="row ems-row no-gutters">
+                                <div class="col-4">null</div>
+                                <div class="col-4"><canvas id="ampGauge"></canvas></div>
+                                <div class="col-4"><canvas id="voltGauge"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="options">
-            <ul>
-                <li>
+    </div>
+
+    <div class="row menu-bar no-gutters">
+        <div class="col-sm-6">
+            <div class="row no-gutters">
+                <div class="col-3">
                     <div class="dropup">
                         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-road" aria-hidden="true"></i> Route
+                            <i class="fa fa-road" aria-hidden="true"></i> <span class="d-none d-sm-inline">Route</span>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" onclick="rm.createRoute()">Create route</a>
@@ -74,22 +97,22 @@
                             <a class="dropdown-item" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#routeManagerModal">Route manager</a>
                         </div>
                     </div>
-                </li>
-                <li>
+                </div>
+                <div class="col-3">
                     <div class="dropup">
                         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> Direct To
+                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> <span class="d-none d-sm-inline">Direct To</span>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#searchDirectToModal">Search</a>
                             <a class="dropdown-item" onclick="rm.clearDirectTo()">Clear</a>
                         </div>
                     </div>
-                </li>
-                <li>
+                </div>
+                <div class="col-3">
                     <div class="dropup">
                         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-map" aria-hidden="true"></i> Map
+                            <i class="fa fa-map" aria-hidden="true"></i> <span class="d-none d-sm-inline">Map</span>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item">Layers</a>
@@ -99,11 +122,11 @@
                             </a>
                         </div>
                     </div>
-                </li>
-                <li>
+                </div>
+                <div class="col-3">
                     <div class="dropup">
                         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-object-ungroup" aria-hidden="true"></i> MFD
+                            <i class="fa fa-object-ungroup" aria-hidden="true"></i> <span class="d-none d-sm-inline">MFD</span>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" onclick="toggleEfis()">
@@ -117,20 +140,44 @@
                             <a class="dropdown-item" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#mfdSettingsModal">Settings</a>
                         </div>
                     </div>
-                </li>
-                <li><input type="range" name="lat" min="43.5" max="44.5" step="0.001" value="44"></li>
-                <li><input type="range" name="lon" min="4.5" max="5.5" step="0.001" value="5"></li>
-                <li><input type="range" name="ems" min="0" max="240" step="5" value="0"></li>
-                <li>
-                    <button class="btn btn-secondary text-left" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#powerManagerModal">
-                        <span>
-                            <i class="fa fa-clock-o" style="margin-left:25%;" aria-hidden="true"></i><span class="time"></span>
-                            <br/>
-                            <i class="fa fa-calendar" style="margin-left:25%;" aria-hidden="true"></i><span class="date"></span>
-                        </span>
-                    </button>
-                </li>
-            </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row no-gutters">
+                <div class="col-3">
+                    <div class="dropup">
+                        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Option1
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="dropup">
+                        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Option2
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="dropup">
+                        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Option3
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="dropup">
+                        <button class="btn btn-secondary text-left" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#powerManagerModal">
+                            <span>
+                                <i class="fa fa-clock-o" style="margin-left:25%;" aria-hidden="true"></i><span class="time"></span>
+                                <br/>
+                                <i class="fa fa-calendar" style="margin-left:25%;" aria-hidden="true"></i><span class="date"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="js/sun.js"></script>

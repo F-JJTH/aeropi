@@ -172,6 +172,7 @@ class SettingsManager {
     set(k, v) {
         this.settings[k] = v;
         this.save(k, v);
+        return v;
     }
 
     toggle(k) {
