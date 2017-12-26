@@ -17,14 +17,14 @@
 #   8 = STM L3GD20H + LSM303DLHC
 #   9 = Bosch BMX055
 #   10 = Bosch BNX055
-IMUType=8
+IMUType=7
 
 # 
 # Fusion type type - 
 #   0 - Null. Use if only sensor data required without fusion
 #   1 - Kalman STATE4
 #   2 - RTQF
-FusionType=2
+FusionType=1
 
 # 
 # Is bus I2C: 'true' for I2C, 'false' for SPI
@@ -40,7 +40,7 @@ SPIBus=0
 
 # 
 # SPI select (between 0 and 1) 
-SPISelect=0
+SPISelect=1
 
 # 
 # SPI Speed in Hz
@@ -48,11 +48,11 @@ SPISpeed=500000
 
 # 
 # I2C slave address (filled in automatically by auto discover) 
-I2CSlaveAddress=107
+I2CSlaveAddress=104
 
 # 
 # IMU axis rotation - see RTIMU.h for details
-AxisRotation=20
+AxisRotation=1
 
 # Pressure sensor type - 
 #   0 = Auto discover
@@ -61,18 +61,18 @@ AxisRotation=20
 #   3 = LPS25H
 #   4 = MS5611
 #   5 = MS5637
-PressureType=2
+PressureType=1
 
 # 
 # I2C pressure sensor address (filled in automatically by auto discover) 
-I2CPressureAddress=119
+I2CPressureAddress=118
 
 # Humidity sensor type - 
 #   0 = Auto discover
 #   1 = Null (no hardware or don't use)
 #   2 = HTS221
 #   3 = HTU21D
-HumidityType=0
+HumidityType=1
 
 # 
 # I2C humidity sensor address (filled in automatically by auto discover) 
@@ -82,13 +82,13 @@ I2CHumidityAddress=0
 # 
 
 # Compass calibration settings
-CompassCalValid=true
-CompassCalMinX=-41.373398
-CompassCalMinY=-27.121874
-CompassCalMinZ=-45.566067
-CompassCalMaxX=39.499893
-CompassCalMaxY=52.794083
-CompassCalMaxZ=35.159248
+CompassCalValid=false
+CompassCalMinX=-39.894218
+CompassCalMinY=-106.600494
+CompassCalMinZ=-60.755310
+CompassCalMaxX=42.781719
+CompassCalMaxY=-26.464571
+CompassCalMaxZ=34.571198
 
 # #####################################################################
 # 
@@ -102,39 +102,39 @@ compassAdjDeclination=0.000000
 
 # Compass ellipsoid calibration
 compassCalEllipsoidValid=false
-compassCalOffsetX=0.000000
-compassCalOffsetY=0.000000
-compassCalOffsetZ=0.000000
-compassCalCorr11=1.000000
-compassCalCorr12=0.000000
-compassCalCorr13=0.000000
-compassCalCorr21=0.000000
-compassCalCorr22=1.000000
-compassCalCorr23=0.000000
-compassCalCorr31=0.000000
-compassCalCorr32=0.000000
-compassCalCorr33=1.000000
+compassCalOffsetX=-1.339410
+compassCalOffsetY=-1.561781
+compassCalOffsetZ=-3.407260
+compassCalCorr11=0.872968
+compassCalCorr12=-0.002662
+compassCalCorr13=0.016862
+compassCalCorr21=-0.002662
+compassCalCorr22=0.899996
+compassCalCorr23=-0.020293
+compassCalCorr31=0.016862
+compassCalCorr32=-0.020293
+compassCalCorr33=0.993497
 
 # #####################################################################
 # 
 
 # Accel calibration
-AccelCalValid=true
-AccelCalMinX=-0.966161
-AccelCalMinY=-1.603493
-AccelCalMinZ=-0.817582
-AccelCalMaxX=0.847644
-AccelCalMaxY=1.601903
-AccelCalMaxZ=0.766858
+AccelCalValid=false
+AccelCalMinX=-2.478341
+AccelCalMinY=-1.849590
+AccelCalMinZ=-2.058864
+AccelCalMaxX=2.259937
+AccelCalMaxY=2.064113
+AccelCalMaxZ=1.960049
 
 # #####################################################################
 # 
 
 # Saved gyro bias data
 GyroBiasValid=true
-GyroBiasX=-0.029590
-GyroBiasY=-0.000126
-GyroBiasZ=0.006254
+GyroBiasX=-0.003579
+GyroBiasY=-0.001095
+GyroBiasZ=0.006016
 
 # #####################################################################
 # 
@@ -181,7 +181,7 @@ MPU9150AccelFSR=16
 # 
 
 # Gyro sample rate (between 5Hz and 1000Hz plus 8000Hz and 32000Hz) 
-MPU9250GyroAccelSampleRate=80
+MPU9250GyroAccelSampleRate=120
 
 # 
 # Compass sample rate (between 1Hz and 100Hz) 
@@ -392,24 +392,24 @@ GD20M303DLHCCompassFsr=1
 #   4 = 200Hz 
 #   5 = 400Hz 
 #   6 = 800Hz 
-GD20HM303DLHCGyroSampleRate=6
+GD20HM303DLHCGyroSampleRate=2
 
 # 
 # Gyro full scale range - 
 #   0 = 245 degrees per second 
 #   1 = 500 degrees per second 
 #   2 = 2000 degrees per second 
-GD20HM303DLHCGyroFsr=0
+GD20HM303DLHCGyroFsr=1
 
 # 
 # Gyro high pass filter - 
 #   0 - 9 but see the L3GD20H manual for details
-GD20HM303DLHCGyroHpf=0
+GD20HM303DLHCGyroHpf=4
 
 # 
 # Gyro bandwidth - 
 #   0 - 3 but see the L3GD20H manual for details
-GD20HM303DLHCGyroBW=0
+GD20HM303DLHCGyroBW=1
 
 # Accel sample rate - 
 #   1 = 1Hz 
@@ -419,7 +419,7 @@ GD20HM303DLHCGyroBW=0
 #   5 = 100Hz 
 #   6 = 200Hz 
 #   7 = 400Hz 
-GD20HM303DLHCAccelSampleRate=7
+GD20HM303DLHCAccelSampleRate=4
 
 # 
 # Accel full scale range - 
@@ -427,7 +427,7 @@ GD20HM303DLHCAccelSampleRate=7
 #   1 = +/- 4g 
 #   2 = +/- 8g 
 #   3 = +/- 16g 
-GD20HM303DLHCAccelFsr=0
+GD20HM303DLHCAccelFsr=2
 
 # 
 # Compass sample rate - 

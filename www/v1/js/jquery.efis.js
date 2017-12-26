@@ -443,7 +443,7 @@
 		main.ball.setAttribute("cy", 24);
 		main.ball.setAttribute("r", 15);
 		main.ball.setAttribute("style", "fill:#FFF;");
-		//main.ball.style.transition = "all 1s";
+		main.ball.style.transition = "all 0.5s";
 		main.appendChild(main.ball);
 		return main;
 	}
@@ -628,12 +628,12 @@
 
 	this.setAttitude = function(params) {
 	    params.pitch = Math.round(params.pitch*20)/20;
-	    params.roll = Math.round(params.roll*20)/20;
+	    params.roll = -(Math.round(params.roll*20)/20);
 	    if(data.pitch == params.pitch && data.roll == params.roll) return;
 		data.pitch = params.pitch;
 		data.roll = params.roll;
-		pitch = -(params.pitch-settings.attitude.pitchoffset)/10*attitudeOffsetBase;
-		roll = -(params.roll-settings.attitude.rolloffset);
+		pitch = (params.pitch-settings.attitude.pitchoffset)/10*attitudeOffsetBase;
+		roll = (params.roll-settings.attitude.rolloffset);
 		ai.horizonAnim.style.transform = "rotate("+roll+"deg) translate(0px, "+pitch+"px)";
 	}
 	
@@ -667,7 +667,7 @@
 		var mul = settings.width/10-16;
 		
 		data.ts = v
-		ts.ball.style.transform = "translate("+(-v*mul)+"px, 0px)";
+		ts.ball.style.transform = "translate("+(v*mul)+"px, 0px)";
 	}
 
 	this.setClock = function(v){

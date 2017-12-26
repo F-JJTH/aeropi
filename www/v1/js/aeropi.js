@@ -219,7 +219,7 @@ $(document).ready(function() {
         data.pressure = toDecimal(data.pressure, 2);
         data.temperature = toDecimal(data.temperature, 1);
         if(Settings.efis.compass.source != "gps"){
-          data.compass = parseInt(data.yaw)+83;
+          data.compass = parseInt(data.yaw);
           efis.setCompass(data.compass);
         }
         efis.setSlip(data.slipball);
@@ -548,6 +548,7 @@ $(document).ready(function() {
 
 function calibrateEfis(){
   var attitude = efis.getAttitude();
+
   efis.setCalibration(attitude);
   Settings.efis.attitude.pitchoffset = attitude.pitch;
   Settings.efis.attitude.rolloffset = attitude.roll;
@@ -556,6 +557,7 @@ function calibrateEfis(){
     rolloffset: attitude.roll,
   }}};
   saveSettings(data);
+  efis.setAttitude({pitch:0, roll:0});
 }
 
 function saveSettings(data){

@@ -1,0 +1,9 @@
+<?php
+include('createRoute.modal.html');
+include('createUser.modal.html');
+include('searchDirectTo.modal.html');
+include('routeManager.modal.html');
+include('powerManager.modal.html');
+include('userManager.modal.html');
+include('mfdSettings.modal.html');
+?>

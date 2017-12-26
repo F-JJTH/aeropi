@@ -1,0 +1,52 @@
+<!-- Route Manager Modal -->
+<div class="modal fade" id="routeManagerModal" tabindex="-1" role="dialog" aria-labelledby="routeManagerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="routeManagerModalLabel">Route Manager</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row routeListHeader">
+                            <div class="col-2 text-right">#</div>
+                            <div class="col-9">Route name</div>
+                            <div class="col-1"></div>
+                        </div>
+                        <div class="list-group routeList"></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row waypointListHeader">
+                                    <div class="col-2 text-right">#</div>
+                                    <div class="col-4 text-center">Longitude</div>
+                                    <div class="col-4">Latitude</div>
+                                    <div class="col-1"></div>
+                                </div>
+                                <div class="list-group waypointList"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <input type="text" class="routeNameInput form-control" onkeyup="rm.updateRouteName()" onchange="rm.saveSelectedRoute()" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <input type="text" class="routeCommentInput form-control" onkeyup="rm.updateRouteComment()" onchange="rm.saveSelectedRoute()" placeholder="Comment">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="rm.loadSelectedRoute()">Load route</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -53,6 +53,7 @@ class reader:
 
       self._high_tick = None
       self._period = None
+      self._count = 0
 
       pi.set_mode(gpio, pigpio.INPUT)
 
@@ -72,6 +73,7 @@ class reader:
                self._period = t
 
          self._high_tick = tick
+         self._count += 1
 
       elif level == 2: # Watchdog timeout.
 
@@ -97,3 +99,6 @@ class reader:
       """
       self.pi.set_watchdog(self.gpio, 0) # cancel watchdog
       self._cb.cancel()
+
+   def tally(self):
+      return self._count

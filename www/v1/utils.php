@@ -1,7 +1,7 @@
 <?php
 
 function mysqliConn(){
-  $mysqli = new mysqli("127.0.0.1", "aeropi"/*usr*/, "aeropi"/*pwd*/, "aeropi"/*db*/);
+  $mysqli = new mysqli("127.0.0.1", "aeropi"/*usr*/, "aeropi"/*pwd*/, "aeropi_v1"/*db*/);
   if($mysqli->connect_errno) {
     echo "Error: Unable to connect to MySQL." . PHP_EOL;
     echo "Debugging errno: " . $mysqli->connect_errno . PHP_EOL;

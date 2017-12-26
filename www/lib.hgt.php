@@ -6,17 +6,27 @@ function getDistancePointToPoint($from, $to){
   $lng1 = $from['lng'];
   $lat2 = $to['lat'];
   $lng2 = $to['lng'];
-  $r = (3958 * 3.1415926 * sqrt(($lat2 - $lat1) * ($lat2 - $lat1) + cos($lat2 / 57.29578) * cos($lat1 / 57.29578) * ($lng2 - $lng1) * ($lng2 - $lng1)) / 180) * 1.609344;
+  $r = (3959 * 3.1415926 * sqrt(($lat2 - $lat1) * ($lat2 - $lat1) + cos($lat2 / 57.29578) * cos($lat1 / 57.29578) * ($lng2 - $lng1) * ($lng2 - $lng1)) / 180) * 1.609344;
   $r = round($r*1000, 2);
   return $r;
+}
+
+function getDistanceBetweenPoints($from, $to)
+{
+    $rad = M_PI / 180;
+    //Calculate distance from latitude and longitude
+    $theta = $from['lng'] - $to['lng'];
+    $dist = sin($from['lat'] * $rad) * sin($to['lat'] * $rad) +  cos($from['lat'] * $rad) * cos($to['lat'] * $rad) * cos($theta * $rad);
+
+    return acos($dist) / $rad * 60 *  1.852;
 }
 
 function parsePath($str){
   $points = explode("|", $str);
   foreach($points as $point){
-    $latlng = explode(",", $point);
-    $p['lat'] = round($latlng[0], 5);
-    $p['lng'] = round($latlng[1], 5);
+    $lnglat = explode(",", $point);
+    $p['lng'] = round($lnglat[0], 5);
+    $p['lat'] = round($lnglat[1], 5);
     $path[] = $p;
   }
   return $path;
@@ -88,6 +98,7 @@ function getDistancesInPath($path){
   $d = array();
   for($i=1; $i<sizeof($path); $i++){
     $d[] = getDistancePointToPoint($path[$i-1], $path[$i]);
+    //$d[] = getDistanceBetweenPoints($path[$i-1], $path[$i]);
   }
   return $d;
 }
@@ -106,7 +117,7 @@ function toDeg($rad){return $rad * 180 / pi();}
 function getPointFromDistanceAndBearing($from, $bearing, $distance){
   $lat1 = toRad($from['lat']);
   $lng1 = toRad($from['lng']);
-  $dist = ($distance/1000)/6371.01; //Earth's radius in km
+  $dist = ($distance/1000)/6372.7976; //Earth's radius in km
   $brng = toRad($bearing);
   $lat2 = asin( sin($lat1)*cos($dist) +
           cos($lat1)*sin($dist)*cos($brng) );
@@ -142,10 +153,14 @@ function getSampledSegmentsPoints($path, $samples){
 function DECtoDMS($dec){
   $vars = explode(".",$dec);
   $deg = $vars[0];
-  $tempma = "0.".$vars[1];
-  $tempma = $tempma * 3600;
-  $min = floor($tempma / 60);
-  $sec = $tempma - ($min*60);
+  $min = 0;
+  $sec = 0;
+  if(count($vars) >1) {
+    $tempma = "0.".$vars[1];
+    $tempma = $tempma * 3600;
+    $min = floor($tempma / 60);
+    $sec = $tempma - ($min*60);
+  }
   return array("deg"=>$deg,"min"=>$min,"sec"=>$sec);
 }
 
@@ -166,7 +181,8 @@ function getElevations($path_req, $samples_req){
   global $SRTM3_dir;
   $path = parsePath($path_req);
   $segments = getSampledSegmentsPoints($path, $samples_req);
-  $results = array();
+  $res = array();
+  $prevElevation = null;
   foreach($segments as &$segment){
     foreach($segment['points'] as &$point){
       $cell = getCellFromPoint($point);
@@ -175,13 +191,17 @@ function getElevations($path_req, $samples_req){
       fseek($fp, ($cell*2)-2);
       $bytes = fread($fp, 2);
       $elevation = unpack('n', $bytes)[1];
-      $results[] = array(
+      if($elevation - $prevElevation > 1000 && $prevElevation !== null) // Prevent gap in SRTM data to be visible
+        $elevation = $prevElevation;
+      $res[] = array(
         'elevation' => $elevation,
         'location' => $point,
+        'distance' => getDistanceBetweenPoints($path[0], $point),
         'resolution' => 1
       );
+      $prevElevation = $elevation;
     }
   }
-  return json_encode( array('results'=>$results), JSON_PRETTY_PRINT );
+  return $res;
 }
 ?>
