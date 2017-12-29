@@ -135,6 +135,10 @@ input[type=range]:focus::-ms-fill-upper {
   background: #3B95EF;
 }
 
+#datetime-ui button {
+  line-height: 2.01em;
+}
+
 #mfdSettingsModal .card {
     margin: 12px 0;
     line-height: 2em;

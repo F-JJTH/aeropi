@@ -166,7 +166,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3" id="datetime-ui">
                     <div class="dropup">
                         <button class="btn btn-secondary text-left" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#powerManagerModal">
                             <span>

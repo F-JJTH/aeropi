@@ -165,8 +165,8 @@ let formatTime = function(date) {
 let setUIDate = function(date) {
     let htmlDate = ('0' + date.getDate()).slice(-2)+'/'+('0' + (date.getMonth()+1)).slice(-2)+'/'+date.getFullYear();
     let htmlTime = ('0' + date.getHours()).slice(-2)+'h'+('0' + date.getMinutes()).slice(-2);
-    $('li span.date').html(' '+formatDate(date));
-    $('li span.time').html(' '+formatTime(date));
+    $('span.date').html(' '+formatDate(date));
+    $('span.time').html(' '+formatTime(date));
 }
 
 let setDirectTo = function() {
@@ -457,7 +457,7 @@ function connect() {
 
         if(data.EMS){
             data = data.EMS;
-            console.log(data);
+            /*console.log(data);*/
 
             ems.setRpm(data.RPM);
             ems.setCylTemp(data.cylTemp);

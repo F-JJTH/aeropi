@@ -63,36 +63,42 @@ class ND {
                 visible: true,
                 minZoom: 1,
                 maxZoom: 8,
+                preload: 6,
             }),
             cartabossy_2015: new ol.layer.Tile({
                 source: new ol.source.XYZ({url: 'maps/cartabossy/{z}/{x}/{y}.png'}),
                 visible: this.sMgr.get('ndLayer_cartabossy_2015'),
                 minZoom: 4,
                 maxZoom: 10,
+                preload: 1,
             }),
             oaci_2017: new ol.layer.Tile({
                 source: new ol.source.XYZ({url: 'maps/oaci_2017/{z}/{x}/{y}.jpg'}),
                 visible: this.sMgr.get('ndLayer_oaci_2017'),
                 minZoom: 6,
                 maxZoom: 11,
+                preload: 1,
             }),
             delta_rhone: new ol.layer.Tile({
                 source: new ol.source.XYZ({url: 'maps/delta_rhone/{z}/{x}/{-y}.png'}),
                 visible: this.sMgr.get('ndLayer_delta_rhone'),
                 minZoom: 4,
                 maxZoom: 12,
+                preload: 1,
             }),
             appr_2015: new ol.layer.Tile({
                 source: new ol.source.XYZ({url: 'maps/appr_2015/{z}/{x}/{-y}.png'}),
                 visible: this.sMgr.get('ndLayer_appr_2015'),
                 minZoom: 4,
                 maxZoom: 12,
+                preload: 1,
             }),
             land_2015: new ol.layer.Tile({
                 source: new ol.source.XYZ({url: 'maps/land_2015/{z}/{x}/{-y}.png'}),
                 visible: this.sMgr.get('ndLayer_land_2015'),
                 minZoom: 4,
                 maxZoom: 14,
+                preload: 1,
             }),
         };
 
@@ -617,7 +623,9 @@ class ND {
         this.hdg = Math.radians(hdg);
         this.aircraftFeature.getStyle().getImage().setRotation(this.hdg);
         this.aircraftFeature.setStyle(this.aircraftFeature.getStyle());
-        this.setMapViewCenter(this.coord);
+
+        if(this.followAircraft)
+            this.setMapViewCenter(this.coord);
 
         this.updatePredictive();
 
