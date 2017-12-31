@@ -176,6 +176,7 @@ input[type=range]:focus::-ms-fill-upper {
 .ems-row {
     height: 31vh;
     background: black;
+    color: white;
 }
 
 .ems-end-row {

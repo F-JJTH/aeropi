@@ -20,8 +20,10 @@ class ND {
         this.coord = ol.proj.fromLonLat([5.1,44.02]);
         this.alt   = 0;
         this.hdg   = 0;
+        this.track = 0;
         this.gs    = 0;
         this.directToEnabled = false;
+        this.currentDestinationWaypointIndex = null;
         //this.predictiveTime = 5; // 5 Minutes
         this.elementId = elementId;
         this.sMgr = settingsMgr;
@@ -66,7 +68,7 @@ class ND {
                 preload: 6,
             }),
             cartabossy_2015: new ol.layer.Tile({
-                source: new ol.source.XYZ({url: 'maps/cartabossy/{z}/{x}/{y}.png'}),
+                source: new ol.source.XYZ({url: 'maps/cartabossy_2015/{z}/{x}/{y}.png'}),
                 visible: this.sMgr.get('ndLayer_cartabossy_2015'),
                 minZoom: 4,
                 maxZoom: 10,
@@ -443,7 +445,7 @@ class ND {
                 let duration  = this.getLegDuration(legLength, true);
 
                 if(legLength < this.sMgr.get('rmChangeWaypointThreshold')) {
-                    this.changeWaypoint();
+                    this.currentDestinationWaypointIndex = this.changeWaypoint();
                 }
 
                 let _fontStyle = 'bold 20px Arial';
@@ -502,6 +504,7 @@ class ND {
         this.directToSource.clear();
         this.directToSource.addFeature(destFeature);
         this.directToEnabled = true;
+        this.currentDestinationWaypointIndex = 0;
     }
 
     setDirectToFromLonlat(coords) {
@@ -558,6 +561,46 @@ class ND {
         features[0].getGeometry().setCoordinates(newCoords);
     }
 
+    getDirectToDistance() {
+        let features = this.directToSource.getFeatures();
+        if(features.length == 0) return 0;
+        return this.getGeomLength(features[0].getGeometry());
+    }
+
+    getDirectToDuration() {
+        return this.getLegDuration(this.getDirectToDistance());
+    }
+
+    getRemainingRouteDistance() {
+        let remainingDistance = this.getDirectToDistance();
+
+        let features = this.routeSource.getFeatures();
+        if(features.length == 0) return;
+
+        let coords = features[0].getGeometry().getCoordinates();
+        let remainingRouteCoords = [];
+        if(this.currentDestinationWaypointIndex !== null) {
+            $.each(coords, (k, v) => {
+                if(k >= this.currentDestinationWaypointIndex) {
+                    remainingRouteCoords.push(v);
+                }
+            });
+
+            let remainingRouteLineString = new ol.geom.LineString(remainingRouteCoords);
+            remainingDistance += this.getGeomLength(remainingRouteLineString);
+        }
+
+        return remainingDistance;
+    }
+
+    getRemainingRouteDuration() {
+        return this.getLegDuration(this.getRemainingRouteDistance());
+    }
+
+    activateRoute() {
+        this.currentDestinationWaypointIndex = 0;
+    }
+
     updatePredictive() {
         let gs = this.gs;
         if(gs <= this.sMgr.get('ndMinPredictiveSpeed')) {
@@ -608,8 +651,9 @@ class ND {
 
         this.updatePredictive();
 
-        if(this.directToEnabled)
+        if(this.directToEnabled) {
             this.updateDirectTo();
+        }
 
         if(this.followAircraft)
             this.setMapViewCenter(this.coord);
@@ -619,9 +663,9 @@ class ND {
         return ol.proj.toLonLat(this.coord);
     }
 
-    setAircraftHeading(hdg) {
-        this.hdg = Math.radians(hdg);
-        this.aircraftFeature.getStyle().getImage().setRotation(this.hdg);
+    _applyAircraftRotation() {
+    	let rotation = this.gs > 5 ? this.track : this.hdg;
+    	this.aircraftFeature.getStyle().getImage().setRotation(rotation);
         this.aircraftFeature.setStyle(this.aircraftFeature.getStyle());
 
         if(this.followAircraft)
@@ -630,7 +674,17 @@ class ND {
         this.updatePredictive();
 
         if(!this.sMgr.get('ndMapToNorth'))
-            this.setMapViewRotation(this.hdg);
+            this.setMapViewRotation(rotation);
+    }
+
+    setAircraftHeading(hdg) {
+        this.hdg = Math.radians(hdg);
+        this._applyAircraftRotation();
+    }
+
+    setAircraftTrack(track) {
+    	this.track = Math.radians(track);
+        this._applyAircraftRotation();
     }
 
     setAircraftGroundSpeed(gs) {
@@ -685,7 +739,7 @@ class ND {
         this.view.animate({
             rotation: -rotation,
             anchor: this.coord,
-            duration: 250,
+            duration: 50,
         });
     }
 

@@ -232,6 +232,9 @@ class EMSWorker (threading.Thread):
     self.fuelflowSensor.cancel()
     self.pi.stop()
 
+  def resetFuelConsumed(self):
+    self.fuelflowSensor.reset_tally()
+
   def getResistance(self, value):
     Vout = (value*self.V_Ref)/4096
     return int((Vout*self.R_Ref)/(self.V_Ref-Vout))
@@ -292,8 +295,10 @@ class MSGWorker (threading.Thread):
     threading.Thread.__init__(self)
     self.db = pymysql.connect("localhost","aeropi","aeropi","aeropi" )
     self.cursor = self.db.cursor()
-    self.connected    = set()
+    self.connected   = set()
     self.engineState = EngineState.OFF
+    self.fuelLevelAtStartEngine = 0
+    self.currentFuelLevel = 0
     self.currentEngineId = 0
     self.engineStartTime = 0
     self.engineStopTime  = 0
@@ -304,6 +309,18 @@ class MSGWorker (threading.Thread):
     self.lastEms = None
     self.lastImu = None
     self.lastGps = None
+    self.readFuelLevelFromDB()
+
+  def readFuelLevelFromDB(self):
+    # retrieve the last tank level
+    req = "SELECT level FROM tanks WHERE id=1"
+    try:
+      self.cursor.execute(req)
+      result = self.cursor.fetchone()
+      self.fuelLevelAtStartEngine = result[0]
+      self.currentFuelLevel = self.fuelLevelAtStartEngine
+    except:
+      pass
 
   def run(self):
     while not stopFlag:
@@ -338,8 +355,10 @@ class MSGWorker (threading.Thread):
           ems['engine_state'] = 1 if self.engineState == EngineState.ON else 0
 
           if now and now - self.lastUpdateEms > 2:
-            self.updateEngine(now)
+            self.updateEngine(now, ems)
             dbWrite = True
+
+          ems['fuelLevel'] = self.currentFuelLevel
 
           if dbWrite:
             self.lastUpdateEms = now
@@ -407,10 +426,20 @@ class MSGWorker (threading.Thread):
         self.cursor.execute(req)
         self.db.commit()
         self.currentEngineId = 0
+        ems.resetFuelConsumed()
       except:
         self.db.rollback()
 
-  def updateEngine(self, now):
+  def updateEngine(self, now, ems):
+    if self.engineState == EngineState.ON:
+      self.currentFuelLevel = self.fuelLevelAtStartEngine - ems['fuelConsumed']
+      req = "UPDATE tanks SET level=%f WHERE id=1" % self.currentFuelLevel
+      try:
+        self.cursor.execute(req)
+        self.db.commit()
+      except:
+        self.db.rollback()
+
     if self.currentEngineId > 0:
       sqltime = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(now))
       req = "UPDATE enginelogs SET update_date='%s' WHERE id=%d" % (sqltime, self.currentEngineId)
@@ -442,6 +471,10 @@ class MSGWorker (threading.Thread):
       data = json.loads(message)
       if data['type'] == "user_id":
         _USERID_ = int(data['user_id'])
+
+      if data['type'] == "refuel":
+        self.readFuelLevelFromDB()
+
     except json.JSONDecodeError:
       pass
 

@@ -155,6 +155,20 @@ switch ($command) {
         //TO BO DONE
         break;
 
+    case 'refuel':
+        $sql =  "UPDATE `tanks` SET `level`=". $mysqli->real_escape_string($_POST['level']) ." WHERE `id`=1";
+        if ($mysqli->query($sql) !== TRUE) {
+            array('status' => 'KO', 'sql' => $sql, 'error' => $mysqli->error);
+        } else {
+            $sql =  "INSERT INTO `refuels` (`tank_id`, `date`, `quantity`) VALUES(1, NOW(), ". $mysqli->real_escape_string($_POST['quantity']) .")";
+            if ($mysqli->query($sql) !== TRUE) {
+                array('status' => 'KO', 'sql' => $sql, 'error' => $mysqli->error);
+            } else {
+                array('status' => 'OK');
+            }
+        }
+        break;
+
     default:
         $result = array();
         break;

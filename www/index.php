@@ -59,7 +59,7 @@
                         <div class="col-4 col-sm-5"><canvas id="mapGauge"></canvas></div>
                         <div class="col-8 col-sm-7">
                             <div class="row ems-row no-gutters">
-                                <div class="col-4"><canvas id="fuelQtyGauge"></canvas></div>
+                                <div class="col-4" ondblclick="openFuelManager()"><canvas id="fuelQtyGauge"></canvas></div>
                                 <div class="col-4"><canvas id="fuelFlowGauge"></canvas></div>
                                 <div class="col-4"><canvas id="fuelPressGauge"></canvas></div>
                             </div>
@@ -68,10 +68,24 @@
                 </div>
                 <div class="col-lg-12 col-md-4">
                     <div class="row ems-row no-gutters">
-                        <div class="col-4 col-sm-5">INFO</div>
+                        <div class="col-4 col-sm-5">
+                            <div class="row no-gutters">
+                                <div class="col-6">Position :</div><div class="col-6"><span class="info-position"></span></div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-6">Next waypoint :</div><div class="col-6"><span class="info-wptDistance"></span></div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-6">Remaining distance :</div><div class="col-6"><span class="info-routeDistance"></span></div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-3">ETE :</div><div class="col-3"><span class="info-ete"></span></div>
+                                <div class="col-3">ETA :</div><div class="col-3"><span class="info-eta"></span></div>
+                            </div>
+                        </div>
                         <div class="col-8 col-sm-7">
                             <div class="row ems-row no-gutters">
-                                <div class="col-4">null</div>
+                                <div class="col-4"></div>
                                 <div class="col-4"><canvas id="ampGauge"></canvas></div>
                                 <div class="col-4"><canvas id="voltGauge"></canvas></div>
                             </div>
@@ -112,20 +126,6 @@
                 <div class="col-3">
                     <div class="dropup">
                         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-map" aria-hidden="true"></i> <span class="d-none d-sm-inline">Map</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item">Layers</a>
-                            <a class="dropdown-item" onclick="toggleNdAdsb()">
-                                <input type="checkbox" name="ndAdsb" on-value="On" off-value="Off" class="custom-switch">
-                                ADS-B
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="dropup">
-                        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-object-ungroup" aria-hidden="true"></i> <span class="d-none d-sm-inline">MFD</span>
                         </button>
                         <div class="dropdown-menu">
@@ -133,12 +133,23 @@
                                 <input type="checkbox" name="efisVisible" on-value="On" off-value="Off" class="custom-switch">
                                 EFIS
                             </a>
+                            <a class="dropdown-item" onclick="toggleNdAdsb()">
+                                <input type="checkbox" name="ndAdsb" on-value="On" off-value="Off" class="custom-switch">
+                                ADS-B
+                            </a>
                             <a class="dropdown-item" onclick="toggleTerrainElevation()">
                                 <input type="checkbox" name="terrainElevationVisible" on-value="On" off-value="Off" class="custom-switch">
                                 Terrain
                             </a>
                             <a class="dropdown-item" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#mfdSettingsModal">Settings</a>
                         </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="dropup">
+                        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ...
+                        </button>
                     </div>
                 </div>
             </div>

@@ -353,6 +353,7 @@ class EMS {
             needleCircleSize: 7,
             needleCircleOuter: true,
             needleCircleInner: false,
+            animation: false,
         }).draw();
     }
 
@@ -394,6 +395,7 @@ class EMS {
             needleCircleSize: 7,
             needleCircleOuter: true,
             needleCircleInner: false,
+            animation: false,
         }).draw();
     }
 
@@ -453,6 +455,20 @@ class EMS {
     setRpm(v) {
         this.rpm = v;
         this.rpmGauge.value = this.rpm;
+    }
+
+    setFuelLevel(v) {
+        this.fuelQty = v;
+        this.fuelQtyGauge.value = this.fuelQty;
+    }
+
+    getFuelLevel() {
+        return this.fuelQty;
+    }
+
+    setFuelFlow(v) {
+        this.fuelFlow = v;
+        this.fuelFlowGauge.value = this.fuelFlow;
     }
 }
 

@@ -57,7 +57,8 @@ let settingsMgr = new SettingsManager({
         $(':checkbox[name=emsTemperatureUnit]').prop('checked', (settings.emsTemperatureUnit == 'C'));
         ems.setTemperatureUnit(settings.emsTemperatureUnit);
 
-        sendCurrentUser();
+        //sendCurrentUser();
+        connect();
     },
     onSettingSaved: setting => {
         console.log(setting);
@@ -326,6 +327,52 @@ let toggleEfisQnhUnit = function() {
     $(':checkbox[name='+k+']').prop('checked', (rValue == 'Mb'));
 }
 
+let openFuelManager = function() {
+    $('#fuelValueInput').val(ems.getFuelLevel());
+    $('#tankManagerModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+    });
+}
+
+let addFuel = function() {
+    let quantity = parseFloat( $('#fuelValueInput').val() );
+    let currentFuelLevel = ems.getFuelLevel();
+    let level = (currentFuelLevel + quantity);
+    $.ajax({
+        type: 'POST',
+        url: 'ajax.php?command=refuel',
+        data: {
+            level: level,
+            quantity: quantity
+        }
+    }).done(data => {
+        sendData({
+            type: 'refuel',
+            level: level
+        });
+    });
+}
+
+let setFuel = function() {
+    let level = parseFloat( $('#fuelValueInput').val() );
+    let currentFuelLevel = ems.getFuelLevel();
+    let quantity = (level - currentFuelLevel);
+    $.ajax({
+        type: 'POST',
+        url: 'ajax.php?command=refuel',
+        data: {
+            level: level,
+            quantity: quantity
+        }
+    }).done(data => {
+        sendData({
+            type: 'refuel',
+            level: level
+        });
+    });
+}
+
 let setSunrise = function(date) {
     //console.log(date.getUTCTime());
     $('span.sunrise').html(formatTime(date));
@@ -334,6 +381,55 @@ let setSunrise = function(date) {
 let setSunset = function(date) {
     //console.log(date.getUTCTime());
     $('span.sunset').html(formatTime(date));
+}
+
+function ConvertDDToDMS(D, lng){
+    return {
+        dir : D<0?lng?'W':'S':lng?'E':'N',
+        deg : 0|(D<0?D=-D:D),
+        min : 0|D%1*60,
+        sec :(0|D*60%1*60)
+    };
+}
+
+let updateRouteStat = function(date) {
+    let latlng = nd.getAircraftPosition();
+    let DMSlng = ConvertDDToDMS(latlng[0], true);
+    let DMSlat = ConvertDDToDMS(latlng[1]);
+    let DMSposition = DMSlat.deg+"°"+DMSlat.min+"'"+DMSlat.sec+"''"+DMSlat.dir+" &nbsp;&nbsp; "+DMSlng.deg+"°"+DMSlng.min+"'"+DMSlng.sec+"''"+DMSlng.dir;
+
+    let routeDist = nd.getRemainingRouteDistance();
+    if(routeDist > 0) {
+        routeDist = routeDist+" km";
+    } else {
+        routeDist = "------";
+    }
+
+    let directToDist = nd.getDirectToDistance();
+    if(directToDist > 0) {
+        directToDist = directToDist+" km";
+    } else {
+        directToDist = "------";
+    }
+
+    let routeDuration = nd.getRemainingRouteDuration();
+    let eta = "------";
+    if(routeDuration > 0) {
+        eta = new Date(date.getTime());
+        console.log(routeDuration);
+        eta.setMinutes(eta.getMinutes() + routeDuration);
+        eta = formatTime(eta);
+
+        routeDuration = routeDuration+" min";
+    } else {
+        routeDuration = "------";
+    }
+
+    $('.info-position').html(DMSposition);
+    $('.info-ete').html(routeDuration);
+    $('.info-eta').html(eta);
+    $('.info-wptDistance').html(directToDist);
+    $('.info-routeDistance').html(routeDist);
 }
 
 $('#searchDirectToModal').on('show.bs.modal', function(e){
@@ -418,6 +514,7 @@ function connect() {
         if(data.GPS){
             data = data.GPS;
             nd.setAircraftPosition([data.lng, data.lat]);
+            nd.setAircraftTrack(data.compass);
 
             let today = new Date(data.time);
             setSunrise(today.sunrise(data.lat, data.lng));
@@ -428,6 +525,8 @@ function connect() {
             terrain.setAircraftPosition([data.lng, data.lat]);
             terrain.setAircraftGroundSpeed(data.spd);
             terrain.setAircraftAltitude(data.alt);
+
+            updateRouteStat(today);
             /*data.spd = 60;
             efis.setClock(data.time);
             efis.setPosition({"lat":data.lat, "lng":data.lng});
@@ -464,6 +563,8 @@ function connect() {
             ems.setOilTemp(data.oilTemp);
             ems.setOilPress(data.oilPress);
             ems.setVolt(data.voltage);
+            ems.setFuelLevel(data.fuelLevel);
+            ems.setFuelFlow(data.fuelFlow);
             /*$("input#cht0").val(data.cht0+" °C");
             var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht0), 1, 1)+")";
             $("input#cht0").css({backgroundColor: col});
@@ -505,7 +606,7 @@ function connect() {
     };
 }
 
-connect();
+
 
 
 

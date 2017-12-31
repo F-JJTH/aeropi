@@ -278,10 +278,11 @@ class RouteManager {
         this.setDirectTo(wpt);
         this.currentRouteActivated = true;
         this.currentRouteInverse = inverse;
+        this.nd.activateRoute();
     }
 
     selectNextWaypoint() {
-        if(this.currentRoute == null) return;
+        if(this.currentRoute == null) return null;
 
         let wpts = this.currentRoute.getWaypoints();
         if(this.currentRouteInverse) {
@@ -295,6 +296,8 @@ class RouteManager {
         let wpt = {longitude: wpts[this.currentWaypoint][0], latitude: wpts[this.currentWaypoint][1]};
 
         this.setDirectTo(wpt);
+
+        return this.currentWaypoint;
     }
 
     selectPrevWaypoint() {
