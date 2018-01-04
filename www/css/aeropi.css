@@ -136,7 +136,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #datetime-ui button {
-  line-height: 2.01em;
+  line-height: 2.00em;
 }
 
 #mfdSettingsModal .card {
@@ -152,8 +152,13 @@ input[type=range]:focus::-ms-fill-upper {
     height: 93vh;
 }
 
+#efis {
+  height: 100%;
+  width: 100%;
+}
+
 .menu-bar {
-    width: 100vw;
+    /*width: 100vw;*/
     height: 7vh;
     line-height: 7vh;
     text-align: center;
@@ -184,9 +189,18 @@ input[type=range]:focus::-ms-fill-upper {
     background-color: black;
 }
 
+#efis {
+  position: absolute;
+  top: 0;
+}
+
 @media (orientation: portrait) {
     #map {
         height: 70vw;
+    }
+
+    .ems-info {
+      font-size: 24px;
     }
 }
 

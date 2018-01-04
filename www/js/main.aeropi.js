@@ -7,9 +7,12 @@ class AeroPi {
         this.nd  = null;
         this.terrain  = null;
         this.settings = null;
+
+        this.init();
     }
     init() {}
     postInit() {}
+    update() {}
 }
 
 let settingsMgr = new SettingsManager({
@@ -53,17 +56,38 @@ let settingsMgr = new SettingsManager({
         $(':checkbox[name=efisSpeedUnit]').prop('checked', (settings.efisSpeedUnit == 'Km/h'));
         $(':checkbox[name=efisAltitudeUnit]').prop('checked', (settings.efisAltitudeUnit == 'M'));
         $(':checkbox[name=efisQnhUnit]').prop('checked', (settings.efisQnhUnit == 'Mb'));
+        efis.setCalibration({pitch:settings.efisPitchOffset, roll:settings.efisRollOffset});
+        efis.setSpeedLimit('vne', settings.vne);
+        efis.setSpeedLimit('vfe', settings.vfe);
+        efis.setSpeedLimit('vn0', settings.vn0);
+        efis.setSpeedLimit('vs0', settings.vs0);
+        efis.setSpeedLimit('vs', settings.vs);
+        efis.setSpeedTickSpacing(settings.efisTickSpeed);
+        efis.setAltitudeTickSpacing(settings.efisTickAlt);
+        $(':input[name=vs]').val(settings.vs);
+        $(':input[name=vs0]').val(settings.vs0);
+        $(':input[name=vn0]').val(settings.vn0);
+        $(':input[name=vfe]').val(settings.vfe);
+        $(':input[name=vne]').val(settings.vne);
+        $(':input[name=speedTickSpacing]').val(settings.efisTickSpeed);
+        $(':input[name=altitudeTickSpacing]').val(settings.efisTickAlt);
         
         $(':checkbox[name=emsTemperatureUnit]').prop('checked', (settings.emsTemperatureUnit == 'C'));
         ems.setTemperatureUnit(settings.emsTemperatureUnit);
 
-        //sendCurrentUser();
+        $(':checkbox[name=summerTime]').prop('checked', settings.summerTime);
+        $(':checkbox[name=clockZone]').prop('checked', (settings.clockZone == 'UTC'));
+        $(':input[name=timeZone]').val(settings.timeZone);
+        setTimeZoneUI(settings.timeZone);
+
         connect();
     },
     onSettingSaved: setting => {
         console.log(setting);
     }
 });
+
+let currentDate = new Date();
 
 let ems  = new EMS({
     amp:       'ampGauge',
@@ -79,7 +103,7 @@ let ems  = new EMS({
 }, settingsMgr, {});
 let nd   = new ND('map', settingsMgr, {});
 let rm   = new RouteManager(nd, settingsMgr, {});
-let efis = new Efis('', settingsMgr, {});
+let efis = $('#efis').efis(settingsMgr);
 let terrain = new Terrain('#terrainElevation', settingsMgr, {
     url: "ajax.php?command=get_terrain_elevation",
     pathProvider: () => {
@@ -87,7 +111,17 @@ let terrain = new Terrain('#terrainElevation', settingsMgr, {
     }
 });
 
+settingsMgr.addDefaultSettings({
+    timeZone: 0,
+    clockZone: 'UTC',
+    summerTime: false,
+});
+
 settingsMgr.init();
+
+$('#map').on('click', function(e){
+    console.log('clicked');
+});
 
 let toggleFullscreen = () => {
     var element = document.documentElement;
@@ -100,6 +134,65 @@ let toggleFullscreen = () => {
     }else if(element.msRequestFullscreen){
         element.msRequestFullscreen();
     }
+}
+
+let changeEfisTickSpeed = e => {
+    let v = $(e).val();
+    efis.setSpeedTickSpacing(v);
+
+    settingsMgr.set('efisTickSpeed', v);
+}
+
+let changeEfisTickAlt = e => {
+    let v = $(e).val();
+    efis.setAltitudeTickSpacing(v);
+
+    settingsMgr.set('efisTickAlt', v);
+}
+
+let setEfisSpeed = (k, e) => {
+    let v = $(e).val();
+
+    efis.setSpeedLimit(k, v);
+    settingsMgr.set(k, v);
+}
+
+let calibrateAttitudeIndicator = () => {
+    let attitude = efis.getAttitude();
+    efis.setCalibration(attitude);
+    efis.setAttitude({pitch:0, roll:0});
+
+    settingsMgr.set('efisPitchOffset', attitude.pitch);
+    settingsMgr.set('efisRollOffset', attitude.roll);
+}
+
+let toggleSummerTime = function(e) {
+    let k = 'summerTime';
+    $(':checkbox[name='+k+']').prop('checked', settingsMgr.toggle(k));
+    setUIDate(currentDate);
+}
+
+let toggleClockZone = function(e) {
+    let k = 'clockZone';
+    let rValue = 'UTC';
+    if(settingsMgr.get(k) == 'UTC') {
+        rValue = 'TZ';
+    }
+    settingsMgr.set(k, rValue);
+    $(':checkbox[name='+k+']').prop('checked', (rValue == 'UTC'));
+    setUIDate(currentDate);
+}
+
+let setTimeZone = function(e) {
+    let v = $(e).val();
+    settingsMgr.set('timeZone', v);
+    setUIDate(currentDate);
+    setTimeZoneUI(v);
+}
+
+let setTimeZoneUI = function(v) {
+    let html = v > 0 ? '+'+v : v;
+    $('#timeZoneOutput').html(html);
 }
 
 $.typeahead({
@@ -160,12 +253,19 @@ let formatDate = function(date) {
 }
 
 let formatTime = function(date) {
-    return ''+('0' + date.getUTCHours()).slice(-2)+'h'+('0' + date.getUTCMinutes()).slice(-2)+" UTC";
+    let hour = date.getUTCHours();
+    if( settingsMgr.get('clockZone') == 'TZ' ) {
+        hour += parseInt(settingsMgr.get('timeZone'));
+    }
+
+    if( settingsMgr.get('summerTime') ) {
+        hour += 1;
+    }
+
+    return ''+('0' + hour).slice(-2) +'h'+('0' + date.getUTCMinutes()).slice(-2)+ (settingsMgr.get('clockZone') == 'UTC' ? " UTC" : "");
 }
 
 let setUIDate = function(date) {
-    let htmlDate = ('0' + date.getDate()).slice(-2)+'/'+('0' + (date.getMonth()+1)).slice(-2)+'/'+date.getFullYear();
-    let htmlTime = ('0' + date.getHours()).slice(-2)+'h'+('0' + date.getMinutes()).slice(-2);
     $('span.date').html(' '+formatDate(date));
     $('span.time').html(' '+formatTime(date));
 }
@@ -288,6 +388,22 @@ let toggleEmsTemperatureUnit = function() {
     $(':checkbox[name='+k+']').prop('checked', (rValue == 'C'));
 }
 
+let selectLayout = function(layout) {
+    switch(layout) {
+        case 'nav-ems':
+            break;
+
+        case 'efis-ems':
+            break;
+
+        case 'nav-efis':
+            break;
+
+        default:
+            break;
+    }
+}
+
 // Efis
 let toggleEfis = function() {
     $(':checkbox[name=efisVisible]').prop('checked', settingsMgr.toggle('efisVisible'));
@@ -396,7 +512,7 @@ let updateRouteStat = function(date) {
     let latlng = nd.getAircraftPosition();
     let DMSlng = ConvertDDToDMS(latlng[0], true);
     let DMSlat = ConvertDDToDMS(latlng[1]);
-    let DMSposition = DMSlat.deg+"°"+DMSlat.min+"'"+DMSlat.sec+"''"+DMSlat.dir+" &nbsp;&nbsp; "+DMSlng.deg+"°"+DMSlng.min+"'"+DMSlng.sec+"''"+DMSlng.dir;
+    let DMSposition = DMSlat.deg+"°"+DMSlat.min+"'"+DMSlat.sec+"''"+DMSlat.dir+"&nbsp;&nbsp;"+DMSlng.deg+"°"+DMSlng.min+"'"+DMSlng.sec+"''"+DMSlng.dir;
 
     let routeDist = nd.getRemainingRouteDistance();
     if(routeDist > 0) {
@@ -406,8 +522,9 @@ let updateRouteStat = function(date) {
     }
 
     let directToDist = nd.getDirectToDistance();
+    let directToDuration = nd.getDirectToDuration();
     if(directToDist > 0) {
-        directToDist = directToDist+" km";
+        directToDist = directToDist+" km / "+directToDuration+" min";
     } else {
         directToDist = "------";
     }
@@ -416,7 +533,6 @@ let updateRouteStat = function(date) {
     let eta = "------";
     if(routeDuration > 0) {
         eta = new Date(date.getTime());
-        console.log(routeDuration);
         eta.setMinutes(eta.getMinutes() + routeDuration);
         eta = formatTime(eta);
 
@@ -459,6 +575,7 @@ $(window).resize(function(){
     if(terrainVisible)
         terrain.hide();
 
+    efis.redraw();
     setTimeout(function(){
         nd.updateSize();
         ems.updateSize();
@@ -487,11 +604,13 @@ function connect() {
     let _hostname = window.location.hostname;
     ws = new WebSocket("ws://"+_hostname+":7700");
     ws.onopen = function() {
+
         sendCurrentUser();
     };
 
     ws.onmessage = function (e) {
         var data = JSON.parse(e.data);
+        //console.log(data);
         if(data.IMU){
             data = data.IMU;
             //console.log(data);
@@ -502,31 +621,34 @@ function connect() {
             data.pitch = toDecimal(data.pitch, 2);
             data.slipball = toDecimal(data.slipball, 2);
             data.pressure = toDecimal(data.pressure, 2);
-            data.temperature = toDecimal(data.temperature, 1);
-            if(Settings.efis.compass.source != "gps"){
+            data.temperature = toDecimal(data.temperature, 1);*/
+            /*if(Settings.efis.compass.source != "gps"){
                 data.compass = parseInt(data.yaw);
                 efis.setCompass(data.compass);
-            }
+            }*/
             efis.setSlip(data.slipball);
             efis.setPressure(data.pressure);
-            efis.setAttitude({roll:data.roll, pitch:data.pitch});*/
+            efis.setAttitude({roll:data.roll, pitch:data.pitch});
+            efis.setCompass(data.yaw);
         }
         if(data.GPS){
             data = data.GPS;
             nd.setAircraftPosition([data.lng, data.lat]);
             nd.setAircraftTrack(data.compass);
 
-            let today = new Date(data.time);
-            setSunrise(today.sunrise(data.lat, data.lng));
-            setSunset(today.sunset(data.lat, data.lng));
+            currentDate = new Date(data.time);
+            setSunrise(currentDate.sunrise(data.lat, data.lng));
+            setSunset(currentDate.sunset(data.lat, data.lng));
 
-            setUIDate(today);
+            setUIDate(currentDate);
 
             terrain.setAircraftPosition([data.lng, data.lat]);
             terrain.setAircraftGroundSpeed(data.spd);
             terrain.setAircraftAltitude(data.alt);
 
-            updateRouteStat(today);
+            updateRouteStat(currentDate);
+
+            efis.setAltitude(data.alt);
             /*data.spd = 60;
             efis.setClock(data.time);
             efis.setPosition({"lat":data.lat, "lng":data.lng});
@@ -556,13 +678,14 @@ function connect() {
 
         if(data.EMS){
             data = data.EMS;
-            /*console.log(data);*/
+            //console.log(data.current);
 
             ems.setRpm(data.RPM);
             ems.setCylTemp(data.cylTemp);
             ems.setOilTemp(data.oilTemp);
             ems.setOilPress(data.oilPress);
             ems.setVolt(data.voltage);
+            ems.setAmp(data.current);
             ems.setFuelLevel(data.fuelLevel);
             ems.setFuelFlow(data.fuelFlow);
             /*$("input#cht0").val(data.cht0+" °C");

@@ -196,7 +196,7 @@ class EMSWorker (threading.Thread):
     self.A = 1.572032517e-3
     self.B = 2.731146045e-4
     self.C = -2.867504522e-7
-    self.V_Ref = 5.1
+    self.V_Ref = 5.07
     self.R_Ref = 220
     self.basicResistorSerie = [10, 31, 52, 71, 88, 106, 124, 140, 155, 170, 184]
     self.precision = 5
@@ -212,7 +212,7 @@ class EMSWorker (threading.Thread):
       self.data['oilPress'] = self.getPressure(self.adc.readChannel(0))
       self.data['oilTemp'] = self.getTemperature(self.adc.readChannel(1))
       self.data['cylTemp'] = self.getTemperature(self.adc.readChannel(2))
-      self.data['current'] = self.adc.readChannel(3)
+      self.data['current'] = roundNearest(self.getCurrent(self.adc.readChannel(3)), 0.2)
       self.data['voltage'] = int(self.getVoltage(self.adc.readChannel(4))*10)/10
       self.data['ASI'] = self.getAirspeed(self.adc.readChannel(5))
       self.data['MAP'] = self.adc.readChannel(6)
@@ -242,6 +242,11 @@ class EMSWorker (threading.Thread):
   def getVoltage(self, value):
     Vout = (value*self.V_Ref)/4096
     return Vout*5
+
+  def getCurrent(self, value):
+    Vout = (value*self.V_Ref)/4096
+    A = (Vout - 2.5197) / 0.0631
+    return A
 
   def getTemperature(self, value):
     T = 0

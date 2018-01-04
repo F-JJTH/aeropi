@@ -36,11 +36,12 @@
         <ul id="top-menu"></ul>
     </header>
     <div class="row no-gutters">
-        <div class="col-lg-7 col-md-12" id="pfdx">
+        <div class="col-lg-7 col-md-12" id="pfd">
             <div id="map"></div>
+            <div id="efis"></div>
             <div id="terrainElevation"></div>
         </div>
-        <div class="col-lg-5 col-md-12" id="eng">
+        <div class="col-lg-5 col-md-12" id="ems">
             <div class="row no-gutters">
                 <div class="col-lg-12 col-md-4">
                     <div class="row ems-row no-gutters">
@@ -68,19 +69,19 @@
                 </div>
                 <div class="col-lg-12 col-md-4">
                     <div class="row ems-row no-gutters">
-                        <div class="col-4 col-sm-5">
+                        <div class="col-4 col-sm-5 ems-info text-nowrap">
                             <div class="row no-gutters">
-                                <div class="col-6">Position :</div><div class="col-6"><span class="info-position"></span></div>
+                                <div class="col-12 col-lg-6">Position:</div><div class="col-12 col-lg-6"><span class="info-position"></span></div>
                             </div>
                             <div class="row no-gutters">
-                                <div class="col-6">Next waypoint :</div><div class="col-6"><span class="info-wptDistance"></span></div>
+                                <div class="col-12 col-lg-6">Next&nbsp;waypoint:</div><div class="col-12 col-lg-6"><span class="info-wptDistance"></span></div>
                             </div>
                             <div class="row no-gutters">
-                                <div class="col-6">Remaining distance :</div><div class="col-6"><span class="info-routeDistance"></span></div>
+                                <div class="col-12 col-lg-6">Remaining&nbsp;distance:</div><div class="col-12 col-lg-6"><span class="info-routeDistance"></span></div>
                             </div>
                             <div class="row no-gutters">
-                                <div class="col-3">ETE :</div><div class="col-3"><span class="info-ete"></span></div>
-                                <div class="col-3">ETA :</div><div class="col-3"><span class="info-eta"></span></div>
+                                <div class="col-6 col-lg-3">ETE:</div><div class="col-6 col-lg-3"><span class="info-ete"></span></div>
+                                <div class="col-6 col-lg-3">ETA:</div><div class="col-6 col-lg-3"><span class="info-eta"></span></div>
                             </div>
                         </div>
                         <div class="col-8 col-sm-7">
@@ -148,8 +149,28 @@
                 <div class="col-3">
                     <div class="dropup">
                         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ...
+                            <i class="fa fa-object-ungroup" aria-hidden="true"></i> <span class="d-none d-sm-inline">Layout</span>
                         </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="selectLayout('nav-ems')">
+                                NAV / EMS
+                            </a>
+                            <a class="dropdown-item" onclick="selectLayout('efis-ems')">
+                                EFIS / EMS
+                            </a>
+                            <a class="dropdown-item" onclick="selectLayout('nav-efis')">
+                                NAV / EFIS
+                            </a>
+                            <a class="dropdown-item" onclick="selectLayout('nav')">
+                                NAV
+                            </a>
+                            <a class="dropdown-item" onclick="selectLayout('efis')">
+                                EFIS
+                            </a>
+                            <a class="dropdown-item" onclick="selectLayout('ems')">
+                                EMS
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
