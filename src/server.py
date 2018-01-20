@@ -59,23 +59,23 @@ class GPSWorker (threading.Thread):
           self.fix.refresh(new_data)
           '''
           GPS data are:
-          	speed: double
-          	device: string
-          	epy: double
-          	ept: double
-          	epc: double
-          	track: double
-          	eps: double
-          	lat: double
-          	epd: n/a
-          	time: aaaa-mm-ddThh:mm:ss.000Z
-          	mode: int
-          	epx: double
-          	epv: double
-          	tag: string
-          	alt: double
-          	lon: double
-          	climb: double
+            speed: double
+            device: string
+            epy: double
+            ept: double
+            epc: double
+            track: double
+            eps: double
+            lat: double
+            epd: n/a
+            time: aaaa-mm-ddThh:mm:ss.000Z
+            mode: int
+            epx: double
+            epv: double
+            tag: string
+            alt: double
+            lon: double
+            climb: double
           '''
           try:
             self.data['lat']   = self.fix.TPV['lat']
@@ -118,6 +118,7 @@ class IMUWorker (threading.Thread):
     self.imu = RTIMU.RTIMU(self.settings)
 
     self.bme280 = BME280(t_mode=BME280_OSAMPLE_8, p_mode=BME280_OSAMPLE_8, h_mode=BME280_OSAMPLE_8, address=0x76)
+    self.bme280LastRead = 0;
 
     if not self.imu.IMUInit():
       print("IMU Init Failed")
@@ -137,40 +138,45 @@ class IMUWorker (threading.Thread):
       if self.imu.IMURead():
         '''
         IMU data are:
-		    pressure: double
-		    temperature: double
-		    accel:(double, double, double)
-		    compassValid: bool
-		    humidityValid: bool
-		    timestamp: timestamp
-		    compass: (double, double, double)
-		    fusionQPose: (double, double, double, double)
-		    fusionPose: (double, double, double)
-		    humidity: double
-		    pressureValid: bool
-		    fusionQPoseValid: bool
-		    gyroValid: bool
-		    accelValid: bool
-		    temperatureValid: bool
-		    gyro: (double, double, double)
-		    fusionPoseValid: bool
-		    Pressure data are:
-		    pressureValid: bool
-		    pressure: double
-		    temperatureValid: bool
-		    temperature: double
+            pressure: double
+            temperature: double
+            accel:(double, double, double)
+            compassValid: bool
+            humidityValid: bool
+            timestamp: timestamp
+            compass: (double, double, double)
+            fusionQPose: (double, double, double, double)
+            fusionPose: (double, double, double)
+            humidity: double
+            pressureValid: bool
+            fusionQPoseValid: bool
+            gyroValid: bool
+            accelValid: bool
+            temperatureValid: bool
+            gyro: (double, double, double)
+            fusionPoseValid: bool
+            Pressure data are:
+            pressureValid: bool
+            pressure: double
+            temperatureValid: bool
+            temperature: double
         '''
         self.IMUdata = self.imu.getIMUData()
-        self.data['temperature'] = int(self.bme280.read_temperature()*10)/10
-        self.data['pressure'] = self.bme280.read_pressure() / 100
-        self.data['humidity'] = int(self.bme280.read_humidity())
+        now = time.time()
+        elapsedTimeSinceLastRead = now - self.bme280LastRead
+        if elapsedTimeSinceLastRead > 1:
+            self.data['temperature'] = int(self.bme280.read_temperature()*10)/10
+            self.data['humidity'] = int(self.bme280.read_humidity())
+            self.data['pressure'] = roundNearest(self.bme280.read_pressure() / 100, 0.1)
+            self.data['dewpoint'] = roundNearest(self.bme280.read_dewpoint(), 0.5)
+            self.bme280LastRead = now
+
         self.data['pitch'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][1]), 180))
         self.data['roll'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][0]), 180))
         self.data['yaw'] = int(math.degrees(self.IMUdata['fusionPose'][2]))-90
-        self.data['slipball'] = int(self.IMUdata['accel'][1]*100)/100
+        self.data['slipball'] = -int(self.IMUdata['accel'][1]*100)/100
         self.data['vs'] = int(self.IMUdata['accel'][2]*100)/100
 
-        self.data['pressure'] = roundNearest(self.data['pressure'], 0.05)
         self.data['slipball'] = roundNearest(self.data['slipball'], 0.05)
         self.data['vs'] = roundNearest(self.data['vs'], 0.05)
         if self.data['yaw'] < 0:
@@ -179,6 +185,9 @@ class IMUWorker (threading.Thread):
         self.newData = '%s' % json.dumps(self.data)
 
         time.sleep(self.pollInterval*1.0/1000.0)
+
+  def getPressure(self):
+    return self.data['pressure']
 
   def get(self):
     if self.oldData != self.newData:
@@ -197,6 +206,7 @@ class EMSWorker (threading.Thread):
     self.B = 2.731146045e-4
     self.C = -2.867504522e-7
     self.V_Ref = 5.07
+    self.resolution = 4096
     self.R_Ref = 220
     self.basicResistorSerie = [10, 31, 52, 71, 88, 106, 124, 140, 155, 170, 184]
     self.precision = 5
@@ -206,6 +216,7 @@ class EMSWorker (threading.Thread):
     self.rpmSensor = read_RPM.reader(self.pi, 18)
     self.fuelflowSensor = read_RPM.reader(self.pi, 17)
     self.i = 0
+    self.airPressure = 0
 
   def run(self):
     while not stopFlag:
@@ -215,9 +226,9 @@ class EMSWorker (threading.Thread):
       self.data['current'] = roundNearest(self.getCurrent(self.adc.readChannel(3)), 0.2)
       self.data['voltage'] = int(self.getVoltage(self.adc.readChannel(4))*10)/10
       self.data['ASI'] = self.getAirspeed(self.adc.readChannel(5))
-      self.data['MAP'] = self.adc.readChannel(6)
+      self.data['MAP'] = self.getMap(self.adc.readChannel(6))
 
-      if self.i > 3:
+      if self.i > 1:
         self.data['RPM'] = roundNearest(self.rpmSensor.RPM(), 25)
         self.data['fuelFlow'] = roundNearest(self.getFuelFlow(self.fuelflowSensor.RPM()), 0.2)
         fuelFlowPulses = self.fuelflowSensor.tally()
@@ -226,7 +237,7 @@ class EMSWorker (threading.Thread):
 
       self.newData = '%s' % json.dumps(self.data);
       self.i += 1
-      time.sleep(0.25);
+      time.sleep(0.5);
 
     self.rpmSensor.cancel()
     self.fuelflowSensor.cancel()
@@ -236,15 +247,17 @@ class EMSWorker (threading.Thread):
     self.fuelflowSensor.reset_tally()
 
   def getResistance(self, value):
-    Vout = (value*self.V_Ref)/4096
+    Vout = (value*self.V_Ref)/self.resolution
+    if self.V_Ref - Vout == 0:
+      return int(Vout*self.R_Ref)
     return int((Vout*self.R_Ref)/(self.V_Ref-Vout))
 
   def getVoltage(self, value):
-    Vout = (value*self.V_Ref)/4096
+    Vout = (value*self.V_Ref)/self.resolution
     return Vout*5
 
   def getCurrent(self, value):
-    Vout = (value*self.V_Ref)/4096
+    Vout = (value*self.V_Ref)/self.resolution
     A = (Vout - 2.5197) / 0.0631
     return A
 
@@ -280,7 +293,7 @@ class EMSWorker (threading.Thread):
 
   def getAirspeed(self, value):
     airspeed = value
-    Vout = (value*self.V_Ref)/4096
+    Vout = (value*self.V_Ref)/self.resolution
     kPa = ((Vout / self.V_Ref)-0.2)/0.2
     Pa = abs(kPa*1000)
     if kPa < 0:
@@ -288,6 +301,14 @@ class EMSWorker (threading.Thread):
     mps = math.sqrt(2*Pa/1.225)
     kph = int(mps*3.6)
     return kph
+
+  def getMap(self, value):
+    Vout = (value*self.V_Ref)/self.resolution
+    kPa = ((Vout / self.V_Ref)+0.095)/0.009
+    hPa = roundNearest(kPa*10, 0.1)
+    self.airPressure = imuWorker.getPressure()
+    mapPressure =  roundNearest(self.airPressure - hPa, 0.1)
+    return mapPressure
 
   def get(self):
     if self.oldData != self.newData:

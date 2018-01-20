@@ -614,18 +614,8 @@ function connect() {
         if(data.IMU){
             data = data.IMU;
             //console.log(data);
-
             nd.setAircraftHeading(data.yaw);
             terrain.setAircraftHeading(data.yaw);
-            /*data.roll = toDecimal(data.roll, 2);
-            data.pitch = toDecimal(data.pitch, 2);
-            data.slipball = toDecimal(data.slipball, 2);
-            data.pressure = toDecimal(data.pressure, 2);
-            data.temperature = toDecimal(data.temperature, 1);*/
-            /*if(Settings.efis.compass.source != "gps"){
-                data.compass = parseInt(data.yaw);
-                efis.setCompass(data.compass);
-            }*/
             efis.setSlip(data.slipball);
             efis.setPressure(data.pressure);
             efis.setAttitude({roll:data.roll, pitch:data.pitch});
@@ -649,37 +639,11 @@ function connect() {
             updateRouteStat(currentDate);
 
             efis.setAltitude(data.alt);
-            /*data.spd = 60;
-            efis.setClock(data.time);
-            efis.setPosition({"lat":data.lat, "lng":data.lng});
-            if(Settings.efis.asi.source == "gps") {
-                efis.setSpeed(data.spd);
-            }
-
-            if(Settings.efis.compass.source == "gps"){
-                if(data.spd > 2) {
-                    efis.setCompass(data.compass);
-                } else {
-                    efis.setCompass(0);
-                }
-            }
-
-            data.altPress = altcalc(efis.getQnh()*100, 288.15, efis.getPressure()*100)*3.28084;
-            geo_success(data);
-
-            var alt = data.altPress;
-            if(Settings.efis.alt.source == 'gps')
-                alt = data.alt;
-            if(Settings.general.unit.altitude == 'm')
-                alt /= 3.28084;
-
-            efis.setAltitude(alt);*/
         }
 
         if(data.EMS){
             data = data.EMS;
             //console.log(data.current);
-
             ems.setRpm(data.RPM);
             ems.setCylTemp(data.cylTemp);
             ems.setOilTemp(data.oilTemp);
@@ -688,31 +652,8 @@ function connect() {
             ems.setAmp(data.current);
             ems.setFuelLevel(data.fuelLevel);
             ems.setFuelFlow(data.fuelFlow);
-            /*$("input#cht0").val(data.cht0+" °C");
-            var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht0), 1, 1)+")";
-            $("input#cht0").css({backgroundColor: col});
-
-            $("input#cht1").val(data.cht1+" °C");
-            var col = "rgb("+hsv2rgb(getHueFromTemp(data.cht1), 1, 1)+")";
-            $("input#cht1").css({backgroundColor: col});
-
-            $("input#oilTemp").val(data.oilTemp+" °C");
-            var col = "rgb("+hsv2rgb(getHueFromTemp(data.oilTemp), 1, 1)+")";
-            $("input#oilTemp").css({backgroundColor: col});
-
-            $("input#oilPress").val(data.oilPress+" Bar");
-            var col = "rgb("+hsv2rgb(getHueFromPress(data.oilPress), 1, 1)+")";
-            $("input#oilPress").css({backgroundColor: col});
-
-            $("input#fuelFlow").val(toDecimal(data.fuelFlow, 2)+" L/h");
-            $("input#MaP").val(data.MaP+" \"");
-            $("input#voltage").val(toDecimal(data.voltage, 1)+" V");
-            $("input#load").val(data.load+" A");
-            $("input#rpm").val(data.RPM+" tr/m");
-
-            if(Settings.efis.asi.source != "gps") {
-                efis.setSpeed(data.ASI);
-            }*/
+            efis.setSpeed(data.ASI);
+            ems.setMap(data.MAP);
         }
     };
 
