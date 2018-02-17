@@ -590,7 +590,7 @@
 		filter.setAttribute("id", "asiClip");
 		elem = document.createElementNS(svgNS, "rect");
 		elem.setAttribute("x", 0);
-		elem.setAttribute("y", -rectHeight/2+9);
+		elem.setAttribute("y", -rectHeight+9);
 		elem.setAttribute("width", 78);
 		elem.setAttribute("height", rectHeight-2);
 		filter.appendChild(elem);

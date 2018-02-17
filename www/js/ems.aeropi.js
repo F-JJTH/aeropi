@@ -160,6 +160,7 @@ class EMS {
             minValue: 0,
             maxValue: 10,
             value: 0,
+            valueDec: 1,
             title: 'Oil. P '+this.sMgr.get('emsPressureUnit'),
             majorTicks: [0, 4, 6, 10],
             minorTicks: 2,
@@ -177,6 +178,7 @@ class EMS {
             colorMajorTicks: [this.colors.red, this.colors.green, this.colors.green, this.colors.red]
         };
         $.extend(true, config, this.generalGaugeConfig);
+        config.valueDec = 1;
 
         return new LinearGauge(config).draw();
     }
@@ -442,6 +444,7 @@ class EMS {
     }
 
     setAmp(v) {
+        if(v>30)v=30;
         this.amp = v;
         this.ampGauge.value = this.amp;
     }

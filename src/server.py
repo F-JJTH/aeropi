@@ -210,7 +210,7 @@ class EMSWorker (threading.Thread):
     self.R_Ref = 220
     self.basicResistorSerie = [10, 31, 52, 71, 88, 106, 124, 140, 155, 170, 184]
     self.precision = 5
-    self.fuelFlowPulsesPerLiter = 10500
+    self.fuelFlowPulsesPerLiter = 1300
     self.completeResistorSerie = self.getCompleteResistorSerie()
     self.pi = pigpio.pi()
     self.rpmSensor = read_RPM.reader(self.pi, 18)
@@ -228,16 +228,16 @@ class EMSWorker (threading.Thread):
       self.data['ASI'] = self.getAirspeed(self.adc.readChannel(5))
       self.data['MAP'] = self.getMap(self.adc.readChannel(6))
 
-      if self.i > 1:
-        self.data['RPM'] = roundNearest(self.rpmSensor.RPM(), 25)
-        self.data['fuelFlow'] = roundNearest(self.getFuelFlow(self.fuelflowSensor.RPM()), 0.2)
-        fuelFlowPulses = self.fuelflowSensor.tally()
-        self.data['fuelConsumed'] = roundNearest(fuelFlowPulses/self.fuelFlowPulsesPerLiter, 0.2)
-        self.i = 0
+      #if self.i > 1:
+      self.data['RPM'] = roundNearest(self.rpmSensor.RPM(), 50)
+      self.data['fuelFlow'] = roundNearest(self.getFuelFlow(self.fuelflowSensor.RPM()), 0.2)
+      fuelFlowPulses = self.fuelflowSensor.tally()
+      self.data['fuelConsumed'] = roundNearest(fuelFlowPulses/self.fuelFlowPulsesPerLiter, 0.2)
+      #self.i = 0
 
       self.newData = '%s' % json.dumps(self.data);
-      self.i += 1
-      time.sleep(0.5);
+      #self.i += 1
+      time.sleep(1);
 
     self.rpmSensor.cancel()
     self.fuelflowSensor.cancel()
@@ -266,12 +266,12 @@ class EMSWorker (threading.Thread):
     R = self.getResistance(value)
     if R < 3200 and R is not 0: # above this resistance we are negative
       T = 1/(self.A + self.B*math.log(R) + self.C*math.pow(math.log(R),3) )-273.15;
-    return int(T)
+    return int(roundNearest(T, 2))
 
   def getPressure(self, value):
-    P = 0.0
     R = self.getResistance(value)
-    return self.find_nearest(self.completeResistorSerie, R) / self.precision
+    P = self.find_nearest(self.completeResistorSerie, R) / self.precision
+    return roundNearest(P, 0.2)
 
   def getFuelFlow(self, value):
     return (value*60)/self.fuelFlowPulsesPerLiter
@@ -300,7 +300,7 @@ class EMSWorker (threading.Thread):
       Pa = 0
     mps = math.sqrt(2*Pa/1.225)
     kph = int(mps*3.6)
-    return kph
+    return roundNearest(kph, 2)
 
   def getMap(self, value):
     Vout = (value*self.V_Ref)/self.resolution

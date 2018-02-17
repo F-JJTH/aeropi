@@ -614,17 +614,19 @@ function connect() {
         if(data.IMU){
             data = data.IMU;
             //console.log(data);
-            nd.setAircraftHeading(data.yaw);
+            //nd.setAircraftHeading(data.yaw);
             terrain.setAircraftHeading(data.yaw);
             efis.setSlip(data.slipball);
             efis.setPressure(data.pressure);
             efis.setAttitude({roll:data.roll, pitch:data.pitch});
-            efis.setCompass(data.yaw);
+            //efis.setCompass(data.yaw);
         }
         if(data.GPS){
             data = data.GPS;
             nd.setAircraftPosition([data.lng, data.lat]);
             nd.setAircraftTrack(data.compass);
+            nd.setAircraftHeading(data.compass);
+            efis.setCompass(data.compass);
 
             currentDate = new Date(data.time);
             setSunrise(currentDate.sunrise(data.lat, data.lng));
