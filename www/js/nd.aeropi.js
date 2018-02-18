@@ -397,13 +397,15 @@ class ND {
                 let geom = new ol.geom.LineString([startCoord, endCoord]);
                 let legLength = this.getLegLength(startCoord, endCoord);
 
+
+                let distanceUnit = this.sMgr.get('ndDistanceUnit');
                 let _fontStyle = 'bold 20px Arial';
-                let _text = ''+legLength+' Km';
+                let _text = ''+ (distanceUnit == 'Nm' ? (legLength*0.539957).toFixed(1) : legLength) +' '+distanceUnit;
                 
                 styles.push(new ol.style.Style({
                     geometry: geom,
                     text: new ol.style.Text({
-                        text: ''+legLength+' Km',
+                        text: _text,
                         textAlign: 'left',
                         textBaseline: 'middle',
                         offsetX: 2,
@@ -448,8 +450,9 @@ class ND {
                     this.currentDestinationWaypointIndex = this.changeWaypoint();
                 }
 
+                let distanceUnit = this.sMgr.get('ndDistanceUnit');
                 let _fontStyle = 'bold 20px Arial';
-                let _text = ''+legLength+' Km / '+duration;
+                let _text = ''+ (distanceUnit == 'Nm' ? (legLength*0.539957).toFixed(1) : legLength) +' '+distanceUnit+' / '+duration;
                 
                 styles.push(new ol.style.Style({
                     geometry: geom,
@@ -546,8 +549,11 @@ class ND {
     }
 
     setDistanceUnit(unit) {
-        /*if( unit != 'Nm' && unit != 'Km' ) return;
-        this.sMgr.set('ndDistanceUnit', unit);*/
+        if( unit != 'Nm' && unit != 'Km' ) return;
+        this.sMgr.set('ndDistanceUnit', unit);
+
+        this.routeSource.changed();
+        this.directToSource.changed();
     }
 
     updateDirectTo() {
