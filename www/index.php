@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="FoxHotel" />
+    <meta name="description" content="aeroPi" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <title>FoxHotel</title>
+    <link rel="shortcut icon" type="image/png" href="img/icon_128x128.png">
+    <title>aeroPi</title>
 
     <link rel="stylesheet" href="css/ol.css" type="text/css">
     <link rel="stylesheet" href="css/ol3-contextmenu.min.css" type="text/css">
@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/aeropi.css" type="text/css">
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/jquery.typeahead.min.css" type="text/css">
+    <link rel="manifest" href="/manifest.json">
 
     <script src="js/ol.min.js"></script>
     <script src="js/ol3-contextmenu.min.js"></script>

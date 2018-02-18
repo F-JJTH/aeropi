@@ -1,0 +1,13 @@
+{
+  "short_name": "aeroPi",
+  "name": "aeroPi client for CD.System aeroPi",
+  "icons": [
+    {
+      "src": "img/icon_128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "orientation": "landscape"
+}
