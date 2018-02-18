@@ -38,7 +38,7 @@ let settingsMgr = new SettingsManager({
         $(':checkbox[name=ndMapToNorth]').prop('checked', settings.ndMapToNorth);
         $(':checkbox[name=ndDistanceUnit]').prop('checked', (settings.ndDistanceUnit == 'Km'));
         $(':input[name=ndAircraftCenterOffset]').val(settings.ndAircraftCenterOffset);
-        $(':input[name=ndAutoZoom]').val(settings.ndAutoZoom);
+        $(':checkbox[name=ndAutoZoom]').prop('checked', settings.ndAutoZoom);
         nd.setAircraftCenterOffset(settings.ndAircraftCenterOffset);
         $(':input[name=ndAverageGroundspeed]').val(settings.ndAverageGroundspeed);
         $(':checkbox[name=ndLayer_cartabossy_2015]').prop('checked', settings.ndLayer_cartabossy_2015);
