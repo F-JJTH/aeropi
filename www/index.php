@@ -129,15 +129,15 @@
                         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-object-ungroup" aria-hidden="true"></i> <span class="d-none d-sm-inline">MFD</span>
                         </button>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu dropdown-menu-mfd">
                             <a class="dropdown-item" onclick="toggleEfis()">
                                 <input type="checkbox" name="efisVisible" on-value="On" off-value="Off" class="custom-switch">
                                 EFIS
                             </a>
-                            <a class="dropdown-item" onclick="toggleNdAdsb()">
+                            <!--<a class="dropdown-item" onclick="toggleNdAdsb()">
                                 <input type="checkbox" name="ndAdsb" on-value="On" off-value="Off" class="custom-switch">
                                 ADS-B
-                            </a>
+                            </a>-->
                             <a class="dropdown-item" onclick="toggleTerrainElevation()">
                                 <input type="checkbox" name="terrainElevationVisible" on-value="On" off-value="Off" class="custom-switch">
                                 Terrain
@@ -201,11 +201,9 @@
                 <div class="col-3" id="datetime-ui">
                     <div class="dropup">
                         <button class="btn btn-secondary text-left" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#powerManagerModal">
-                            <span>
-                                <i class="fa fa-clock-o" style="margin-left:25%;" aria-hidden="true"></i><span class="time"></span>
+                                <i class="fa fa-clock-o" aria-hidden="true"></i><span class="time"></span>
                                 <br/>
-                                <i class="fa fa-calendar" style="margin-left:25%;" aria-hidden="true"></i><span class="date"></span>
-                            </span>
+                                <i class="fa fa-calendar" aria-hidden="true"></i><span class="date"></span>
                         </button>
                     </div>
                 </div>

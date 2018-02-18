@@ -19,7 +19,7 @@ ul {
 
 
 .menu-bar input.custom-switch{position:absolute;opacity:0;}
-.menu-bar input.custom-switch + div{float:right;display:inline-block;vertical-align:middle;width:3em;height:1.2em;border:1px solid rgba(0,0,0,.3);border-radius:4px;margin:.3em -0.5em 0 1em;background:white;background-image:linear-gradient(rgba(0,0,0,.1), transparent),
+.menu-bar input.custom-switch + div{float:right;display:inline-block;vertical-align:middle;width:3em;height:1.2em;border:1px solid rgba(0,0,0,.3);border-radius:4px;margin:0;background:white;background-image:linear-gradient(rgba(0,0,0,.1), transparent),
 linear-gradient(90deg, hsl(210, 90%, 60%) 50%, transparent 50%);background-size:200% 100%;background-position:100% 0;background-origin:border-box;background-clip:border-box;overflow:hidden;transition-duration:.4s;transition-property:padding, width, background-position, text-indent;box-shadow:0 .1em .1em rgba(0,0,0,.2) inset,
 0 .45em 0 .1em rgba(0,0,0,.05) inset;font-size:1.5em;}
 .menu-bar input.custom-switch:checked + div{padding-left:2em;width:3em;background-position:0 0;}
@@ -42,9 +42,16 @@ linear-gradient(90deg, hsl(210, 90%, 60%) 50%, transparent 50%);background-size:
 .modal input.custom-switch + div:after{font:bold 60%/1.9 sans-serif;text-transform:uppercase;}
 .modal input.custom-switch + div:after{content:attr(off-value);float:left;text-align:center;width:3em;color:rgba(0,0,0,.45);text-shadow:none;}
 
+.dropdown-menu-mfd .dropdown-item{
+  padding: .25rem .5rem;
+  /*line-height: 1.9em;*/
+}
 
-
-
+.dropdown-item {
+  /*height: 45px;*/
+  line-height: 35px;
+  vertical-align: middle;
+}
 
 input[type=range] {
   height: 1em;
@@ -135,8 +142,8 @@ input[type=range]:focus::-ms-fill-upper {
   background: #3B95EF;
 }
 
-#datetime-ui button {
-  line-height: 2.00em;
+#datetime-ui button i {
+  margin-left: 15%;
 }
 
 #mfdSettingsModal .card {
@@ -158,24 +165,33 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .menu-bar {
-    /*width: 100vw;*/
-    height: 7vh;
-    line-height: 7vh;
+    height: calc(7vh + 1px);
     text-align: center;
     margin-top: -1px;
-    /*background: black;*/
 }
 
-.menu-bar button {
+.menu-bar .row, .menu-bar .row .dropup {
+    height: 100%;
+}
+
+.menu-bar .row button {
     width: 100%;
     height: 100%;
-    line-height: inherit;
     border: 0;
     border-right: 1px solid white;
     padding: 0;
     border-radius: 1.4em 1.4em 0 0;
     /*box-shadow: inset 0px 4px 10px 0px #BBB;*/
     background-color: rgba(0, 0, 0, 0.6);
+}
+
+.menu-bar .btn-secondary.focus, .menu-bar .btn-secondary:focus,
+.menu-bar .btn.focus, .menu-bar .btn:focus {
+  box-shadow: none;
+}
+
+#datetime-ui button {
+    border-right: 0;
 }
 
 .ems-row {

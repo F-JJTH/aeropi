@@ -64,6 +64,9 @@ let settingsMgr = new SettingsManager({
         efis.setSpeedLimit('vs', settings.vs);
         efis.setSpeedTickSpacing(settings.efisTickSpeed);
         efis.setAltitudeTickSpacing(settings.efisTickAlt);
+        efis.setSpeedUnit(settings.efisSpeedUnit);
+        efis.setAltitudeUnit(settings.efisAltitudeUnit);
+        efis.setQnhUnit(settings.efisQnhUnit);
         $(':input[name=vs]').val(settings.vs);
         $(':input[name=vs0]').val(settings.vs0);
         $(':input[name=vn0]').val(settings.vn0);
@@ -83,7 +86,7 @@ let settingsMgr = new SettingsManager({
         connect();
     },
     onSettingSaved: setting => {
-        console.log(setting);
+        //console.log(setting);
     }
 });
 
@@ -267,7 +270,9 @@ let formatTime = function(date) {
 
 let setUIDate = function(date) {
     $('span.date').html(' '+formatDate(date));
+    //$('span.date').html(' 18/02/2018');
     $('span.time').html(' '+formatTime(date));
+    //$('span.time').html(' 09h07 UTC');
 }
 
 let setDirectTo = function() {
@@ -282,7 +287,6 @@ let toggleLayer = function(layer) {
         console.error('ND::toggleLayer - Unknown layer', layer);
         return;
     }
-
 
     if( nd.layers[layer].getVisible() ) {
         $(':checkbox[name=ndLayer_'+layer+']').prop('checked', settingsMgr.set('ndLayer_'+layer, false));
@@ -403,6 +407,39 @@ let selectLayout = function(layout) {
             break;
     }
 }
+
+$("#toggle-ems").on('click', function(){
+    $('#ems').toggleClass('mini');
+    $('#pfd').toggleClass('large');
+    let terrainVisible = terrain.isVisible();
+
+    if(terrainVisible)
+        terrain.hide();
+
+    setTimeout(function(){
+        nd.updateSize();
+        terrain.updateSize();
+        if(terrainVisible)
+            terrain.show();
+    }, 1100);
+    return false;
+});
+
+$(window).resize(function(){
+    let terrainVisible = terrain.isVisible();
+
+    if(terrainVisible)
+        terrain.hide();
+
+    efis.redraw();
+    setTimeout(function(){
+        nd.updateSize();
+        ems.updateSize();
+        terrain.updateSize();
+        if(terrainVisible)
+            terrain.show();
+    }, 1100);
+});
 
 // Efis
 let toggleEfis = function() {
@@ -552,39 +589,6 @@ $('#searchDirectToModal').on('show.bs.modal', function(e){
     $('.searchDirectToInput').focus();
 });
 
-$("#toggle-ems").on('click', function(){
-    $('#ems').toggleClass('mini');
-    $('#pfd').toggleClass('large');
-    let terrainVisible = terrain.isVisible();
-
-    if(terrainVisible)
-        terrain.hide();
-
-    setTimeout(function(){
-        nd.updateSize();
-        terrain.updateSize();
-        if(terrainVisible)
-            terrain.show();
-    }, 1100);
-    return false;
-});
-
-$(window).resize(function(){
-    let terrainVisible = terrain.isVisible();
-
-    if(terrainVisible)
-        terrain.hide();
-
-    efis.redraw();
-    setTimeout(function(){
-        nd.updateSize();
-        ems.updateSize();
-        terrain.updateSize();
-        if(terrainVisible)
-            terrain.show();
-    }, 1100);
-});
-
 let sendCurrentUser = function() {
     sendData({
         type: 'user_id',
@@ -596,6 +600,16 @@ let sendData = function(obj) {
     let data = JSON.stringify(obj);
     if(ws && ws instanceof WebSocket && ws.readyState == WebSocket.OPEN) {
         ws.send(data);
+    }
+}
+
+function debounce(callback, delay) {
+    let timer = null;
+    return () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            callback();
+        }, delay);
     }
 }
 
@@ -615,10 +629,11 @@ function connect() {
             data = data.IMU;
             //console.log(data);
             //nd.setAircraftHeading(data.yaw);
-            terrain.setAircraftHeading(data.yaw);
+            //terrain.setAircraftHeading(data.yaw);
             efis.setSlip(data.slipball);
             efis.setPressure(data.pressure);
-            efis.setAttitude({roll:data.roll, pitch:data.pitch});
+            //efis.setAttitude({roll:data.roll, pitch:data.pitch});
+            debounce(efis.setAttitude({roll:data.roll, pitch:data.pitch}), 100);
             //efis.setCompass(data.yaw);
         }
         if(data.GPS){
@@ -627,6 +642,7 @@ function connect() {
             nd.setAircraftTrack(data.compass);
             nd.setAircraftHeading(data.compass);
             efis.setCompass(data.compass);
+            terrain.setAircraftHeading(data.compass);
 
             currentDate = new Date(data.time);
             setSunrise(currentDate.sunrise(data.lat, data.lng));
@@ -671,55 +687,3 @@ function connect() {
         ws.close();
     };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$('input[name=ems]').on('input', function(){
-    let v = $(this).val();
-/*    ems.setCylTemp(v*1.5);
-    ems.setOilTemp(v*1.5);
-    ems.setOilPress(v / 10);
-    ems.setRpm(v*80);
-    ems.setAmp(-30 -(v*-0.6));
-    ems.setMap(v*0.32);
-    ems.setVolt(v*0.15);
-    ems.setHdg(v*7.2);
-    ems.setAsi(v*2.7);
-    nd.setAircraftHeading(v*7.2);*/
-    let spd = v;
-    console.log('spd: '+spd);
-    nd.setAircraftGroundSpeed(spd);
-    terrain.setAircraftGroundSpeed(spd);
-    /*terrain.setAircraftAltitude(v*25);
-    let predictivePath = nd.getPredictivePath();*/
-});
-/*
-$('input[name=lat], input[name=lon]').on('input', function(){
-    let lon = parseFloat( $('input[name=lon]').val() );
-    let lat = parseFloat( $('input[name=lat]').val() );
-    nd.setAircraftPosition([lon, lat]);
-    terrain.setAircraftPosition([lon, lat]);
-    let today = new Date();
-    setSunrise(today.sunrise(lat, lon));
-    setSunset(today.sunset(lat, lon));
-});
-
-$('input[name=hdg]').on('input', function(){
-    let hdg = parseFloat( $(this).val() );
-    nd.setAircraftHeading(hdg);
-    terrain.setAircraftHeading(hdg);
-    ems.setHdg(hdg);
-});
-*/

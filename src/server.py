@@ -173,14 +173,14 @@ class IMUWorker (threading.Thread):
 
         self.data['pitch'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][1]), 180))
         self.data['roll'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][0]), 180))
-        self.data['yaw'] = int(math.degrees(self.IMUdata['fusionPose'][2]))-90
+        #self.data['yaw'] = int(math.degrees(self.IMUdata['fusionPose'][2]))-90
         self.data['slipball'] = -int(self.IMUdata['accel'][1]*100)/100
         self.data['vs'] = int(self.IMUdata['accel'][2]*100)/100
 
-        self.data['slipball'] = roundNearest(self.data['slipball'], 0.05)
-        self.data['vs'] = roundNearest(self.data['vs'], 0.05)
-        if self.data['yaw'] < 0:
-          self.data['yaw'] = 360 + self.data['yaw']
+        self.data['slipball'] = roundNearest(self.data['slipball'], 0.1)
+        self.data['vs'] = roundNearest(self.data['vs'], 0.5)
+        #if self.data['yaw'] < 0:
+        #  self.data['yaw'] = 360 + self.data['yaw']
 
         self.newData = '%s' % json.dumps(self.data)
 
@@ -495,7 +495,7 @@ class MSGWorker (threading.Thread):
     global _USERID_
     try:
       data = json.loads(message)
-      if data['type'] == "user_id":
+      if data['type'] == "user_id" and _USERID_ == 0:
         _USERID_ = int(data['user_id'])
 
       if data['type'] == "refuel":

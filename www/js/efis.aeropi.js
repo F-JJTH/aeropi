@@ -67,6 +67,9 @@
         efisRollOffset : 0,
         efisTickAlt: 8,
         efisTickSpeed: 5,
+        efisAltitudeUnit: 'Ft',
+        efisSpeedUnit: 'Km/h',
+        efisQnhUnit: 'Mb',
     });
     var defaults = {
         width: $(this).width(),
@@ -114,9 +117,10 @@
             summer: false,
         },
         unit:{
-            alt: "ft",
-            asi: "kmh",
-            dst: "nm",
+            alt: "Ft",
+            asi: "Km/h",
+            dst: "Nm",
+            qnh: "Mb",
         },
         etaType: 'total',
         dstType: 'wp',
@@ -391,7 +395,7 @@
         // Animated parts
         main.horizonAnim = document.createElementNS(svgNS, "g");
         main.horizonAnim.setAttribute("id", "horizonAnim");
-        //main.horizonAnim.style.transition = "all 0.4s";
+        main.horizonAnim.style.transition = "all 0.1s";
         main.horizonAnim.style.transformOrigin =  settings.width/2+"px "+settings.height/2+"px";
         // ground
         let elem = document.createElementNS(svgNS, "rect");
@@ -558,7 +562,7 @@
         main.dst.setAttribute("x", 6);
         main.dst.setAttribute("y", 78);
         main.dst.setAttribute("id", "dst-box");
-        main.dst.textContent = "DST: 0km";
+        main.dst.textContent = "DST: 0Km";
         main.appendChild(main.dst);
 
         return main;
@@ -688,11 +692,12 @@
         v = parseInt(v);
         //if( v == 0) return;
         v = Math.round(v/10)*10;
-        if(v == data.alt) return;
-        data.alt = v;
-        var t = (v/200)*(settings.height/settings.alt.tickspacing);
+        //if(v == data.alt) return;
+        //data.alt = v;
+        data.alt = settings.unit.alt == 'M' ? parseInt(v/3.28084) : v;
+        var t = (data.alt/200)*(settings.height/settings.alt.tickspacing);
         alt.ladder.style.transform = "translate(0px, "+t+"px)";
-        alt.digits.textContent = parseInt(v);
+        alt.digits.textContent = parseInt(data.alt);
     }
 
     this.setAttitude = function(params) {
@@ -793,14 +798,14 @@
       var t = settings.dstType == 'wp' ? ' WP' : '';
       if(data.dst != 0){
         distance = data.dst[settings.dstType];
-        if(settings.unit.dst == 'nm')
+        if(settings.unit.dst == 'Nm')
           distance = distance * 0.539956803;
       }
       bottomLeft.dst.textContent = 'DST'+t+': '+Math.round(distance, 1)+settings.unit.dst;
     }
     
     this.setDistanceUnit = function(v){
-      if(v != 'km' && v != 'nm')
+      if(v != 'Km' && v != 'Nm')
         return;
       if(settings.unit.dst == v)
         return;
@@ -864,11 +869,19 @@
         bottomRight.qnh.textContent = "QNH: "+v;
     }
 
+    this.setQnhUnit = function(v) {
+        if( v != 'Mb' && v != 'InHg' )
+            return;
+        if(settings.unit.qnh == v)
+            return;
+
+        settings.unit.qnh = v;
+    }
+
     this.setSpeed = function(v) {
         //v = parseInt(v);
         //if(data.spd == v) return;
-        data.spd = settings.unit.asi == 'kt' ? parseInt(v*0.539956803) : v;
-/*      v = settings.unit.asi == 'kt' ? parseInt(v*0.539956803) : v;*/
+        data.spd = settings.unit.asi == 'Kt' ? parseInt(v*0.539956803) : v;
         var t = (data.spd/20)*(settings.height/settings.asi.tickspacing);
         asi.ladder.style.transform = "translate(0px, "+t+"px)";
         asi.digits.textContent = parseInt(data.spd);
@@ -886,18 +899,30 @@
     }
     
     this.setSpeedUnit = function(v){
-      if(v != 'kmh' && v != 'kt')
+      if(v != 'Km/h' && v != 'Kt')
         return;
       if(settings.unit.asi == v)
         return;
 
       settings.unit.asi = v;
       for(var p in settings.asi.speed){
-        settings.asi.speed[p] = v=="kt" ? settings.asi.speed[p]*0.539956803 : settings.asi.speed[p]*1.852;
-        settings.asi.speed[p] = settings.asi.speed[p];
+        settings.asi.speed[p] = v=="Kt" ? settings.asi.speed[p]*0.539956803 : settings.asi.speed[p]*1.852;
       }
       this.redrawAsi();
       this.setSpeed(this.getSpeed());
+    }
+
+    this.setAltitudeUnit = function(v) {
+        if( v != 'M' && v != 'Ft' )
+            return;
+        if(settings.unit.alt == v)
+            return;
+
+        settings.unit.alt = v;
+    }
+
+    this.getAltitude = function() {
+        return data.alt;
     }
     
     this.setSpeedTickSpacing = function(v) {
