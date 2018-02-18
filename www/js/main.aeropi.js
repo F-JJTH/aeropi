@@ -82,6 +82,9 @@ let settingsMgr = new SettingsManager({
         $(':checkbox[name=clockZone]').prop('checked', (settings.clockZone == 'UTC'));
         $(':input[name=timeZone]').val(settings.timeZone);
         setTimeZoneUI(settings.timeZone);
+        selectLayout(settings.layout);
+
+        nd.setAircraftGroundSpeed(0);
 
         connect();
     },
@@ -118,6 +121,7 @@ settingsMgr.addDefaultSettings({
     timeZone: 0,
     clockZone: 'UTC',
     summerTime: false,
+    layout: 'nav-ems',
 });
 
 settingsMgr.init();
@@ -395,20 +399,63 @@ let toggleEmsTemperatureUnit = function() {
 let selectLayout = function(layout) {
     switch(layout) {
         case 'nav-ems':
+            efis.hide();
+            $('#left-area').show();
+            $('#right-area').show();
+            $('#left-area').removeClass('col-lg-12');
+            $('#left-area').addClass('col-lg-7');
+            $('#right-area').removeClass('col-lg-12');
+            $('#right-area').addClass('col-lg-5');
+            nd.updateSize();
+            ems.updateSize();
             break;
 
         case 'efis-ems':
+            efis.show();
+            $('#left-area').show();
+            $('#right-area').show();
+            $('#left-area').removeClass('col-lg-12');
+            $('#left-area').addClass('col-lg-7');
+            $('#right-area').removeClass('col-lg-12');
+            $('#right-area').addClass('col-lg-5');
+            nd.updateSize();
+            ems.updateSize();
             break;
 
-        case 'nav-efis':
+        case 'nav':
+            efis.hide();
+            $('#left-area').show();
+            $('#right-area').hide();
+            $('#left-area').removeClass('col-lg-7');
+            $('#left-area').addClass('col-lg-12');
+            nd.updateSize();
+            break;
+
+        case 'efis':
+            efis.show();
+            $('#left-area').show();
+            $('#right-area').hide();
+            $('#left-area').removeClass('col-lg-7');
+            $('#left-area').addClass('col-lg-12');
+            nd.updateSize();
+            break;
+
+        case 'ems':
+            $('#right-area').show();
+            $('#left-area').hide();
+            $('#right-area').removeClass('col-lg-5');
+            $('#right-area').addClass('col-lg-12');
+            ems.updateSize();
             break;
 
         default:
             break;
     }
+
+    settingsMgr.set('layout', layout);
 }
 
-$("#toggle-ems").on('click', function(){
+/*$("#toggle-ems").on('click', function(){
     $('#ems').toggleClass('mini');
     $('#pfd').toggleClass('large');
     let terrainVisible = terrain.isVisible();
@@ -423,7 +470,7 @@ $("#toggle-ems").on('click', function(){
             terrain.show();
     }, 1100);
     return false;
-});
+});*/
 
 $(window).resize(function(){
     let terrainVisible = terrain.isVisible();
@@ -618,7 +665,6 @@ function connect() {
     let _hostname = window.location.hostname;
     ws = new WebSocket("ws://"+_hostname+":7700");
     ws.onopen = function() {
-
         sendCurrentUser();
     };
 

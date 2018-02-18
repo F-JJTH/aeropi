@@ -37,59 +37,61 @@
         <ul id="top-menu"></ul>
     </header>
     <div class="row no-gutters">
-        <div class="col-lg-7 col-md-12" id="pfd">
-            <div id="map"></div>
+        <div class="col-sm-7" id="left-area">
             <div id="efis"></div>
+            <div id="map"></div>
             <div id="terrainElevation"></div>
         </div>
-        <div class="col-lg-5 col-md-12" id="ems">
-            <div class="row no-gutters">
-                <div class="col-lg-12 col-md-4">
-                    <div class="row ems-row no-gutters">
-                        <div class="col-4 col-sm-5"><canvas id="rpmGauge"></canvas></div>
-                        <div class="col-8 col-sm-7">
-                            <div class="row ems-row no-gutters">
-                                <div class="col-4"><canvas id="cylTempGauge"></canvas></div>
-                                <div class="col-4"><canvas id="oilTempGauge"></canvas></div>
-                                <div class="col-4"><canvas id="oilPressGauge"></canvas></div>
+        <div class="col-sm-5" id="right-area">
+            <div id="ems">
+                <div class="row no-gutters">
+                    <div class="col-lg-12 col-md-4">
+                        <div class="row ems-row no-gutters">
+                            <div class="col-4 col-sm-5"><canvas id="rpmGauge"></canvas></div>
+                            <div class="col-8 col-sm-7">
+                                <div class="row ems-row no-gutters">
+                                    <div class="col-4"><canvas id="cylTempGauge"></canvas></div>
+                                    <div class="col-4"><canvas id="oilTempGauge"></canvas></div>
+                                    <div class="col-4"><canvas id="oilPressGauge"></canvas></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12 col-md-4">
-                    <div class="row ems-row no-gutters">
-                        <div class="col-4 col-sm-5"><canvas id="mapGauge"></canvas></div>
-                        <div class="col-8 col-sm-7">
-                            <div class="row ems-row no-gutters">
-                                <div class="col-4" ondblclick="openFuelManager()"><canvas id="fuelQtyGauge"></canvas></div>
-                                <div class="col-4"><canvas id="fuelFlowGauge"></canvas></div>
-                                <div class="col-4"><canvas id="fuelPressGauge"></canvas></div>
+                    <div class="col-lg-12 col-md-4">
+                        <div class="row ems-row no-gutters">
+                            <div class="col-4 col-sm-5"><canvas id="mapGauge"></canvas></div>
+                            <div class="col-8 col-sm-7">
+                                <div class="row ems-row no-gutters">
+                                    <div class="col-4" ondblclick="openFuelManager()"><canvas id="fuelQtyGauge"></canvas></div>
+                                    <div class="col-4"><canvas id="fuelFlowGauge"></canvas></div>
+                                    <div class="col-4"><canvas id="fuelPressGauge"></canvas></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12 col-md-4">
-                    <div class="row ems-row no-gutters">
-                        <div class="col-4 col-sm-5 ems-info text-nowrap">
-                            <div class="row no-gutters">
-                                <div class="col-12 col-lg-6">Position:</div><div class="col-12 col-lg-6"><span class="info-position"></span></div>
+                    <div class="col-lg-12 col-md-4">
+                        <div class="row ems-row no-gutters">
+                            <div class="col-4 col-sm-5 ems-info text-nowrap">
+                                <div class="row no-gutters">
+                                    <div class="col-12 col-lg-6">Position:</div><div class="col-12 col-lg-6"><span class="info-position"></span></div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-12 col-lg-6">Next&nbsp;waypoint:</div><div class="col-12 col-lg-6"><span class="info-wptDistance"></span></div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-12 col-lg-6">Remaining&nbsp;distance:</div><div class="col-12 col-lg-6"><span class="info-routeDistance"></span></div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-6 col-lg-3">ETE:</div><div class="col-6 col-lg-3"><span class="info-ete"></span></div>
+                                    <div class="col-6 col-lg-3">ETA:</div><div class="col-6 col-lg-3"><span class="info-eta"></span></div>
+                                </div>
                             </div>
-                            <div class="row no-gutters">
-                                <div class="col-12 col-lg-6">Next&nbsp;waypoint:</div><div class="col-12 col-lg-6"><span class="info-wptDistance"></span></div>
-                            </div>
-                            <div class="row no-gutters">
-                                <div class="col-12 col-lg-6">Remaining&nbsp;distance:</div><div class="col-12 col-lg-6"><span class="info-routeDistance"></span></div>
-                            </div>
-                            <div class="row no-gutters">
-                                <div class="col-6 col-lg-3">ETE:</div><div class="col-6 col-lg-3"><span class="info-ete"></span></div>
-                                <div class="col-6 col-lg-3">ETA:</div><div class="col-6 col-lg-3"><span class="info-eta"></span></div>
-                            </div>
-                        </div>
-                        <div class="col-8 col-sm-7">
-                            <div class="row ems-row no-gutters">
-                                <div class="col-4"></div>
-                                <div class="col-4"><canvas id="ampGauge"></canvas></div>
-                                <div class="col-4"><canvas id="voltGauge"></canvas></div>
+                            <div class="col-8 col-sm-7">
+                                <div class="row ems-row no-gutters">
+                                    <div class="col-4"></div>
+                                    <div class="col-4"><canvas id="ampGauge"></canvas></div>
+                                    <div class="col-4"><canvas id="voltGauge"></canvas></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -131,11 +133,11 @@
                             <i class="fa fa-object-ungroup" aria-hidden="true"></i> <span class="d-none d-sm-inline">MFD</span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-mfd">
-                            <a class="dropdown-item" onclick="toggleEfis()">
+                            <!--<a class="dropdown-item" onclick="toggleEfis()">
                                 <input type="checkbox" name="efisVisible" on-value="On" off-value="Off" class="custom-switch">
                                 EFIS
                             </a>
-                            <!--<a class="dropdown-item" onclick="toggleNdAdsb()">
+                            <a class="dropdown-item" onclick="toggleNdAdsb()">
                                 <input type="checkbox" name="ndAdsb" on-value="On" off-value="Off" class="custom-switch">
                                 ADS-B
                             </a>-->
@@ -159,14 +161,8 @@
                             <a class="dropdown-item" onclick="selectLayout('efis-ems')">
                                 EFIS / EMS
                             </a>
-                            <a class="dropdown-item" onclick="selectLayout('nav-efis')">
-                                NAV / EFIS
-                            </a>
                             <a class="dropdown-item" onclick="selectLayout('nav')">
                                 NAV
-                            </a>
-                            <a class="dropdown-item" onclick="selectLayout('efis')">
-                                EFIS
                             </a>
                             <a class="dropdown-item" onclick="selectLayout('ems')">
                                 EMS
