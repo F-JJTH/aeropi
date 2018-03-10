@@ -131,7 +131,8 @@ class IMUWorker (threading.Thread):
     self.pollInterval = self.imu.IMUGetPollInterval()
     self.oldData = ''
     self.newData = ''
-    self.data = {'temperature':15, 'pressure':850, 'humidity':0, 'pitch':0, 'roll':0, 'yaw':0, 'slipball':0}
+    self.data = {'temperature':15, 'pressure':850, 'humidity':0, 'pitch':0, 'roll':0, 'yaw':0, 'slipball':0, 'qnh':1013.25}
+    self.currentQNH = 1013.25
 
   def run(self):
     while not stopFlag:
@@ -168,6 +169,7 @@ class IMUWorker (threading.Thread):
             self.data['temperature'] = int(self.bme280.read_temperature()*10)/10
             self.data['humidity'] = int(self.bme280.read_humidity())
             self.data['pressure'] = roundNearest(self.bme280.read_pressure() / 100, 0.1)
+            self.data['altitudePressure'] = roundNearest(self.getAltitudePressure(), 50)
             self.data['dewpoint'] = roundNearest(self.bme280.read_dewpoint(), 0.5)
             self.bme280LastRead = now
 
@@ -182,12 +184,40 @@ class IMUWorker (threading.Thread):
         #if self.data['yaw'] < 0:
         #  self.data['yaw'] = 360 + self.data['yaw']
 
+        self.data['qnh'] = self.currentQNH
+
         self.newData = '%s' % json.dumps(self.data)
 
         time.sleep(self.pollInterval*1.0/1000.0)
 
   def getPressure(self):
     return self.data['pressure']
+
+  def setQNH(self, QNH):
+    self.currentQNH = QNH
+
+  def getAltitudePressure(self):
+    return self._computeAltPress(self.currentQNH, 288.15, self.data['pressure']*100)*3.28084
+
+  def _computeAltPress(self, a, k, i):
+    M = 0.0289644;
+    g = 9.80665;
+    R = 8.31432;
+    if (a / i) < (101325 / 22632.1):
+      d = - 0.0065;
+      e = 0;
+      j = math.pow((i / a), (R * d) / (g * M));
+      return e + ((k * ((1 / j) - 1)) / d)
+    else :
+      if (a / i) < (101325 / 5474.89):
+        e = 11000;
+        b = k - 71.5;
+        f = (R * b * (math.log(i / a))) / (( - g) * M);
+        l = 101325;
+        c = 22632.1;
+        h = ((R * b * (math.log(l / c))) / (( - g) * M)) + e;
+        return h + f
+    return
 
   def get(self):
     if self.oldData != self.newData:
@@ -500,6 +530,9 @@ class MSGWorker (threading.Thread):
 
       if data['type'] == "refuel":
         self.readFuelLevelFromDB()
+
+      if data['type'] == "QNH":
+        imuWorker.setQNH(float(data['QNH']))
 
     except json.JSONDecodeError:
       pass
