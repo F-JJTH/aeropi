@@ -200,22 +200,22 @@ class IMUWorker (threading.Thread):
     return self._computeAltPress(self.currentQNH, 288.15, self.data['pressure']*100)*3.28084
 
   def _computeAltPress(self, a, k, i):
-    M = 0.0289644;
-    g = 9.80665;
-    R = 8.31432;
+    M = 0.0289644
+    g = 9.80665
+    R = 8.31432
     if (a / i) < (101325 / 22632.1):
-      d = - 0.0065;
-      e = 0;
-      j = math.pow((i / a), (R * d) / (g * M));
+      d = - 0.0065
+      e = 0
+      j = math.pow((i / a), (R * d) / (g * M))
       return e + ((k * ((1 / j) - 1)) / d)
     else :
       if (a / i) < (101325 / 5474.89):
-        e = 11000;
-        b = k - 71.5;
-        f = (R * b * (math.log(i / a))) / (( - g) * M);
-        l = 101325;
-        c = 22632.1;
-        h = ((R * b * (math.log(l / c))) / (( - g) * M)) + e;
+        e = 11000
+        b = k - 71.5
+        f = (R * b * (math.log(i / a))) / (( - g) * M)
+        l = 101325
+        c = 22632.1
+        h = ((R * b * (math.log(l / c))) / (( - g) * M)) + e
         return h + f
     return
 
