@@ -207,13 +207,13 @@ NoConn ~ 7200 4500
 NoConn ~ 7200 4400
 NoConn ~ 7200 4100
 NoConn ~ 7200 4000
-Text Label 7200 2550 0    60   ~ 0
-RXD
 Text Label 7200 2450 0    60   ~ 0
-TXD
-Text Label 13320 1910 2    60   ~ 0
+RXD
+Text Label 7200 2550 0    60   ~ 0
 TXD
 Text Label 13220 1810 2    60   ~ 0
+TXD
+Text Label 13320 1910 2    60   ~ 0
 RXD
 $Comp
 L GND #PWR07

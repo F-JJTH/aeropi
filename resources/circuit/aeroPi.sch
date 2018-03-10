@@ -1,34 +1,5 @@
 EESchema Schematic File Version 2
 LIBS:aeroPi-rescue
-LIBS:power
-LIBS:device
-LIBS:transistors
-LIBS:conn
-LIBS:linear
-LIBS:regul
-LIBS:74xx
-LIBS:cmos4000
-LIBS:adc-dac
-LIBS:memory
-LIBS:xilinx
-LIBS:microcontrollers
-LIBS:dsp
-LIBS:microchip
-LIBS:analog_switches
-LIBS:motorola
-LIBS:texas
-LIBS:intel
-LIBS:audio
-LIBS:interface
-LIBS:digital-audio
-LIBS:philips
-LIBS:display
-LIBS:cypress
-LIBS:siliconi
-LIBS:opto
-LIBS:atmel
-LIBS:contrib
-LIBS:valves
 LIBS:aeroPi
 LIBS:bme280
 LIBS:aeroPi-cache
@@ -977,7 +948,7 @@ L R_Small R27
 U 1 1 597BE064
 P 9240 10690
 F 0 "R27" H 9270 10710 50  0000 L CNN
-F 1 "10k" H 9270 10650 50  0000 L CNN
+F 1 "47k" H 9270 10650 50  0000 L CNN
 F 2 "Resistors_SMD:R_0603" H 9240 10690 50  0001 C CNN
 F 3 "" H 9240 10690 50  0001 C CNN
 	1    9240 10690
