@@ -49,6 +49,17 @@ class GPSWorker (threading.Thread):
     self.data = {'lat':0.0, 'lng':0.0, 'time':0, 'alt':0, 'spd':0, 'climb':0, 'compass':0}
     self.systemDatetimeIsSet = False
 
+  def getPredictivePoint(self):
+    brg  = math.degrees(self.data['compass'])*math.pi/180
+    R    = 6372.7976 # Earth radius
+    d    = round(self.data['spd']) * 5 / 60 # 5 mintute ahead
+    dist = round(d, 4)/R
+    lat0 = math.radians(self.data['lat'])
+    lon0 = math.radians(self.data['lng'])
+    lat1 = math.asin(math.sin(lat0)*math.cos(dist) + math.cos(lat0)*math.sin(dist)*math.cos(brg))
+    lon1 = lon0 + math.atan2(math.sin(brg)*math.sin(dist)*math.cos(lat0), math.cos(dist)-math.sin(lat0)*math.sin(lat1))
+    return {'lng': round(math.degrees(lon1), 6), 'lat': round(math.degrees(lat1), 6)}
+
   def run(self):
     while not stopFlag:
       for new_data in self.session:
@@ -87,6 +98,11 @@ class GPSWorker (threading.Thread):
             self.data['compass']   = int(self.fix.TPV['track']) if self.data['spd'] > 2 else 0
             if type(self.data['compass']) is str:
                 self.data['compass'] = 0
+
+            predictivePoint = self.getPredictivePoint()
+            self.data['predictiveLat'] = predictivePoint['lat']
+            self.data['predictiveLng'] = predictivePoint['lng']
+
             self.newData = '%s' % json.dumps(self.data)
 
             if self.systemDatetimeIsSet is False:
@@ -375,6 +391,24 @@ class MSGWorker (threading.Thread):
       result = self.cursor.fetchone()
       self.fuelLevelAtStartEngine = result[0]
       self.currentFuelLevel = self.fuelLevelAtStartEngine
+    except:
+      pass
+
+  def getCurrentAirspace(self):
+    req = "SELECT * FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
+    try:
+      self.cursor.execute(req)
+      result = self.cursor.fetchone()
+      return result[0]
+    except:
+      pass
+
+  def getPredictiveAirspace(self):
+    req = "SELECT * FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
+    try:
+      self.cursor.execute(req)
+      result = self.cursor.fetchone()
+      return result[0]
     except:
       pass
 
