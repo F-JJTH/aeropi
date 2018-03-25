@@ -395,7 +395,7 @@ class MSGWorker (threading.Thread):
       pass
 
   def getCurrentAirspace(self):
-    req = "SELECT * FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
+    req = "SELECT *, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
     try:
       self.cursor.execute(req)
       result = self.cursor.fetchone()
@@ -404,7 +404,7 @@ class MSGWorker (threading.Thread):
       pass
 
   def getPredictiveAirspace(self):
-    req = "SELECT * FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
+    req = "SELECT *, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
     try:
       self.cursor.execute(req)
       result = self.cursor.fetchone()
@@ -421,6 +421,8 @@ class MSGWorker (threading.Thread):
         if gps:
           self.lastGps = gps
           now = datetime.strptime(gps['time'], '%Y-%m-%dT%H:%M:%S.000Z').timestamp()
+          gps['currentAirspace'] = self.getCurrentAirspace()
+          gps['predictiveAirspace'] = self.getPredictiveAirspace()
           self.sendData('{"GPS": %s}' % json.dumps(gps))
 
       if imuWorker:
