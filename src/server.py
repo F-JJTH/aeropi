@@ -99,7 +99,7 @@ class GPSWorker (threading.Thread):
             self.data['time']  = self.fix.TPV['time']
             self.data['alt']   = clamp(0, int(float(self.fix.TPV['alt'])*3.28084), 35000)
             self.data['spd']   = clamp(0, int(float(self.fix.TPV['speed'])*3.6), 500)
-            self.data['climb'] = clamp(-5000, int(float(self.fix.TPV['climb'])*196.5), 5000)
+            self.data['climb'] = clamp(-5000, int(float(self.fix.TPV['climb'])*196.85), 5000)
             self.data['compass']   = int(self.fix.TPV['track']) if self.data['spd'] > 2 else 0
             if type(self.data['compass']) is str:
                 self.data['compass'] = 0
@@ -152,8 +152,8 @@ class IMUWorker (threading.Thread):
     self.pollInterval = self.imu.IMUGetPollInterval()
     self.oldData = ''
     self.newData = ''
-    self.data = {'temperature':15, 'pressure':850, 'humidity':0, 'pitch':0, 'roll':0, 'yaw':0, 'slipball':0, 'qnh':1013.25}
-    self.currentQNH = 1013.25
+    self.data = {'temperature':15, 'pressure':850, 'humidity':0, 'pitch':0, 'roll':0, 'yaw':0, 'slipball':0, 'qnh':1013}
+    self.currentQNH = 1013
 
   def run(self):
     while not stopFlag:
@@ -196,12 +196,11 @@ class IMUWorker (threading.Thread):
 
         self.data['pitch'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][1]), 180))
         self.data['roll'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][0]), 180))
-        #self.data['yaw'] = int(math.degrees(self.IMUdata['fusionPose'][2]))-90
         self.data['slipball'] = -int(self.IMUdata['accel'][1]*100)/100
         self.data['vs'] = int(self.IMUdata['accel'][2]*100)/100
-
         self.data['slipball'] = roundNearest(self.data['slipball'], 0.1)
         self.data['vs'] = roundNearest(self.data['vs'], 0.5)
+        #self.data['yaw'] = int(math.degrees(self.IMUdata['fusionPose'][2]))-90
         #if self.data['yaw'] < 0:
         #  self.data['yaw'] = 360 + self.data['yaw']
 
@@ -218,7 +217,7 @@ class IMUWorker (threading.Thread):
     self.currentQNH = QNH
 
   def getAltitudePressure(self):
-    return self._computeAltPress(self.currentQNH, 288.15, self.data['pressure']*100)*3.28084
+    return self._computeAltPress(self.currentQNH*100, 288.15, self.data['pressure']*100)*3.28084
 
   def _computeAltPress(self, a, k, i):
     M = 0.0289644

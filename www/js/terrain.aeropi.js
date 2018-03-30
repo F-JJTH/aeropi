@@ -16,6 +16,7 @@ class Terrain {
             pathProvider: () => {},
             url: '',
             updateInterval: 3,
+            debug: false,
         }
         $.extend(true, this.options, options);
 
@@ -55,12 +56,15 @@ class Terrain {
         if(!this.positionHasChanged && !force) return;
 
         this.path = this.options.pathProvider();
-        if(!this.path) return;
+        if(!this.path || this.path.length == 0) return;
 
-        let lon0 = this.path.coords[0][0];
-        let lat0 = this.path.coords[0][1];
-        let lon1 = this.path.coords[1][0];
-        let lat1 = this.path.coords[1][1];
+        console.log(this.path);
+
+        let _path = '';
+        this.path.coords.forEach(coord => {
+            _path += coord[0]+','+coord[1]+'|';
+        });
+        _path = _path.substring(0, _path.length - 1);
 
         $.ajax({
             type: 'POST',
@@ -68,8 +72,8 @@ class Terrain {
             cache: false,
             dataType: 'json',
             data: {
-                path: lon0+","+lat0+"|"+lon1+","+lat1,
-                samples: Math.round(this.path.length/100), // path.length is in meters
+                path: _path,
+                samples: this.path.length ? Math.round(this.path.length/100) : null, // path.length is in meters
             },
             success: data => {
                 this.onSuccess(data.terrain);

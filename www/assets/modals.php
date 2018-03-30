@@ -5,6 +5,7 @@ include('searchDirectTo.modal.html');
 include('routeManager.modal.html');
 include('powerManager.modal.html');
 include('tankManager.modal.html');
+include('qnhManager.modal.html');
 include('userManager.modal.html');
 include('mfdSettings.modal.html');
 ?>

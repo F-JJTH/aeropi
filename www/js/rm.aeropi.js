@@ -34,12 +34,15 @@ class RouteManager {
             this.refreshRouteList();
         });
 
-        let terrain = new Terrain('#terrainPreview', settingsMgr, {
+        this.terrain = new Terrain('#terrainPreview', settingsMgr, {
             url: "ajax.php?command=get_terrain_elevation",
             pathProvider: () => {
-                return this.selectedRoute? this.selectedRoute.getWaypoints() : [];
-            }
+                return this.selectedRoute ? {coords: this.selectedRoute.getWaypoints(), length: null} : null;
+            },
+            debug: true,
         });
+        this.terrain.update(true);
+        this.terrain.stop();
 
         this.nd.setChangeWaypointCallback(() => { return this.selectNextWaypoint(); });
     }
@@ -178,7 +181,6 @@ class RouteManager {
             let row  = $('<div>', { 'class': 'row list-group-item' }).css('display', 'inherit');
             let col0 = $('<div>', { 'class': 'col-1' }).html(''+index);
             let col1 = $('<div>', { 'class': 'col-8 routeNameDisplay' }).html(route.name+' <small class="distance">('+route.distance()+' Km)</small>');
-            let col2 = $('<div>', { 'class': 'col-1' }).html('<button type="button" class="btn btn-sm"><i class="fa fa-area-chart" aria-hidden="true"></i></button>');
             let col3 = $('<div>', { 'class': 'col-1' }).html('<button type="button" class="btn btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></button>');
 
             if(index == 1) row.addClass('active');
@@ -186,22 +188,22 @@ class RouteManager {
             row.click(e => { 
                 e.stopPropagation();
                 this.refreshWptList(route);
+                this.refreshTerrain(route);
                 $.each($('.routeList .list-group-item'), (k, elem) => {
                     $(elem).removeClass('active');
                 })
                 row.addClass('active');
             });
-            col2.click(e => { e.stopPropagation(); console.log('show terrain'); });
             col3.dblclick(e => { e.stopPropagation(); this.deleteRoute(route, row); });
 
             row.append(col0);
             row.append(col1);
-            row.append(col2);
             row.append(col3);
             tbody.append(row);
             index++;
         });
         this.refreshWptList(this.routes[0]);
+        this.refreshTerrain(this.routes[0]);
     }
 
     refreshWptList(route = null) {
@@ -240,6 +242,8 @@ class RouteManager {
 
     refreshTerrain(route = null) {
         if(route == null) return;
+        //this.terrain.start();
+        this.terrain.update(true);
     }
 
     deleteRoute(route, row) {

@@ -73,6 +73,8 @@ let settingsMgr = new SettingsManager({
         efis.setAltitudeSource(settings.efisAltitudeSource);
         efis.setAltitudeUnit(settings.efisAltitudeUnit);
         efis.setQnhUnit(settings.efisQnhUnit);
+        efis.setQnh(settings.efisQnh);
+        $(':input[name=efisQnh]').val(settings.efisQnh);
         $(':input[name=vs]').val(settings.vs);
         $(':input[name=vs0]').val(settings.vs0);
         $(':input[name=vn0]').val(settings.vn0);
@@ -566,6 +568,31 @@ let toggleEfisAltitudeSource = function() {
     $(':checkbox[name='+k+']').prop('checked', (rValue == 'GPS'));
 }
 
+let setEfisQnh = function(v) {
+    let k = 'efisQnh';
+    let rValue = $(':input[name='+k+']').val();
+    settingsMgr.set(k, rValue);
+    efis.setQnh(rValue);
+    sendData({
+        type: 'QNH',
+        QNH: rValue
+    });
+}
+
+let openQnhManager = function() {
+    let k = 'efisQnh';
+    console.log(efis.getQnh());
+    $(':input[name='+k+']').val(efis.getQnh());
+    $('#qnhManagerModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+    });
+}
+
+$('#qnh-box').on('click', e => {
+    openQnhManager();
+});
+
 let openFuelManager = function() {
     $('#fuelValueInput').val(ems.getFuelLevel());
     $('#tankManagerModal').modal({
@@ -723,6 +750,12 @@ function connect() {
                 nd.setAircraftHeading(data.yaw);
                 terrain.setAircraftHeading(data.yaw);
             }
+
+            if(settingsMgr.get('efisAltitudeSource') != 'GPS') {
+                efis.setAltitude(data.altitudePressure);
+                efis.setQnh(data.qnh);
+            }
+            console.log(data.qnh);
         }
         if(data.GPS){
             data = data.GPS;
@@ -752,7 +785,9 @@ function connect() {
 
             updateRouteStat(currentDate);
 
-            efis.setAltitude(data.alt);
+            if(settingsMgr.get('efisAltitudeSource') == 'GPS') {
+                efis.setAltitude(data.alt);
+            }
         }
 
         if(data.EMS){

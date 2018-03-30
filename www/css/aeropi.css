@@ -230,6 +230,10 @@ input[type=range]:focus::-ms-fill-upper {
     }
 }
 
+#qnh-box {
+    cursor: pointer;
+}
+
 #terrainElevation{
     display: none;
     width: 50%;
@@ -242,6 +246,11 @@ input[type=range]:focus::-ms-fill-upper {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+#terrainPreview {
+    width: 40vw;
+    height: 20vh;
 }
 
 .waypointListHeader, .routeListHeader {

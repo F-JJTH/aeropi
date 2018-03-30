@@ -73,6 +73,7 @@
         efisSpeedSource: 'GPS',
         efisCompassSource: 'GPS',
         efisQnhUnit: 'Mb',
+        efisQnh: 1013,
     });
     var defaults = {
         width: $(this).width(),
@@ -593,7 +594,7 @@
         main.qnh.textContent = "QNH: "+settings.alt.qnh;
         main.appendChild(main.qnh);
         // Bg Digit
-        elem = document.createElementNS(svgNS, "path");
+        /*elem = document.createElementNS(svgNS, "path");
         elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
         elem.setAttribute("d", "M"+(width-182-4)+" 32 h182 v22 h-182 Z");
         elem.setAttribute("filter", "url(#shadowSmall)");
@@ -604,7 +605,7 @@
         main.position.setAttribute("x", width-6);
         main.position.setAttribute("y", 50);
         main.position.textContent = "00.00N - 00.00E";
-        main.appendChild(main.position);
+        main.appendChild(main.position);*/
 
         return main;
     }
@@ -995,8 +996,8 @@
     parent.append(ts);
     //var bottomLeft = _createBottomLeftTips();
     //parent.append(bottomLeft);
-    //var bottomRight = _createBottomRightTips();
-    //parent.append(bottomRight);
+    var bottomRight = _createBottomRightTips();
+    parent.append(bottomRight);
     
     return this;
   };

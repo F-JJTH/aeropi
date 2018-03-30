@@ -1,0 +1,29 @@
+<!-- QNH Manager Modal -->
+<div class="modal fade" style="z-index:1100;" id="qnhManagerModal" tabindex="-1" role="dialog" aria-labelledby="qnhManagerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qnhManagerModalLabel">QNH Manager</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="efisQnh" name="efisQnh">
+                            <span class="input-group-addon">Mb</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" class="btn" onclick="setEfisQnh()">Set QNH</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

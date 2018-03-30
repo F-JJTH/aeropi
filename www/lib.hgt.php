@@ -129,9 +129,12 @@ function getPointFromDistanceAndBearing($from, $bearing, $distance){
 }
 
 function getSampledSegmentsPoints($path, $samples){
+  $autoSample = $samples ? false : true;
   $distancesInPath = getDistancesInPath($path);
-  $sampleLength = array_sum($distancesInPath)/$samples;
-  $samplePerSegment = $samples/(sizeof($path)-1);
+  if(!$autoSample) {
+    $sampleLength = array_sum($distancesInPath)/$samples;
+    $samplePerSegment = $samples/(sizeof($path)-1);
+  }
   $segments = array();
   for($i=1; $i<sizeof($path); $i++){
     $startPoint = array('lat'=>$path[$i-1]['lat'], 'lng'=>$path[$i-1]['lng']);
@@ -139,6 +142,17 @@ function getSampledSegmentsPoints($path, $samples){
     $segmentBearing = getBearing($startPoint, $endPoint);
     $sampledPoints = array($startPoint);
     $from = $startPoint;
+    if($autoSample) {
+        $segmentLength = $distancesInPath[$i-1];
+        if($segmentLength < 10000) {
+            $sampleLength = $distancesInPath[$i-1]/100;
+            $samplePerSegment = 100;
+        } else {
+            $sampleLength = $distancesInPath[$i-1]/50;
+            $samplePerSegment = 50;
+        }
+      
+    }
     for($z=1; $z<$samplePerSegment; $z++){
       $s = getPointFromDistanceAndBearing($from, $segmentBearing, $sampleLength);
       $sampledPoints[] = $s;
