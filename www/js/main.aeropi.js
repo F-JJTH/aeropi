@@ -54,6 +54,9 @@ let settingsMgr = new SettingsManager({
 
         $(':checkbox[name=efisVisible]').prop('checked', settings.efisVisible);
         $(':checkbox[name=efisSpeedUnit]').prop('checked', (settings.efisSpeedUnit == 'Km/h'));
+        $(':checkbox[name=efisSpeedSource]').prop('checked', (settings.efisSpeedSource == 'GPS'));
+        $(':checkbox[name=efisCompassSource]').prop('checked', (settings.efisCompassSource == 'GPS'));
+        $(':checkbox[name=efisAltitudeSource]').prop('checked', (settings.efisAltitudeSource == 'GPS'));
         $(':checkbox[name=efisAltitudeUnit]').prop('checked', (settings.efisAltitudeUnit == 'M'));
         $(':checkbox[name=efisQnhUnit]').prop('checked', (settings.efisQnhUnit == 'Mb'));
         efis.setCalibration({pitch:settings.efisPitchOffset, roll:settings.efisRollOffset});
@@ -65,6 +68,9 @@ let settingsMgr = new SettingsManager({
         efis.setSpeedTickSpacing(settings.efisTickSpeed);
         efis.setAltitudeTickSpacing(settings.efisTickAlt);
         efis.setSpeedUnit(settings.efisSpeedUnit);
+        efis.setSpeedSource(settings.efisSpeedSource);
+        efis.setCompassSource(settings.efisCompassSource);
+        efis.setAltitudeSource(settings.efisAltitudeSource);
         efis.setAltitudeUnit(settings.efisAltitudeUnit);
         efis.setQnhUnit(settings.efisQnhUnit);
         $(':input[name=vs]').val(settings.vs);
@@ -252,7 +258,7 @@ let shutdown = function() {
 }
 
 let reload = function() {
-    window.location = '/';
+    window.location.href = '/';
 }
 
 let formatDate = function(date) {
@@ -527,6 +533,39 @@ let toggleEfisQnhUnit = function() {
     $(':checkbox[name='+k+']').prop('checked', (rValue == 'Mb'));
 }
 
+let toggleEfisSpeedSource = function() {
+    let k = 'efisSpeedSource';
+    let rValue = 'GPS';
+    if(settingsMgr.get(k) == 'GPS') {
+        rValue = 'Air';
+    }
+    settingsMgr.set(k, rValue);
+    efis.setSpeedSource(rValue);
+    $(':checkbox[name='+k+']').prop('checked', (rValue == 'GPS'));
+}
+
+let toggleEfisCompassSource = function() {
+    let k = 'efisCompassSource';
+    let rValue = 'GPS';
+    if(settingsMgr.get(k) == 'GPS') {
+        rValue = 'Mag';
+    }
+    settingsMgr.set(k, rValue);
+    efis.setCompassSource(rValue);
+    $(':checkbox[name='+k+']').prop('checked', (rValue == 'GPS'));
+}
+
+let toggleEfisAltitudeSource = function() {
+    let k = 'efisAltitudeSource';
+    let rValue = 'GPS';
+    if(settingsMgr.get(k) == 'GPS') {
+        rValue = 'Baro';
+    }
+    settingsMgr.set(k, rValue);
+    efis.setAltitudeSource(rValue);
+    $(':checkbox[name='+k+']').prop('checked', (rValue == 'GPS'));
+}
+
 let openFuelManager = function() {
     $('#fuelValueInput').val(ems.getFuelLevel());
     $('#tankManagerModal').modal({
@@ -673,22 +712,33 @@ function connect() {
         //console.log(data);
         if(data.IMU){
             data = data.IMU;
-            //console.log(data);
-            //nd.setAircraftHeading(data.yaw);
-            //terrain.setAircraftHeading(data.yaw);
             efis.setSlip(data.slipball);
             efis.setPressure(data.pressure);
             //efis.setAttitude({roll:data.roll, pitch:data.pitch});
             debounce(efis.setAttitude({roll:data.roll, pitch:data.pitch}), 100);
-            //efis.setCompass(data.yaw);
+
+            if(settingsMgr.get('efisCompassSource') != 'GPS') {
+                efis.setCompass(data.yaw);
+                nd.setAircraftTrack(data.yaw);
+                nd.setAircraftHeading(data.yaw);
+                terrain.setAircraftHeading(data.yaw);
+            }
         }
         if(data.GPS){
             data = data.GPS;
+            console.log(data);
             nd.setAircraftPosition([data.lng, data.lat]);
-            nd.setAircraftTrack(data.compass);
-            nd.setAircraftHeading(data.compass);
-            efis.setCompass(data.compass);
-            terrain.setAircraftHeading(data.compass);
+
+            if(settingsMgr.get('efisSpeedSource') == 'GPS') {
+                efis.setSpeed(data.spd);
+            }
+
+            if(settingsMgr.get('efisCompassSource') == 'GPS') {
+                efis.setCompass(data.compass);
+                nd.setAircraftTrack(data.compass);
+                nd.setAircraftHeading(data.compass);
+                terrain.setAircraftHeading(data.compass);
+            }
 
             currentDate = new Date(data.time);
             setSunrise(currentDate.sunrise(data.lat, data.lng));
@@ -716,7 +766,9 @@ function connect() {
             ems.setAmp(data.current);
             ems.setFuelLevel(data.fuelLevel);
             ems.setFuelFlow(data.fuelFlow);
-            efis.setSpeed(data.ASI);
+            if(settingsMgr.get('efisSpeedSource') != 'GPS') {
+                efis.setSpeed(data.ASI);
+            }
             ems.setMap(data.MAP);
         }
     };

@@ -273,6 +273,47 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
+                                Source
+                            </div>
+                            <div class="card-block">
+                                <div class="row form-goup">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Altitude source</div>
+                                            <div class="col-6" onclick="toggleEfisAltitudeSource()">
+                                                <input type="checkbox" name="efisAltitudeSource" on-value="GPS" off-value="Baro" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Speed source</div>
+                                            <div class="col-6" onclick="toggleEfisSpeedSource()">
+                                                <input type="checkbox" name="efisSpeedSource" on-value="GPS" off-value="Air" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-goup">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6">Compass source</div>
+                                            <div class="col-6" onclick="toggleEfisCompassSource()">
+                                                <input type="checkbox" name="efisCompassSource" on-value="GPS" off-value="Mag" class="custom-switch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-6"></div>
+                                            <div class="col-6"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
                                 Airspeed
                             </div>
                             <div class="card-block">

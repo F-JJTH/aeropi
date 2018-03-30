@@ -252,11 +252,20 @@ input[type=range]:focus::-ms-fill-upper {
      padding: 0 15px 0 15px;
      overflow-y: auto;
      overflow-x: hidden;
-     max-height: 44vh;
+     max-height: 40vh;
      margin-bottom: 18px;
 }
 
-.routeList .distance {    
+.waypointList .list-group-item,
+.routeList .list-group-item {
+    min-height: 55px;
+    line-height: 30px;
+    padding: .75rem .2rem;
+}
+
+.routeList .list-group-item .col-1 {
+    padding: 0 !important;
+    margin: auto;
 }
 
 .fh-control{

@@ -50,9 +50,14 @@ class GPSWorker (threading.Thread):
     self.systemDatetimeIsSet = False
 
   def getPredictivePoint(self):
+    gs = self.data['spd']
+    if gs <= 20:
+        f  = 60 / 5 #5 minutes
+        gs = 10*f # 10 kms
+
     brg  = math.degrees(self.data['compass'])*math.pi/180
     R    = 6372.7976 # Earth radius
-    d    = round(self.data['spd']) * 5 / 60 # 5 mintute ahead
+    d    = round(gs) * 5 / 60 # 5 mintute ahead
     dist = round(d, 4)/R
     lat0 = math.radians(self.data['lat'])
     lon0 = math.radians(self.data['lng'])
@@ -395,20 +400,28 @@ class MSGWorker (threading.Thread):
       pass
 
   def getCurrentAirspace(self):
-    req = "SELECT *, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
+    req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
     try:
       self.cursor.execute(req)
-      result = self.cursor.fetchone()
-      return result[0]
+      results = self.cursor.fetchall()
+      datas = []
+      for result in results:
+        datas.append({'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9]})
+
+      return datas
     except:
       pass
 
   def getPredictiveAirspace(self):
-    req = "SELECT *, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
+    req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
     try:
       self.cursor.execute(req)
-      result = self.cursor.fetchone()
-      return result[0]
+      results = self.cursor.fetchall()
+      datas = []
+      for result in results:
+        datas.append({'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9]})
+
+      return datas
     except:
       pass
 

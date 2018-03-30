@@ -39,7 +39,7 @@ class ND {
             ndAutoZoom: true,
             ndMapToNorth: true,
             ndMinPredictiveSpeed: 20,
-            ndDefaultPredictiveLength: 11, // 10 Kms
+            ndDefaultPredictiveLength: 10, // 10 Kms
             ndAircraftCenterOffset: 2.4,
             ndDistanceUnit: 'Km',
             ndPredictiveTime: 5, // 5 Minutes

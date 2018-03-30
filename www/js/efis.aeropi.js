@@ -68,7 +68,10 @@
         efisTickAlt: 8,
         efisTickSpeed: 5,
         efisAltitudeUnit: 'Ft',
+        efisAltitudeSource: 'GPS',
         efisSpeedUnit: 'Km/h',
+        efisSpeedSource: 'GPS',
+        efisCompassSource: 'GPS',
         efisQnhUnit: 'Mb',
     });
     var defaults = {
@@ -89,14 +92,14 @@
                 normal: "green",
                 flaps: "white",
             },
-            source: "gps",
+            source: "GPS",
         },
         alt:{
             tickspacing: 8, // distance between markers
             maxalt: 25000,    // maximum altitude marker
             qnh: 1013,
             pressure: 1000.0,
-            source: "baro",
+            source: "GPS",
         },
         ai:{
             color:{
@@ -105,7 +108,7 @@
             },
         },
         compass:{
-            source: "gps",
+            source: "GPS",
         },
         attitude:{
             pitchoffset: 0, // offset of the pitch AI
@@ -724,7 +727,7 @@
         if(v == data.compass) return;
         data.compass = v;
         compass.ladder.style.transform = "rotate("+(-v)+"deg";
-        if(v < 0 && settings.compass.source != "gps")
+        if(v < 0 && settings.compass.source != "GPS")
           v = 360 + v;
         compass.digits.textContent = parseInt(v);
     }

@@ -34,6 +34,13 @@ class RouteManager {
             this.refreshRouteList();
         });
 
+        let terrain = new Terrain('#terrainPreview', settingsMgr, {
+            url: "ajax.php?command=get_terrain_elevation",
+            pathProvider: () => {
+                return this.selectedRoute? this.selectedRoute.getWaypoints() : [];
+            }
+        });
+
         this.nd.setChangeWaypointCallback(() => { return this.selectNextWaypoint(); });
     }
 
@@ -170,8 +177,9 @@ class RouteManager {
         $.each(this.routes, (k, route) => {
             let row  = $('<div>', { 'class': 'row list-group-item' }).css('display', 'inherit');
             let col0 = $('<div>', { 'class': 'col-1' }).html(''+index);
-            let col1 = $('<div>', { 'class': 'col-9 routeNameDisplay' }).html(route.name+' <small class="distance">('+route.distance()+' Km)</small>');
-            let col2 = $('<div>', { 'class': 'col-1' }).html('<button class="btn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>');
+            let col1 = $('<div>', { 'class': 'col-8 routeNameDisplay' }).html(route.name+' <small class="distance">('+route.distance()+' Km)</small>');
+            let col2 = $('<div>', { 'class': 'col-1' }).html('<button type="button" class="btn btn-sm"><i class="fa fa-area-chart" aria-hidden="true"></i></button>');
+            let col3 = $('<div>', { 'class': 'col-1' }).html('<button type="button" class="btn btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></button>');
 
             if(index == 1) row.addClass('active');
 
@@ -183,11 +191,13 @@ class RouteManager {
                 })
                 row.addClass('active');
             });
-            col2.click(e => { e.stopPropagation(); this.deleteRoute(route, row); });
+            col2.click(e => { e.stopPropagation(); console.log('show terrain'); });
+            col3.dblclick(e => { e.stopPropagation(); this.deleteRoute(route, row); });
 
             row.append(col0);
             row.append(col1);
             row.append(col2);
+            row.append(col3);
             tbody.append(row);
             index++;
         });
@@ -213,10 +223,10 @@ class RouteManager {
             let col3 = $('<div>', { 'class': 'col-2' });
 
             if(waypoints.length > 2){
-                col3.html('<button class="btn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>');
-                col3.click(e => { e.stopPropagation(); this.deleteWaypoint(route, wpt, row); });
+                col3.html('<button type="button" class="btn btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></button>');
+                col3.dblclick(e => { e.stopPropagation(); this.deleteWaypoint(route, wpt, row); });
             } else {
-                col3.html('<button class="btn" disabled><i class="fa fa-trash-o" aria-hidden="true"></i></button>');
+                col3.html('<button type="button" class="btn btn-sm" disabled><i class="fa fa-trash-o" aria-hidden="true"></i></button>');
             }
 
             row.append(col0);
@@ -226,6 +236,10 @@ class RouteManager {
             tbody.append(row);
             index++;
         });
+    }
+
+    refreshTerrain(route = null) {
+        if(route == null) return;
     }
 
     deleteRoute(route, row) {

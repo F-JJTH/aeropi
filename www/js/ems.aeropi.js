@@ -384,8 +384,8 @@ class EMS {
             minorTicks: 500,
             strokeTicks: false,
             highlights: [
-                { from: 0,    to: 599,  color: this.colors.orange },
-                { from: 600,  to: 5599, color: this.colors.green  },
+                { from: 0,    to: 1199, color: this.colors.orange },
+                { from: 1200, to: 5599, color: this.colors.green  },
                 { from: 5600, to: 5999, color: this.colors.orange },
                 { from: 6000, to: 7000, color: this.colors.red    },
             ],
