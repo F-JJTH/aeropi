@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-lg-12 col-md-4">
                         <div class="row ems-row no-gutters">
-                            <div class="col-4 col-sm-5 ems-info text-nowrap">
+                            <div class="col-4 col-sm-7 ems-info text-nowrap">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-lg-6">Position:</div><div class="col-12 col-lg-6"><span class="info-position"></span></div>
                                 </div>
@@ -85,12 +85,17 @@
                                     <div class="col-6 col-lg-3">ETE:</div><div class="col-6 col-lg-3"><span class="info-ete"></span></div>
                                     <div class="col-6 col-lg-3">ETA:</div><div class="col-6 col-lg-3"><span class="info-eta"></span></div>
                                 </div>
+                                <div class="row no-gutters">
+                                    <div class="col-12">Airspace:</div><div class="col-12"><span class="info-currentAirspace"></span></div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-12">Next&nbsp;airspace:</div><div class="col-12"><span class="info-nextAirspace"></span></div>
+                                </div>
                             </div>
-                            <div class="col-8 col-sm-7">
+                            <div class="col-8 col-sm-5">
                                 <div class="row ems-row no-gutters">
-                                    <div class="col-4"></div>
-                                    <div class="col-4"><canvas id="ampGauge"></canvas></div>
-                                    <div class="col-4"><canvas id="voltGauge"></canvas></div>
+                                    <div class="col-6"><canvas id="ampGauge"></canvas></div>
+                                    <div class="col-6"><canvas id="voltGauge"></canvas></div>
                                 </div>
                             </div>
                         </div>

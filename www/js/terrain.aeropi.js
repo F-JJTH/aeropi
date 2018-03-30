@@ -58,8 +58,6 @@ class Terrain {
         this.path = this.options.pathProvider();
         if(!this.path || this.path.length == 0) return;
 
-        console.log(this.path);
-
         let _path = '';
         this.path.coords.forEach(coord => {
             _path += coord[0]+','+coord[1]+'|';

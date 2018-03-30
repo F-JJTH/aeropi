@@ -957,7 +957,6 @@
     }
 
     this.redraw = function() {
-        console.log('efis redraw');
         settings.width = $(this).width();
         settings.height = $(this).height();
         rectHeight = settings.height-settings.height/2.8;

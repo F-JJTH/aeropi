@@ -19,7 +19,6 @@ let settingsMgr = new SettingsManager({
     userManagerModal: '#userManagerModal',
     createUserModal: 'createUserModal',
     onSettingsLoaded: settings => {
-        console.log(settings);
         if(settings.terrainElevationVisible) {
             terrain.show();
         } else {
@@ -133,10 +132,6 @@ settingsMgr.addDefaultSettings({
 });
 
 settingsMgr.init();
-
-$('#map').on('click', function(e){
-    console.log('clicked');
-});
 
 let toggleFullscreen = () => {
     var element = document.documentElement;
@@ -581,7 +576,6 @@ let setEfisQnh = function(v) {
 
 let openQnhManager = function() {
     let k = 'efisQnh';
-    console.log(efis.getQnh());
     $(':input[name='+k+']').val(efis.getQnh());
     $('#qnhManagerModal').modal({
         backdrop: 'static',
@@ -640,12 +634,10 @@ let setFuel = function() {
 }
 
 let setSunrise = function(date) {
-    //console.log(date.getUTCTime());
     $('span.sunrise').html(formatTime(date));
 }
 
 let setSunset = function(date) {
-    //console.log(date.getUTCTime());
     $('span.sunset').html(formatTime(date));
 }
 
@@ -658,6 +650,11 @@ function ConvertDDToDMS(D, lng){
     };
 }
 
+let infoPosition = $('.info-position');
+let infoEte = $('.info-ete');
+let infoEta = $('.info-eta');
+let infoWptDistance = $('.info-wptDistance');
+let infoRouteDistance = $('.info-routeDistance');
 let updateRouteStat = function(date) {
     let latlng = nd.getAircraftPosition();
     let DMSlng = ConvertDDToDMS(latlng[0], true);
@@ -691,11 +688,41 @@ let updateRouteStat = function(date) {
         routeDuration = "------";
     }
 
-    $('.info-position').html(DMSposition);
-    $('.info-ete').html(routeDuration);
-    $('.info-eta').html(eta);
-    $('.info-wptDistance').html(directToDist);
-    $('.info-routeDistance').html(routeDist);
+    if(infoPosition.html() != DMSposition) {
+        infoPosition.html(DMSposition);
+    }
+    if(infoEte.html() != routeDuration) {
+        infoEte.html(routeDuration);
+    }
+    if(infoEta.html() != eta) {
+        infoEta.html(eta);
+    }
+    if(infoWptDistance.html() != directToDist) {
+        infoWptDistance.html(directToDist);
+    }
+    if(infoRouteDistance.html() != routeDist) {
+        infoRouteDistance.html(routeDist);
+    }
+}
+
+let currentAirspace = null;
+let nextAirspace = null;
+let updateAirspaceInfo = function(current, next) {
+    if(current) {
+        if(!currentAirspace || current.id != currentAirspace.id) {
+            currentAirspace = current;
+            let txt = currentAirspace.activities.split('\n');
+            $('.info-currentAirspace').html(txt[1]);
+        }
+    }
+
+    if(next) {
+        if(!nextAirspace || next.id != nextAirspace.id) {
+            nextAirspace = next;
+            let txt = nextAirspace.activities.split('\n');
+            $('.info-nextAirspace').html(txt[1]);
+        }
+    }
 }
 
 $('#searchDirectToModal').on('show.bs.modal', function(e){
@@ -736,7 +763,6 @@ function connect() {
 
     ws.onmessage = function (e) {
         var data = JSON.parse(e.data);
-        //console.log(data);
         if(data.IMU){
             data = data.IMU;
             efis.setSlip(data.slipball);
@@ -755,12 +781,12 @@ function connect() {
                 efis.setAltitude(data.altitudePressure);
                 efis.setQnh(data.qnh);
             }
-            console.log(data.qnh);
         }
         if(data.GPS){
             data = data.GPS;
-            console.log(data);
             nd.setAircraftPosition([data.lng, data.lat]);
+
+            updateAirspaceInfo(data.currentAirspace[0], data.predictiveAirspace[0]);
 
             if(settingsMgr.get('efisSpeedSource') == 'GPS') {
                 efis.setSpeed(data.spd);
@@ -792,7 +818,6 @@ function connect() {
 
         if(data.EMS){
             data = data.EMS;
-            //console.log(data.current);
             ems.setRpm(data.RPM);
             ems.setCylTemp(data.cylTemp);
             ems.setOilTemp(data.oilTemp);
