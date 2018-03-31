@@ -814,6 +814,8 @@ function connect() {
             if(settingsMgr.get('efisAltitudeSource') == 'GPS') {
                 efis.setAltitude(data.alt);
             }
+
+            efis.setVsi(data.climb);
         }
 
         if(data.EMS){

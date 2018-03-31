@@ -594,9 +594,9 @@
         main.qnh.textContent = "QNH: "+settings.alt.qnh;
         main.appendChild(main.qnh);
         // Bg Digit
-        /*elem = document.createElementNS(svgNS, "path");
+        elem = document.createElementNS(svgNS, "path");
         elem.setAttribute("style", "fill:black; fill-opacity:0.24;");
-        elem.setAttribute("d", "M"+(width-182-4)+" 32 h182 v22 h-182 Z");
+        elem.setAttribute("d", "M"+(width-127-4)+" 32 h127 v22 h-127 Z");
         elem.setAttribute("filter", "url(#shadowSmall)");
         main.appendChild(elem);
         main.position = document.createElementNS(svgNS, "text");
@@ -604,8 +604,8 @@
         main.position.setAttribute("text-anchor", "end");
         main.position.setAttribute("x", width-6);
         main.position.setAttribute("y", 50);
-        main.position.textContent = "00.00N - 00.00E";
-        main.appendChild(main.position);*/
+        main.position.textContent = "0 Ft/m";
+        main.appendChild(main.position);
 
         return main;
     }
@@ -692,6 +692,13 @@
     /*
      * Public methods
      */
+     this.setVsi = function(v) {
+        v = parseInt(v);
+        data.vsi = v;
+        let txt = v > 0 ? "+"+v : v;
+        bottomRight.position.textContent = txt + " Ft/m";
+     }
+
     this.setAltitude = function(v) {
         v = parseInt(v);
         //if( v == 0) return;
@@ -969,19 +976,19 @@
         compass.remove();
         ts.remove();
 
-        ai     = _createAi();
+        ai      = _createAi();
         parent.append(ai);
-        asi    = _createAsi();
+        asi     = _createAsi();
         parent.append(asi);
-        alt    = _createAlt();
+        alt     = _createAlt();
         parent.append(alt);
-        compass    = _createCompass();
+        compass = _createCompass();
         parent.append(compass);
-        ts     = _createTs();
+        ts      = _createTs();
         parent.append(ts);
     }
 
-    var data = {alt:0, qnh:0, spd:0, compass:0, pitch:0, roll:0, eta:0, dst:0, pressure:0};
+    var data = {alt:0, qnh:0, spd:0, compass:0, pitch:0, roll:0, eta:0, dst:0, pressure:0, vsi: 0};
     var parent = $(this);
     var ai     = _createAi();
     parent.append(ai);
