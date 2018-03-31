@@ -460,35 +460,35 @@ class MSGWorker (threading.Thread):
 
   def getCurrentAirspace(self):
     req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
+    airspaces = []
     try:
       self.cursor.execute(req)
       results = self.cursor.fetchall()
-      airspaces = []
       for result in results:
         geom = self.getGeometryAsArray(result[10])
         row = {'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9], 'g': geom}
-        if isInPolygon(row) is True:
+        if self.isInPolygon(row) is True:
           airspaces.append(row)
-
-      return airspaces
     except:
       pass
+
+    return airspaces
 
   def getPredictiveAirspace(self):
     req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
+    airspaces = []
     try:
       self.cursor.execute(req)
       results = self.cursor.fetchall()
-      airspaces = []
       for result in results:
         geom = self.getGeometryAsArray(result[10])
         row = {'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9], 'g': geom}
-        if isInPolygon(row) is True:
+        if self.isInPolygon(row) is True:
           airspaces.append(row)
-
-      return airspaces
     except:
       pass
+
+    return airspaces
 
   def run(self):
     while not stopFlag:

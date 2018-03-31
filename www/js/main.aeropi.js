@@ -707,21 +707,33 @@ let updateRouteStat = function(date) {
 
 let currentAirspace = null;
 let nextAirspace = null;
-let updateAirspaceInfo = function(current, next) {
-    if(current) {
-        if(!currentAirspace || current.id != currentAirspace.id) {
-            currentAirspace = current;
-            let txt = currentAirspace.activities.split('\n');
-            $('.info-currentAirspace').html(txt[1]);
+let updateAirspaceInfo = function(currentAirspaces, nextAirspaces) {
+    if(currentAirspaces.length > 0) {
+        let current = currentAirspaces[0];
+        if(current) {
+            if(!currentAirspace || current.id != currentAirspace.id) {
+                currentAirspace = current;
+                let txt = currentAirspace.activities.split('\n');
+                $('.info-currentAirspace').html(txt[1]);
+            }
         }
+    } else {
+        currentAirspace = null;
+        $('.info-currentAirspace').empty();
     }
 
-    if(next) {
-        if(!nextAirspace || next.id != nextAirspace.id) {
-            nextAirspace = next;
-            let txt = nextAirspace.activities.split('\n');
-            $('.info-nextAirspace').html(txt[1]);
+    if(nextAirspaces.length > 0) {
+        let next = nextAirspaces[0];
+        if(next) {
+            if(!nextAirspace || next.id != nextAirspace.id) {
+                nextAirspace = next;
+                let txt = nextAirspace.activities.split('\n');
+                $('.info-nextAirspace').html(txt[1]);
+            }
         }
+    } else {
+        nextAirspace = null;
+        $('.info-nextAirspace').empty();
     }
 }
 
@@ -733,6 +745,13 @@ let sendCurrentUser = function() {
     sendData({
         type: 'user_id',
         user_id: settingsMgr.getUser().getId()
+    });
+}
+
+let sendCurrentQnh = function() {
+    sendData({
+        type: 'QNH',
+        QNH: settingsMgr.get('efisQnh'),
     });
 }
 
@@ -759,6 +778,7 @@ function connect() {
     ws = new WebSocket("ws://"+_hostname+":7700");
     ws.onopen = function() {
         sendCurrentUser();
+        sendCurrentQnh();
     };
 
     ws.onmessage = function (e) {
@@ -786,7 +806,7 @@ function connect() {
             data = data.GPS;
             nd.setAircraftPosition([data.lng, data.lat]);
 
-            updateAirspaceInfo(data.currentAirspace[0], data.predictiveAirspace[0]);
+            updateAirspaceInfo(data.currentAirspace, data.predictiveAirspace);
 
             if(settingsMgr.get('efisSpeedSource') == 'GPS') {
                 efis.setSpeed(data.spd);
