@@ -25,6 +25,50 @@ gpsWorker  = False
 emsWorker  = False
 _USERID_   = 0
 
+def pointInPolygon(point, polygon, pointOnVertex=True):
+  # Transform string coordinates into arrays with x and y values
+  point    = pointStringToCoordinates(point)
+  vertices = []
+  for vertex in polygon:
+    vertices.append(pointStringToCoordinates(vertex))
+
+  # Check if the point sits exactly on a vertex
+  if pointOnVertex is True and isPointOnVertex(point, vertices) is True:
+    return True
+
+  # Check if the point is inside the polygon or on the boundary
+  intersections = 0
+  vertices_count = len(vertices)
+
+  for i in range(1, vertices_count):
+    vertex1 = vertices[i-1]
+    vertex2 = vertices[i]
+    # Check if point is on an horizontal polygon boundary
+    if vertex1['y'] == vertex2['y'] and vertex1['y'] == point['y'] and point['x'] > min(vertex1['x'], vertex2['x']) and point['x'] < max(vertex1['x'], vertex2['x']):
+      return True
+
+    if point['y'] > min(vertex1['y'], vertex2['y']) and point['y'] <= max(vertex1['y'], vertex2['y']) and point['x'] <= max(vertex1['x'], vertex2['x']) and vertex1['y'] != vertex2['y']:
+      xinters = (point['y'] - vertex1['y']) * (vertex2['x'] - vertex1['x']) / (vertex2['y'] - vertex1['y']) + vertex1['x']
+      if xinters == point['x']: # Check if point is on the polygon boundary (other than horizontal)
+        return True
+      if vertex1['x'] == vertex2['x'] or point['x'] <= xinters:
+        intersections += 1
+
+  # If the number of edges we passed through is odd, then it's in the polygon.
+  if intersections % 2 != 0:
+    return True
+  else:
+    return False
+
+def isPointOnVertex(point, vertices):
+  for vertex in vertices:
+    if point == vertex:
+      return True
+  return False
+
+def pointStringToCoordinates(pointString):
+  return {'x': pointString[0], 'y': pointString[1]}
+
 def clamp(minimum, value, maximum):
   return min(maximum, max(minimum, value))
 
@@ -398,29 +442,51 @@ class MSGWorker (threading.Thread):
     except:
       pass
 
+  def getGeometryAsArray(self, geom):
+    polygon  = geom[9:-2]
+    coords   = polygon.split(',')
+    polygon  = []
+    for coord in coords:
+      lon1, lat1 = coord.split(' ')
+      polygon.append([float(lon1), float(lat1)])
+
+    return polygon
+
+  def isInPolygon(self, row):
+    point = [self.lastGps['lng'], self.lastGps['lat']]
+    if pointInPolygon(point, row['g']):
+        return True
+    return False
+
   def getCurrentAirspace(self):
-    req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
+    req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['lng'], self.lastGps['lat'], self.lastGps['alt'], self.lastGps['alt'])
     try:
       self.cursor.execute(req)
       results = self.cursor.fetchall()
-      datas = []
+      airspaces = []
       for result in results:
-        datas.append({'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9]})
+        geom = self.getGeometryAsArray(result[10])
+        row = {'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9], 'g': geom}
+        if isInPolygon(row) is True:
+          airspaces.append(row)
 
-      return datas
+      return airspaces
     except:
       pass
 
   def getPredictiveAirspace(self):
-    req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
+    req = "SELECT id, name, type, class, activities, remarks, upper, lower, minimum, maximum, AsText(g) FROM airspaces WHERE id > 0 AND Contains(g, GeomFromText('POINT(%s %s)')) AND lower <= %s AND upper >= %s" % (self.lastGps['predictiveLng'], self.lastGps['predictiveLat'], self.lastGps['alt'], self.lastGps['alt'])
     try:
       self.cursor.execute(req)
       results = self.cursor.fetchall()
-      datas = []
+      airspaces = []
       for result in results:
-        datas.append({'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9]})
+        geom = self.getGeometryAsArray(result[10])
+        row = {'id': result[0], 'name': result[1], 'type': result[2], 'class': result[3], 'activities': result[4], 'remarks': result[5], 'upper': result[6], 'lower': result[7], 'minimum': result[8], 'maximum': result[9], 'g': geom}
+        if isInPolygon(row) is True:
+          airspaces.append(row)
 
-      return datas
+      return airspaces
     except:
       pass
 
