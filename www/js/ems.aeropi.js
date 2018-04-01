@@ -206,6 +206,7 @@ class EMS {
             colorMajorTicks: [this.colors.red, this.colors.green, this.colors.red]
         };
         $.extend(true, config, this.generalGaugeConfig);
+        config.valueDec = 1;
 
         return new LinearGauge(config).draw();
     }
@@ -233,6 +234,7 @@ class EMS {
             colorMajorTicks: [this.colors.red, this.colors.green, this.colors.red]
         };
         $.extend(true, config, this.generalGaugeConfig);
+        config.valueDec = 1;
 
         return new LinearGauge(config).draw();
     }
@@ -474,104 +476,3 @@ class EMS {
         this.fuelFlowGauge.value = this.fuelFlow;
     }
 }
-
-
-/*_createFilters() {
-        let defs = document.createElementNS(this.svgNS, "defs");
-        // shadow
-        let filter = document.createElementNS(this.svgNS, "filter");
-        filter.setAttribute("id", "shadow");
-        filter.setAttribute("x", "-10%");
-        filter.setAttribute("y", "-10%");
-        filter.setAttribute("width", "120%");
-        filter.setAttribute("height", "120%");
-        let elem = document.createElementNS(this.svgNS, "feOffset");
-        elem.setAttribute("result", "offOut");
-        elem.setAttribute("in", "SourceAlpha");
-        elem.setAttribute("dx", 0);
-        elem.setAttribute("dy", 0);
-        filter.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, "feGaussianBlur");
-        elem.setAttribute("result", "blurOut");
-        elem.setAttribute("in", "offOut");
-        elem.setAttribute("stdDeviation", 4);
-        filter.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, "feBlend");
-        elem.setAttribute("in", "SourceGraphic");
-        elem.setAttribute("in2", "blurOut");
-        elem.setAttribute("mode", "normal");
-        filter.appendChild(elem);
-        defs.appendChild(filter);
-        // shadowSmall
-        filter = document.createElementNS(this.svgNS, "filter");
-        filter.setAttribute("id", "shadowSmall");
-        filter.setAttribute("x", "-15%");
-        filter.setAttribute("y", "-15%");
-        filter.setAttribute("width", "130%");
-        filter.setAttribute("height", "130%");
-        elem = document.createElementNS(this.svgNS, "feOffset");
-        elem.setAttribute("result", "offOut");
-        elem.setAttribute("in", "SourceAlpha");
-        elem.setAttribute("dx", 0);
-        elem.setAttribute("dy", 0);
-        filter.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, "feGaussianBlur");
-        elem.setAttribute("result", "blurOut");
-        elem.setAttribute("in", "offOut");
-        elem.setAttribute("stdDeviation", 2);
-        filter.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, "feBlend");
-        elem.setAttribute("in", "SourceGraphic");
-        elem.setAttribute("in2", "blurOut");
-        elem.setAttribute("mode", "normal");
-        filter.appendChild(elem);
-        defs.appendChild(filter);
-        
-
-        // colors cylTempGauge
-        let grad = document.createElementNS(this.svgNS, 'linearGradient');
-        grad.setAttribute('id', 'cylTempColor');
-        grad.setAttribute('x1', '0%');
-        grad.setAttribute('y1', '0%');
-        grad.setAttribute('x2', '0%');
-        grad.setAttribute('y2', '100%');
-        elem = document.createElementNS(this.svgNS, 'stop');
-        elem.setAttribute('offset', '0%');
-        elem.setAttribute('style', 'stop-color:'+this.colors.red+';stop-opacity:1');
-        grad.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, 'stop');
-        elem.setAttribute('offset', '10%');
-        elem.setAttribute('style', 'stop-color:'+this.colors.orange+';stop-opacity:1');
-        grad.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, 'stop');
-        elem.setAttribute('offset', '17%');
-        elem.setAttribute('style', 'stop-color:'+this.colors.green+';stop-opacity:1');
-        grad.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, 'stop');
-        elem.setAttribute('offset', '83%');
-        elem.setAttribute('style', 'stop-color:'+this.colors.green+';stop-opacity:1');
-        grad.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, 'stop');
-        elem.setAttribute('offset', '90%');
-        elem.setAttribute('style', 'stop-color:'+this.colors.orange+';stop-opacity:1');
-        grad.appendChild(elem);
-        elem = document.createElementNS(this.svgNS, 'stop');
-        elem.setAttribute('offset', '100%');
-        elem.setAttribute('style', 'stop-color:'+this.colors.red+';stop-opacity:1');
-        grad.appendChild(elem);
-        defs.appendChild(grad);
-
-        filter = document.createElementNS(this.svgNS, "clipPath");
-        filter.setAttribute("id", "gaugeClip");
-        elem = document.createElementNS(this.svgNS, "rect");
-        elem.setAttribute("x", "33%");
-        elem.setAttribute("y", 4);
-        elem.setAttribute("rx", 6);
-        elem.setAttribute("ry", 6);
-        elem.setAttribute("width", '33%');
-        elem.setAttribute("height", '80%');
-        filter.appendChild(elem);
-        defs.appendChild(filter);
-
-        return defs;
-    }*/

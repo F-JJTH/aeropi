@@ -348,7 +348,7 @@ class EMSWorker (threading.Thread):
 
   def getVoltage(self, value):
     Vout = (value*self.V_Ref)/self.resolution
-    return Vout*5
+    return Vout*5.120967742
 
   def getCurrent(self, value):
     Vout = (value*self.V_Ref)/self.resolution
