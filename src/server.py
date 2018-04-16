@@ -188,7 +188,7 @@ class IMUWorker (threading.Thread):
     if not self.imu.IMUInit():
       print("IMU Init Failed")
 
-    self.imu.setSlerpPower(0.02)
+    self.imu.setSlerpPower(0.005)
     self.imu.setGyroEnable(True)
     self.imu.setAccelEnable(True)
     self.imu.setCompassEnable(True)
@@ -244,9 +244,9 @@ class IMUWorker (threading.Thread):
         self.data['vs'] = int(self.IMUdata['accel'][2]*100)/100
         self.data['slipball'] = roundNearest(self.data['slipball'], 0.1)
         self.data['vs'] = roundNearest(self.data['vs'], 0.5)
-        #self.data['yaw'] = int(math.degrees(self.IMUdata['fusionPose'][2]))-90
-        #if self.data['yaw'] < 0:
-        #  self.data['yaw'] = 360 + self.data['yaw']
+        self.data['yaw'] = int(math.degrees(self.IMUdata['fusionPose'][2]))-180
+        if self.data['yaw'] < 0:
+          self.data['yaw'] = 360 + self.data['yaw']
 
         self.data['qnh'] = self.currentQNH
 
@@ -537,7 +537,7 @@ class MSGWorker (threading.Thread):
 
       if now - self.lastUpdateLog > 10:
         self.updateLog(now, self.lastGps, self.lastEms, self.lastImu)
-        self.lastUpdateLog = now        
+        self.lastUpdateLog = now
 
       time.sleep(0.02)
 
