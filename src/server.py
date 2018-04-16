@@ -198,6 +198,7 @@ class IMUWorker (threading.Thread):
     self.newData = ''
     self.data = {'temperature':15, 'pressure':850, 'humidity':0, 'pitch':0, 'roll':0, 'yaw':0, 'slipball':0, 'qnh':1013}
     self.currentQNH = 1013
+    self.prevPressure = 0.0
 
   def run(self):
     while not stopFlag:
@@ -236,6 +237,11 @@ class IMUWorker (threading.Thread):
             self.data['pressure'] = roundNearest(self.bme280.read_pressure() / 100, 0.1)
             self.data['altitudePressure'] = roundNearest(self.getAltitudePressure(), 50)
             self.data['dewpoint'] = roundNearest(self.bme280.read_dewpoint(), 0.5)
+
+            deltaPressure = (self.prevPressure - self.data['pressure'])*1000 # Delta in Pascal
+            self.data['climb'] = int((33.0*deltaPressure/100000.0)*60)       # 33ft = 100 000 Pascal
+
+            self.prevPressure = self.data['pressure']
             self.bme280LastRead = now
 
         self.data['pitch'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][1]), 180))

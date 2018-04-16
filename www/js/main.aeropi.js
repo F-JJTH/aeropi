@@ -81,7 +81,7 @@ let settingsMgr = new SettingsManager({
         $(':input[name=vne]').val(settings.vne);
         $(':input[name=speedTickSpacing]').val(settings.efisTickSpeed);
         $(':input[name=altitudeTickSpacing]').val(settings.efisTickAlt);
-        
+
         $(':checkbox[name=emsTemperatureUnit]').prop('checked', (settings.emsTemperatureUnit == 'C'));
         ems.setTemperatureUnit(settings.emsTemperatureUnit);
 
@@ -787,6 +787,7 @@ function connect() {
             data = data.IMU;
             efis.setSlip(data.slipball);
             efis.setPressure(data.pressure);
+            efis.setVsi(data.climb);
             //efis.setAttitude({roll:data.roll, pitch:data.pitch});
             debounce(efis.setAttitude({roll:data.roll, pitch:data.pitch}), 100);
 
@@ -834,8 +835,6 @@ function connect() {
             if(settingsMgr.get('efisAltitudeSource') == 'GPS') {
                 efis.setAltitude(data.alt);
             }
-
-            efis.setVsi(data.climb);
         }
 
         if(data.EMS){
