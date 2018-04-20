@@ -242,6 +242,7 @@ class IMUWorker (threading.Thread):
             self.prevPressure = self.data['pressure']
             self.bme280LastRead = now
 
+        self.data['imu'] = self.IMUdata
         self.data['pitch'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][1]), 180))
         self.data['roll'] = int(clamp(-180, math.degrees(self.IMUdata['fusionPose'][0]), 180))
         self.data['slipball'] = -int(self.IMUdata['accel'][1]*100)/100
