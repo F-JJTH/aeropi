@@ -18,6 +18,7 @@ import pigpio
 from enum import Enum
 import pymysql
 from datetime import datetime
+from madgwick_ahrs import MadgwickAHRS
 
 stopFlag   = False
 imuWorker  = False
