@@ -2,6 +2,9 @@
 import pymysql
 import math
 import time
+from madgwick_ahrs import MadgwickAHRS
+
+
 
 def getPredictivePoint(spd, compass, lat, lng):
     gs = spd
@@ -88,6 +91,19 @@ def getClimbRate(prevPressure, currPressure, dt):
   return int(33.0*deltaPressure*(60/dt))
 
 
+
+gyro    = [0, 1, 0]
+accel   = [1, 0, 0]
+compass = [0, 0, 0]
+
+AHRS = MadgwickAHRS()
+AHRS.update(gyro, accel, compass)
+roll, pitch, yaw  = AHRS.getRollPitchYaw()
+print('roll ', roll)
+print('pitch ', pitch)
+print('yaw ', yaw)
+
+"""
 pollInterval = 2
 bme280LastRead = 0
 
@@ -100,7 +116,7 @@ while(1):
         bme280LastRead = now
 
     time.sleep(pollInterval)
-
+"""
 
 
 """
