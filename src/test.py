@@ -1,5 +1,22 @@
 #!/usr/bin/env python3
 import pymysql
+import math
+
+def getPredictivePoint(spd, compass, lat, lng):
+    gs = spd
+    if gs <= 20:
+        f  = 60 / 5 #5 minutes
+        gs = 10*f # 10 kms
+
+    brg  = math.radians(compass)
+    R    = 6372.7976 # Earth radius
+    d    = gs * 5 / 60 # 5 mintute ahead
+    dist = d/R
+    lat0 = math.radians(lat)
+    lon0 = math.radians(lng)
+    lat1 = math.asin(math.sin(lat0)*math.cos(dist) + math.cos(lat0)*math.sin(dist)*math.cos(brg))
+    lon1 = lon0 + math.atan2(math.sin(brg)*math.sin(dist)*math.cos(lat0), math.cos(dist)-math.sin(lat0)*math.sin(lat1))
+    return {'lng': round(math.degrees(lon1), 6), 'lat': round(math.degrees(lat1), 6)}
 
 def pointInPolygon(point, polygon, pointOnVertex=True):
   # Transform string coordinates into arrays with x and y values
@@ -63,6 +80,16 @@ def isInPolygon(row):
     return True
 
 
+
+spd = 100
+compass = 270
+lat = 44
+lng = 5
+
+coord = getPredictivePoint(spd, compass, lat, lng)
+print(coord)
+
+"""
 db = pymysql.connect("192.168.0.252", "aeropi", "aeropi", "aeropi")
 cursor = db.cursor()
 
@@ -85,4 +112,6 @@ try:
   
 except:
   pass
+
+"""
 
