@@ -623,7 +623,7 @@ class ND {
 
     destSphere(coord0, hdg, spd) {
         let ll   = ol.proj.toLonLat(coord0);
-        let brg  = Math.degrees(hdg)*Math.PI/180;
+        let brg  = hdg;
         var R    = 6372.7976; // Earth radius
         let d    = (Math.round(spd) * this.sMgr.get('ndPredictiveTime')) / 60;
         var dist = d.toFixed(4)/R;

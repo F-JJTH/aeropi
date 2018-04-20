@@ -99,7 +99,7 @@ class GPSWorker (threading.Thread):
         f  = 60 / 5 #5 minutes
         gs = 10*f # 10 kms
 
-    brg  = math.degrees(self.data['compass'])*math.pi/180
+    brg  = math.radians(self.data['compass'])
     R    = 6372.7976 # Earth radius
     d    = round(gs) * 5 / 60 # 5 mintute ahead
     dist = round(d, 4)/R
