@@ -237,7 +237,7 @@ class IMUWorker (threading.Thread):
             self.data['pressure'] = roundNearest(self.bme280.read_pressure() / 100, 0.1)
             self.data['altitudePressure'] = roundNearest(self.getAltitudePressure(), 50)
             self.data['dewpoint'] = roundNearest(self.bme280.read_dewpoint(), 0.5)
-            self.data['climb'] = self.getClimbRate(elapsedTimeSinceLastRead)
+            self.data['climb'] = roundNearest(self.getClimbRate(elapsedTimeSinceLastRead), 25)
 
             self.prevPressure = self.data['pressure']
             self.bme280LastRead = now
