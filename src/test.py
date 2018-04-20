@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import pymysql
 import math
+import time
 
 def getPredictivePoint(spd, compass, lat, lng):
     gs = spd
@@ -81,6 +82,28 @@ def isInPolygon(row):
 
 
 
+def getClimbRate(prevPressure, currPressure, dt):
+  print(dt)
+  deltaPressure = prevPressure - currPressure
+  return int(33.0*deltaPressure*(60/dt))
+
+
+pollInterval = 2
+bme280LastRead = 0
+
+while(1):
+    now = time.time()
+    elapsedTimeSinceLastRead = now - bme280LastRead
+    if elapsedTimeSinceLastRead > 1:
+        climb = getClimbRate(1000.0, 1000.5, elapsedTimeSinceLastRead)
+        print(climb)
+        bme280LastRead = now
+
+    time.sleep(pollInterval)
+
+
+
+"""
 spd = 100
 compass = 270
 lat = 44
@@ -88,6 +111,8 @@ lng = 5
 
 coord = getPredictivePoint(spd, compass, lat, lng)
 print(coord)
+"""
+
 
 """
 db = pymysql.connect("192.168.0.252", "aeropi", "aeropi", "aeropi")
