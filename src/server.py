@@ -255,6 +255,13 @@ class IMUWorker (threading.Thread):
 
         self.data['qnh'] = self.currentQNH
 
+        AHRS = MadgwickAHRS()
+        AHRS.update(gyro, accel, compass)
+        roll, pitch, yaw   = AHRS.getRollPitchYaw()
+        self.data['roll']  = roll
+        self.data['pitch'] = pitch
+        self.data['yaw']   = yaw
+
         self.newData = '%s' % json.dumps(self.data)
 
         time.sleep(self.pollInterval*1.0/1000.0)
