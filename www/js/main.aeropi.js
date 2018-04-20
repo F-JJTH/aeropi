@@ -802,6 +802,23 @@ function connect() {
                 efis.setAltitude(data.altitudePressure);
                 efis.setQnh(data.qnh);
             }
+
+            $('.imu-accel-0').html(data.imu.accel[0]);
+            $('.imu-accel-1').html(data.imu.accel[1]);
+            $('.imu-accel-2').html(data.imu.accel[2]);
+            $('.imu-gyro-0').html(data.imu.gyro[0]);
+            $('.imu-gyro-1').html(data.imu.gyro[1]);
+            $('.imu-gyro-2').html(data.imu.gyro[2]);
+            $('.imu-magn-0').html(data.imu.compass[0]);
+            $('.imu-magn-1').html(data.imu.compass[1]);
+            $('.imu-magn-2').html(data.imu.compass[2]);
+            $('.imu-fusion-0').html(data.imu.fusionPose[0]);
+            $('.imu-fusion-1').html(data.imu.fusionPose[1]);
+            $('.imu-fusion-2').html(data.imu.fusionPose[2]);
+            $('.imu-qfusion-0').html(data.imu.fusionQPose[0]);
+            $('.imu-qfusion-1').html(data.imu.fusionQPose[1]);
+            $('.imu-qfusion-2').html(data.imu.fusionQPose[2]);
+            $('.imu-qfusion-3').html(data.imu.fusionQPose[3]);
         }
         if(data.GPS){
             data = data.GPS;
