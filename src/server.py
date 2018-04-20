@@ -237,9 +237,7 @@ class IMUWorker (threading.Thread):
             self.data['pressure'] = roundNearest(self.bme280.read_pressure() / 100, 0.1)
             self.data['altitudePressure'] = roundNearest(self.getAltitudePressure(), 50)
             self.data['dewpoint'] = roundNearest(self.bme280.read_dewpoint(), 0.5)
-
-            deltaPressure = (self.prevPressure - self.data['pressure'])*1000 # Delta in Pascal
-            self.data['climb'] = int((33.0*deltaPressure/100000.0)*60)       # 33ft = 100 000 Pascal
+            self.data['climb'] = self.getClimbRate(elapsedTimeSinceLastRead)
 
             self.prevPressure = self.data['pressure']
             self.bme280LastRead = now
@@ -259,6 +257,10 @@ class IMUWorker (threading.Thread):
         self.newData = '%s' % json.dumps(self.data)
 
         time.sleep(self.pollInterval*1.0/1000.0)
+
+  def getClimbRate(self, dt):
+    deltaPressure = self.prevPressure - self.data['pressure']
+    return int(33.0*deltaPressure*(60/dt))
 
   def getPressure(self):
     return self.data['pressure']
