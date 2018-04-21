@@ -189,17 +189,19 @@ class IMUWorker (threading.Thread):
     if not self.imu.IMUInit():
       print("IMU Init Failed")
 
-    self.imu.setSlerpPower(0.005)
+    self.imu.setSlerpPower(0.02)
     self.imu.setGyroEnable(True)
     self.imu.setAccelEnable(True)
     self.imu.setCompassEnable(True)
 
     self.pollInterval = self.imu.IMUGetPollInterval()
+    print('IMU poll interval: ', self.pollInterval)
     self.oldData = ''
     self.newData = ''
     self.data = {'temperature':15, 'pressure':850, 'humidity':0, 'pitch':0, 'roll':0, 'yaw':0, 'slipball':0, 'qnh':1013}
     self.currentQNH = 1013
     self.prevPressure = 0.0
+    self.AHRS = MadgwickAHRS(sampleperiod=(1.0/self.pollInterval), beta=1.0)
 
   def run(self):
     while not stopFlag:
@@ -256,16 +258,15 @@ class IMUWorker (threading.Thread):
 
         self.data['qnh'] = self.currentQNH
 
-        AHRS = MadgwickAHRS()
-        AHRS.update(gyro, accel, compass)
-        roll, pitch, yaw   = AHRS.getRollPitchYaw()
-        self.data['roll']  = roll
-        self.data['pitch'] = pitch
-        self.data['yaw']   = yaw
+        #gyro = [math.radians(self.IMUdata['gyro'][0]), math.radians(self.IMUdata['gyro'][1]), math.radians(self.IMUdata['gyro'][2])]
+        #roll, pitch, yaw   = self.AHRS.update(self.IMUdata['gyro'], self.IMUdata['accel'], self.IMUdata['compass'])
+        #self.data['roll']  = roll
+        #self.data['pitch'] = pitch
+        #self.data['yaw']   = yaw
 
         self.newData = '%s' % json.dumps(self.data)
 
-        time.sleep(self.pollInterval*1.0/1000.0)
+      time.sleep(self.pollInterval/1000.0)
 
   def getClimbRate(self, dt):
     deltaPressure = self.prevPressure - self.data['pressure']

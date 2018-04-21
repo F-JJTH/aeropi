@@ -803,6 +803,9 @@ function connect() {
                 efis.setQnh(data.qnh);
             }
 
+            $('.imu-roll').html('roll '+data.roll);
+            $('.imu-pitch').html('pitch '+data.pitch);
+            $('.imu-yaw').html('yaw '+data.yaw);
             $('.imu-accel-0').html(data.imu.accel[0]);
             $('.imu-accel-1').html(data.imu.accel[1]);
             $('.imu-accel-2').html(data.imu.accel[2]);
