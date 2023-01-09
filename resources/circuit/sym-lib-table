@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name aeroPi-rescue)(type Legacy)(uri ${KIPRJMOD}/aeroPi-rescue.lib)(options "")(descr ""))
+  (lib (name aeroPi)(type Legacy)(uri ${KIPRJMOD}/aeroPi.lib)(options "")(descr ""))
+  (lib (name bme280)(type Legacy)(uri ${KIPRJMOD}/prototype_circuit/bme280.lib)(options "")(descr ""))
+)

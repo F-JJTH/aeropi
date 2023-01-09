@@ -19,6 +19,7 @@ from enum import Enum
 import pymysql
 from datetime import datetime
 from madgwick_ahrs import MadgwickAHRS
+import numpy as np
 
 stopFlag   = False
 imuWorker  = False
@@ -93,6 +94,25 @@ class GPSWorker (threading.Thread):
     self.newData = ''
     self.data = {'lat':0.0, 'lng':0.0, 'time':0, 'alt':0, 'spd':0, 'climb':0, 'compass':0}
     self.systemDatetimeIsSet = False
+    self.acceleration = [0, 0, 0];
+    self.prevTime = 0
+
+  def computeAcceleration(self):
+    now = time.time()
+    latDelta = self.prevData['lat'] - self.data['lat']
+    lngDelta = self.prevData['lng'] - self.data['lng']
+    altDelta = self.prevData['alt'] - self.data['alt']
+    dt = now - self.prevTime
+
+    prevPos = np.array([self.prevData['lat'], self.prevData['lng'], self.prevData['alt']], dtype=float).flatten()
+    currPos = np.array([self.data['lat'], self.data['lng'], self.data['alt']], dtype=float).flatten()
+    # In dt, we moved from prevPos to currPos, calculate vector then acceleration
+    
+    self.prevData = self.data
+    self.prevTime = now
+
+  def getAcceleration(self):
+    return self.acceleration 
 
   def getPredictivePoint(self):
     gs = self.data['spd']
@@ -259,7 +279,8 @@ class IMUWorker (threading.Thread):
         self.data['qnh'] = self.currentQNH
 
         #gyro = [math.radians(self.IMUdata['gyro'][0]), math.radians(self.IMUdata['gyro'][1]), math.radians(self.IMUdata['gyro'][2])]
-        #roll, pitch, yaw   = self.AHRS.update(self.IMUdata['gyro'], self.IMUdata['accel'], self.IMUdata['compass'])
+        #self.AHRS.update(self.IMUdata['gyro'], self.IMUdata['accel'], self.IMUdata['compass'])
+        #roll, pitch, yaw   = self.AHRS.getRollPitchYaw()
         #self.data['roll']  = roll
         #self.data['pitch'] = pitch
         #self.data['yaw']   = yaw
